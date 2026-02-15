@@ -23,7 +23,6 @@
 
 无名杀在`WebView`的基础上，结合`Android原生`开放的能力，实现了版本管理、资源下载、手机建立联机服务器等多种功能能力，用于解决原程序的`android版本`容易崩溃、无法创建联机服务器等问题。
 
-
 ## 更新日志
 
 #### 版本1.0
@@ -39,18 +38,51 @@
 8. 新增添加便捷导入目录功能，可以在本APP中快速导入指定目录下的文件，并可以导入该目录下的单个非压缩包文件到本体目录，或进行分享
 9. 增加迁移功能，原诗笺版和由理版用户可以将文件和数据便捷迁移到本APP中。由于增强版系列玩家较少，暂不打算为此更新增强版，请游玩增强版懒人包的用户请求懒人包制作者使用mt管理器注入文件提供器后可使用迁移功能
 10. 版本页增加扩展管理功能，可以查看或删除当前使用的游戏主体中已导入的扩展
-11. 增加设置页，具体功能请用户自行查看
-12. 本项目已经与[noname-shijian-android](https://github.com/nonameShijian/noname-shijian-android)合并，并且重新创建项目，所以本项目拥有了原诗笺版和原增强版的绝大多数功能
+11. 增加主题页，可以导入自定义主题
+12. 增加设置页，具体功能请用户自行查看
+13. 内置Chrome Devtools，在Shizuku的root授权下可以调试网页内容(代码参考了[FoldDevtools](https://github.com/achyuki/FoldDevtools))
+14. 本项目已经与[noname-shijian-android](https://github.com/nonameShijian/noname-shijian-android)合并，并且重新创建项目，所以本项目拥有了原诗笺版和原增强版的绝大多数功能
 
-## 赞助
+## 主题结构
+
+```
+主题名称/
+├── preview/                    # 主题预览图
+│   └── xx.jpg                  # 主题截图（文件名可自定义）
+│
+├── assets/                     # 主题资源文件
+│   ├── video/             
+│   │   └── splash_video.mp4    # 启动视频（可选，但文件名固定）
+│   └── images/
+│       └── background/         # 背景图片目录
+│           ├── 0.jpg           # 默认背景图（文件名固定，不可修改）
+│           └── custom_*.jpg    # 自定义背景图（文件名可自定义）
+│
+└── manifest.json           # 主题配置文件（包含名称、版本、作者、描述、应用图标等）
+```
+
+注: 应用图标(icon)的可用值为: 
+1. ic_launcher
+2. ic_noname_plus_launcher
+3. ic_launcher_xiaowu
+4. ic_launcher_jiaozhu
+
+## 💖 赞助感谢
 
 如果这个应用对你有帮助，可以考虑支持一下开发者，谢谢！
 
 赞助链接: [https://afdian.com/a/sjahkl](https://afdian.com/a/sjahkl)
 
-赞助名单列表(排名不分先后): 
+感谢以下小伙伴通过爱发电支持项目发展！
 
-| 用户名 | 金额 (元) |
-|  :---:  | :---:  |
-| [倘若](https://afdian.com/u/cdd9cecaf5cc11f09f0652540025c377)  | 50 |
-| [无名杀频道读书人](https://afdian.com/u/e14e2f8e437711ecae3252540025c377)  | 10 |
+<details>
+<summary>📅 2026年赞助记录（点击展开）</summary>
+
+### 一月
+![2026年1月赞助截图](docs/sponsors/2026-01.jpg)
+
+</details>
+
+---
+
+> 💡 每月赞助截图已放在 [`/docs/sponsors/`](/docs/sponsors) 目录下

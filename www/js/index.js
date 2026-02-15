@@ -1,45 +1,29 @@
-'use strict';
-(async () => {
-    if (!localStorage.getItem('noname_freeTips')) {
-        alert("【无名杀】属于个人开发软件且【完全免费】，如非法倒卖用于牟利将承担法律责任 开发团队将追究到底");
-        localStorage.setItem('noname_freeTips', true);
-    }
-    let url = window.jsBridge.getAssetPath();
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 
-    if (!url) return;
+// Wait for the deviceready event before using any of Cordova's device APIs.
+// See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
+document.addEventListener('deviceready', onDeviceReady, false);
 
-    if (localStorage.getItem("noname_inited") != url) {
-        localStorage.setItem('noname_inited', url);
-    }
+function onDeviceReady() {
+    // Cordova is now initialized. Have fun!
 
-    if (url === 'nodejs' || location.protocol.startsWith('http')) url = '';
-
-    const loadFailed = () => {
-        localStorage.removeItem('noname_inited');
-        localStorage.removeItem('noname_freeTips');
-        window.location.reload();
-    };
-
-    const load = src => new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = `${url}game/${src}.js`;
-        script.onload = resolve;
-        script.onerror = (e) => {
-            alert('在载入' + 'game/' + src + '.js时发生错误');
-            reject(e);
-        };
-        document.head.appendChild(script);
-    });
-
-    try {
-        await Promise.all([
-            load('importmap'),
-            load('update'),
-            load('config'),
-            load('package')
-        ]);
-        await load('game');
-    } catch (e) {
-        loadFailed();
-    }
-})();
+    console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
+    document.getElementById('deviceready').classList.add('ready');
+}
