@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!--
+      external-path 对应 Environment.getExternalStorageDirectory()
+      name 是 URI 中显示的虚拟目录名
+      path="." 表示允许访问根目录下的所有文件
+    -->
+    <external-path name="external_files" path="." />
+
+    <!-- 对应 Context.getFilesDir() -->
+    <files-path name="files" path="." />
+
+    <!-- 对应 Context.getCacheDir() -->
+    <cache-path name="cache" path="." />
+</paths>

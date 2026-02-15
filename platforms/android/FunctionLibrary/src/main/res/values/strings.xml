@@ -1,0 +1,429 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- ============================= -->
+    <!--        应用基础信息            -->
+    <!-- ============================= -->
+    <string name="app_name" translatable="false">无名杀</string>
+    <string name="launcher_name" translatable="false">@string/app_name</string>
+    <string name="activity_name" translatable="false">@string/launcher_name</string>
+    <string name="app_free_warning">【无名杀】属于个人开发软件且【完全免费】，如非法倒卖用于牟利将承担法律责任 开发团队将追究到底</string>
+
+    <!-- ============================= -->
+    <!--        通用功能相关           -->
+    <!-- ============================= -->
+    <string name="common_action_check_update">检查更新</string>
+    <string name="common_action_click_to_update">点击更新</string>
+    <string name="common_action_copy">复制</string>
+    <string name="common_action_delete">删除</string>
+    <string name="common_action_go_to_settings">前往设置</string>
+    <string name="common_action_import">导入</string>
+    <string name="common_action_overwrite">覆盖</string>
+    <string name="common_action_reinput">重新输入</string>
+    <string name="common_action_save">保存</string>
+    <string name="common_action_select_directory">选择目录</string>
+    <string name="common_action_share">分享</string>
+    <string name="common_action_enable">启用</string>
+    <string name="common_action_disable">禁用</string>
+    <string name="common_action_back">返回</string>
+    <string name="common_confirm_delete">确认删除</string>
+    <string name="common_confirm_overwrite_file">目标文件已存在，是否覆盖？</string>
+    <string name="common_content_no_release_notes">无更新说明</string>
+    <string name="common_dialog_confirm_preference_change">是否%1$s</string>
+    <string name="common_dialog_prompt_enter_game">是否进入游戏?\n否则将跳转至版本页面</string>
+    <string name="common_dialog_title_choose_app">选择应用</string>
+    <string name="common_error_cannot_create_file">无法创建文件</string>
+    <string name="common_error_cannot_open_link">无法打开链接</string>
+    <string name="common_error_cannot_open_link_with_url">无法打开链接:&#160;%1$s</string>
+    <string name="common_error_cannot_select_own_app">不允许选择当前应用</string>
+    <string name="common_error_create_folder_failed">无法创建该文件夹</string>
+    <string name="common_error_delete_failed">删除失败</string>
+    <string name="common_error_dialog_style_failed">弹窗样式切换失败，已设置为默认样式</string>
+    <string name="common_error_execute_command_failed">执行命令失败</string>
+    <string name="common_error_execute_command_failed_reason">执行命令失败:&#160;</string>
+    <string name="common_error_folder_name_empty">文件夹名称不能为空</string>
+    <string name="common_error_folder_name_invalid">非法文件夹名称</string>
+    <string name="common_error_launch_game_failed">自动启动游戏失败，请手动启动游戏</string>
+    <string name="common_error_no_directory_selected">未选择目录</string>
+    <string name="common_error_open_input_stream_failed">无法打开源文件输入流</string>
+    <string name="common_error_operation_failed_with_stacktrace">操作失败：%1$s</string>
+    <string name="common_error_parsing_failed">解析失败</string>
+    <string name="common_error_path_empty">文件路径不能为空</string>
+    <string name="common_error_root_not_exist">根目录不存在</string>
+    <string name="common_error_source_not_exist">源文件不存在</string>
+    <string name="common_error_temp_not_exist">临时文件不存在</string>
+    <string name="common_error_uri_empty">URI为空</string>
+    <string name="common_error_cache_not_exist">缓存文件不存在</string>
+    <string name="common_error_data_not_found">未找到 data 目录</string>
+    <string name="common_error_webview_not_found">未找到 app_webview 目录</string>
+    <string name="common_error_android_data_not_found">未找到 android_data 目录</string>
+    <string name="common_extension_dialog_confirm_delete">确定要删除扩展 "%1$s"的文件和配置吗？</string>
+    <string name="common_extension_error_no_info_json">没有info.json，无法读取扩展的其余信息</string>
+    <string name="common_extension_info_author">作者:&#160;</string>
+    <string name="common_extension_info_download">下载:&#160;</string>
+    <string name="common_extension_info_forum">论坛:&#160;</string>
+    <string name="common_extension_info_intro">介绍:&#160;</string>
+    <string name="common_extension_info_version">版本:&#160;</string>
+    <string name="common_extension_status_none_found">没有发现扩展</string>
+    <string name="common_hint_scroll_more">显示不全可下滑查看</string>
+    <string name="common_info_app_version">版本:&#160;%1$s</string>
+    <string name="common_info_change_icon_restart">修改图标后会自动退出进程</string>
+    <string name="common_prompt_input">请输入%1$s</string>
+    <string name="common_prompt_select_directory">请选择目录</string>
+    <string name="common_progress_creating_temp" tools:ignore="TypographyEllipsis">正在创建临时文件...</string>
+    <string name="common_progress_loading" tools:ignore="TypographyEllipsis">正在加载...</string>
+    <string name="common_progress_refreshing" tools:ignore="TypographyEllipsis">刷新中...</string>
+    <string name="common_progress_updating" tools:ignore="TypographyEllipsis">更新中...</string>
+    <string name="common_resource_configure_update_source">配置更新源</string>
+    <string name="common_resource_force_update">强制更新</string>
+    <string name="common_resource_latest_version">最新版本:&#160;</string>
+    <string name="common_resource_path">资源路径:&#160;</string>
+    <string name="common_resource_release_notes">更新日志:&#160;</string>
+    <string name="common_resource_size">资源大小:&#160;</string>
+    <string name="common_resource_update_source">更新源:&#160;</string>
+    <string name="common_resource_version">资源版本:&#160;</string>
+    <string name="common_source_error_fields_required">所有字段不能为空，请输入对应字段内容！</string>
+    <string name="common_source_field_branch">分支</string>
+    <string name="common_source_field_filename">下载文件</string>
+    <string name="common_source_field_name">配置名称</string>
+    <string name="common_source_field_repository">仓库</string>
+    <string name="common_source_field_username">用户/组织</string>
+    <string name="common_status_already_latest_version">已是最新版本</string>
+    <string name="common_status_delete_success">删除成功</string>
+    <string name="common_status_preparing" tools:ignore="TypographyEllipsis">准备中...</string>
+    <string name="common_status_processing" tools:ignore="TypographyEllipsis">处理中...</string>
+    <string name="common_status_setup_complete">设置完成</string>
+    <string name="common_title_update_source">配置更新源</string>
+    <string name="common_tip">提示</string>
+    <string name="common_toast_copied">已复制：%1$s</string>
+    <string name="common_toast_dialog_style_changed">弹窗样式切换成功</string>
+    <string name="common_toast_preference_changed">已%1$s</string>
+    <string name="common_warning_debug_mode_icon">注意：调试模式下，不是默认图标将不能通过ADB自动安装后启动进程</string>
+    <string name="common_warning_file_exists">文件已存在</string>
+    <string name="common_warning_folder_exists">文件夹已存在</string>
+    <string name="common_image">图片</string>
+
+    <!-- ============================= -->
+    <!--        权限与协议相关          -->
+    <!-- ============================= -->
+    <string name="permission_action_agree">同意</string>
+    <string name="permission_action_disagree">拒绝</string>
+    <string name="permission_action_disagree_enter_browse_mode">拒绝并进入仅浏览模式</string>
+    <string name="permission_content_privacy_agreement_full">无名杀App隐私政策以及免责声明\n\n我们非常重视您的隐私保护，本应用不会主动上传您存储的任何信息，不收集任何个人身份信息。\n\n一、信息收集\n1. 本应用不会主动收集您的任何个人信息。\n2. 本应用不会主动上传您的任何数据到网络。\n3. 所有游戏数据均保存在您的设备本地。\n\n二、本地数据使用\n1. 游戏设置和偏好仅保存在您的设备上。\n2. 所有除了更新和使用WebView以外的操作都在本地进行，不涉及网络传输。\n\n三、权限说明\n本应用可能需要以下权限：\n- 存储权限：用于保存或读取游戏数据和配置到本地\n- 网络权限：获取游戏更新以及加载WebView内容\n- 通知权限：显示应用更新下载进度，下载成功或失败信息\n- 震动权限：用于WebView内的震动API调用\n- 安装权限：用于更新本APP\n\n四、数据安全\n1. 您的所有数据都保存在设备本地。\n2. 您可以随时清除应用数据来删除所有信息。\n\n五、免责声明\n本项目不提供完整的可运行的HTML项目，如果因您主动导入的任何HTML项目文件造成的任何损失和法律后果，开发者不承担任何责任。\n从非项目主页获取到的本APP有被篡改的可能，您从任何其他渠道获取到的App造成的任何损失和法律后果，开发者不承担任何责任。\n\n六、联系我们\n如有任何疑问，请通过项目主页(https://github.com/nonameShijian/noname-android-app)反馈。</string>
+    <string name="permission_dialog_title_privacy_agreement">用户隐私协议以及免责声明</string>
+    <string name="permission_error_no_shizuku_to_import">无Shizuku权限，无法导入此文件</string>
+    <string name="permission_error_no_shizuku_to_share">无Shizuku权限，无法分享此文件</string>
+    <string name="permission_error_storage_expired">存储权限已失效，请重新选择目录</string>
+    <string name="permission_error_storage_permission_denied">用户拒绝存储权限</string>
+    <string name="permission_error_video_permission_denied">您已拒绝存储权限，请在设置界面授权以便正常播放视频</string>
+    <string name="permission_info_privacy_updated">用户隐私协议以及免责声明已更新</string>
+    <string name="permission_info_read_agreement_completely">请将用户隐私协议以及免责声明阅读完毕</string>
+    <string name="permission_require_install_packages">需要允许安装应用权限才能更新应用</string>
+    <string name="permission_require_privacy_agreement">请先同意隐私协议以及免责声明才能使用本功能</string>
+    <string name="permission_require_privacy_agreement_for_import">请先同意隐私协议以及免责声明才能使用导入功能</string>
+    <string name="permission_require_storage_for_custom_video">需要存储权限才能播放自定义视频</string>
+    <string name="permission_require_video_access">应用需要访问您设备上的视频文件，以便播放本地视频</string>
+    <string name="permission_request_storage">请授予存储权限</string>
+    <string name="permission_required_directory_access">读取此目录需要授权</string>
+
+    <!-- ============================= -->
+    <!--        游戏主体相关           -->
+    <!-- ============================= -->
+    <string name="gamemain_action_set_as_gamemain">设置为游戏主体</string>
+    <string name="gamemain_dialog_confirm_delete_data">是否删除「%1$s」以及对应的网页数据？</string>
+    <string name="gamemain_dialog_confirm_set">是否设置「%1$s」(%2$s)为游戏主体？成功设置后需要重启才能生效</string>
+    <string name="gamemain_dialog_confirm_set_short">是否设置「%1$s」为游戏主体？成功设置后需要重启才能生效</string>
+    <string name="gamemain_error_already_exists">「%1$s」游戏主体已存在</string>
+    <string name="gamemain_error_create_importmap_failed">创建game/importmap.js失败，请手动创建</string>
+    <string name="gamemain_error_directory_empty">游戏主体目录为空文件夹</string>
+    <string name="gamemain_error_missing_required_files">没有任何html文件，以及game/game.js</string>
+    <string name="gamemain_error_not_set">未设置游戏主体</string>
+    <string name="gamemain_error_not_set_or_invalid">未设置游戏主体或游戏主体目录不存在</string>
+    <string name="gamemain_hint_input_new_name">请输入新的游戏主体名称</string>
+    <string name="gamemain_progress_load_extension_config">正在从游戏主体的扩展加载压缩包类型配置，其中重名配置将被过滤</string>
+    <string name="gamemain_toast_set_complete">游戏主体设置完成</string>
+
+    <!-- ============================= -->
+    <!--        导入功能相关           -->
+    <!-- ============================= -->
+    <string name="import_action_add_quick_directory">添加新的便捷导入目录</string>
+    <string name="import_action_create_directory">新建本体目录</string>
+    <string name="import_action_overwrite_item">覆盖「%1$s」</string>
+    <string name="import_action_overwrite_version">覆盖当前版本「%1$s」</string>
+    <string name="import_action_select_directory">选择导入目录</string>
+    <string name="import_action_start">开始导入</string>
+    <string name="import_action_start_file">开始导入文件：%1$s</string>
+    <string name="import_action_use_saf_select">使用SAF选择目录</string>
+    <string name="import_dialog_confirm_delete">确定要删除 \"%1$s\" 这个导入目录吗？</string>
+    <string name="import_dialog_confirm_directory_mismatch">您选择的目录是 %1$s，但当前功能期望选择 %2$s，是否选错？</string>
+    <string name="import_dialog_confirm_file">是否导入 %1$s？</string>
+    <string name="import_error_cannot_delete_protected">该导入目录或功能页不可删除</string>
+    <string name="import_hint_long_press_delete">提示：您可以通过长按标签页来删除不需要的导入目录</string>
+    <string name="import_info_path_calculation">将会从应用的files文件夹内算作起始路径\n示例:&#160;文件夹名 或 文件名.后缀名</string>
+    <string name="import_prompt_input_directory_name">请输入新本体目录名称</string>
+    <string name="import_prompt_input_path">输入导入文件路径</string>
+    <string name="import_prompt_select_config_path">选择「%1$s」的导入路径</string>
+    <string name="import_prompt_select_directory">请先选择导入目录</string>
+    <string name="import_progress_importing_file" tools:ignore="TypographyEllipsis">等待文件导入中...</string>
+    <string name="import_rule_folder_must_in_files">文件夹路径必须在应用的files文件夹中</string>
+    <string name="import_status_directory_selected">已选择目录</string>
+    <string name="import_status_extension_complete">扩展导入完成，将跳转到配置页面</string>
+    <string name="import_status_failed">导入失败</string>
+    <string name="import_status_failed_reason">导入失败:&#160;%1$s</string>
+    <string name="import_status_progress">导入进度 %1$d%%</string>
+    <string name="import_status_success">导入成功</string>
+    <string name="import_toast_directory_added">已成功添加 "%1$s" 导入目录</string>
+    <string name="import_toast_directory_success">目录选择成功</string>
+
+    <!-- ============================= -->
+    <!--        配置与设置相关         -->
+    <!-- ============================= -->
+    <string name="config_error_tag_exists">标签已存在</string>
+    <string name="config_hint_input_tag_name">请输入标签名称</string>
+    <string name="config_info_restart_required">需要重启才能生效</string>
+    <string name="config_info_webview_data_isolation_enabled">WebView数据隔离已开启</string>
+    <string name="config_label_tag_name">标签名称</string>
+    <string name="config_notification_set_failed">配置设置失败</string>
+    <string name="config_prompt_select_file">请选择要导入的配置文件</string>
+    <string name="config_toast_save_success">保存成功</string>
+    <string name="config_toast_set_success">配置文件设置成功</string>
+
+    <!-- ============================= -->
+    <!--        迁移功能相关           -->
+    <!-- ============================= -->
+    <string name="migration_action_start">开始迁移</string>
+    <string name="migration_button_continue">继续迁移</string>
+    <string name="migration_dialog_confirm_saf_permission">是否使用SAF授权访问 %1$s 的所有文件？</string>
+    <string name="migration_error_app_not_running">此目录对应的app可能未启动，暂时无法读取其文件！</string>
+    <string name="migration_error_failed">数据迁移失败</string>
+    <string name="migration_guide_select_provided_directory">选择旧版应用提供的目录</string>
+    <string name="migration_note_data_items">注意：此操作将从旧版应用迁移以下数据：\n1. data/app_webview (网页数据)目录\n2. android_data (外部存储)目录</string>
+    <string name="migration_progress_data" tools:ignore="TypographyEllipsis">正在迁移数据...</string>
+    <string name="migration_progress_folder_detail" tools:ignore="TypographyEllipsis">正在迁移数据...\n复制文件夹:&#160;%1$s 到 %2$s</string>
+    <string name="migration_prompt_select_legacy_directory">请选择旧版应用目录</string>
+    <string name="migration_prompt_select_version">发现多个可迁移版本，请选择其中一个进行迁移</string>
+    <string name="migration_status_legacy_selected">已选择旧版应用目录</string>
+    <string name="migration_toast_success">数据迁移成功</string>
+    <string name="migration_warning_android9_multiple_versions">安卓9以下的设备多个游戏版本之间数据不能隔离！</string>
+    <string name="migration_warning_legacy_platform">由于旧版本游戏本体判断平台逻辑不标准，最好请在设置中开启无名杀兼容模式并启动一次游戏后，再关闭兼容模式选项</string>
+    <string name="migration_warning_webview_version">由于WebView版本或许不同，推荐在迁移之前手动前往旧app导出游戏设置！</string>
+
+    <!-- ============================= -->
+    <!--        解压功能相关           -->
+    <!-- ============================= -->
+    <string name="extract_action_select_type">选择压缩包类型</string>
+    <string name="extract_error_archive_invalid">压缩文件不合法，可能被损坏</string>
+    <string name="extract_error_no_gamemain_limit">没有游戏主体时，只能导入本体包或HTML项目包。解压因此停止</string>
+    <string name="extract_error_process_cancelled">解压失败:&#160;进程取消</string>
+    <string name="extract_error_temp_creation_failed">临时文件创建失败，解压停止</string>
+    <string name="extract_error_temp_missing_stop">临时文件不存在，解压停止</string>
+    <string name="extract_error_tar_no_password">tar格式文件不支持密码</string>
+    <string name="extract_error_type_undetermined">无法确认压缩包类型</string>
+    <string name="extract_error_unsupported_engine">不支持的引擎:&#160;%1$s</string>
+    <string name="extract_error_unsupported_type_no_target">不支持的文件类型，且未设置目标路径，停止解压</string>
+    <string name="extract_file_status_recognized">识别到文件:&#160;%1$s</string>
+    <string name="extract_hint_copy_destination">文件将复制至</string>
+    <string name="extract_hint_destination_path">文件将解压至:&#160;%1$s</string>
+    <string name="extract_info_archive_type">压缩包类型:&#160;%1$s</string>
+    <string name="extract_info_copy_for_unsupported">不支持的压缩格式，将复制到对应目录</string>
+    <string name="extract_info_password_required">此压缩包需要密码</string>
+    <string name="extract_info_rar_version">RAR版本:&#160;%1$s</string>
+    <string name="extract_progress_deleting_temp" tools:ignore="TypographyEllipsis">正在删除临时文件...</string>
+    <string name="extract_progress_fixing_encoding" tools:ignore="TypographyEllipsis">正在搜索并修复文件名乱码...</string>
+    <string name="extract_progress_parsing_type" tools:ignore="TypographyEllipsis">正在解析压缩包类型，请稍候...</string>
+    <string name="extract_progress_unpacking_file">正在解压:&#160;%1$s</string>
+    <string name="extract_prompt_password_optional">请输入压缩包密码(可留空)</string>
+    <string name="extract_status_encoding_fixed">文件名乱码修复完成</string>
+    <string name="extract_status_no_encoding_issue">无文件名乱码</string>
+    <string name="extract_status_temp_deleted">临时文件删除成功</string>
+    <string name="extract_warning_confirm_type">请确认压缩包类型，选错无法撤消</string>
+    <string name="extract_warning_temp_delete_failed">临时文件删除失败，应用退出后将自动删除！</string>
+
+    <!-- ============================= -->
+    <!--        通知功能相关           -->
+    <!-- ============================= -->
+    <string name="notification_action_click_to_install">点击安装更新</string>
+    <string name="notification_action_open_page">打开页面</string>
+    <string name="notification_action_restart">重新启动</string>
+    <string name="notification_action_update_now">立即更新</string>
+    <string name="notification_channel_downloads_name">下载通知</string>
+    <string name="notification_channel_progress_downloading" tools:ignore="TypographyEllipsis">正在下载更新...</string>
+    <string name="notification_channel_status_download_progress">已下载 %1$d%% (%2$s / %3$s)</string>
+    <string name="notification_channel_updates_description">显示应用更新下载进度，下载成功或失败信息和安装进度</string>
+    <string name="notification_content_update_info">最新版本:&#160;%1$s\n\n更新内容:\n%2$s</string>
+    <string name="notification_error_restart_to_retry_update">需要重新启动以进行重新更新\n%1$s</string>
+    <string name="notification_error_system_installer_failed">启动系统安装器失败</string>
+    <string name="notification_error_system_installer_failed_reason">启动系统安装器失败:&#160;%1$s</string>
+    <string name="notification_progress_initialize_data" tools:ignore="TypographyEllipsis">初始化数据中...</string>
+    <string name="notification_progress_checking_update" tools:ignore="TypographyEllipsis">检查更新中...</string>
+    <string name="notification_progress_downloading" tools:ignore="TypographyEllipsis">正在下载</string>
+    <string name="notification_progress_downloading_file">下载中:&#160;%1$s</string>
+    <string name="notification_reason_download_user_canceled">用户取消了下载操作</string>
+    <string name="notification_status_apk_not_found">未找到 APK 文件，将打开发布页面</string>
+    <string name="notification_status_check_update_failed">检查更新失败</string>
+    <string name="notification_status_check_update_failed_reason">检查更新失败:&#160;%1$s</string>
+    <string name="notification_status_download_canceled">下载已取消</string>
+    <string name="notification_status_download_complete">下载完成</string>
+    <string name="notification_status_download_failed">下载失败</string>
+    <string name="notification_status_download_failed_reason">下载失败:&#160;%1$s</string>
+    <string name="notification_status_download_interrupted">下载被中断，请保持网络连接稳定</string>
+    <string name="notification_status_downloaded_click_install">下载完成，点击安装</string>
+    <string name="notification_status_downloading">下载中</string>
+    <string name="notification_status_new_version_found">发现新版本</string>
+    <string name="notification_update_dialog_new_version_available">有新版本%1$s可用，是否下载？</string>
+
+    <!-- ============================= -->
+    <!--        网络功能相关           -->
+    <!-- ============================= -->
+    <string name="network_error_domain_format">域名格式错误</string>
+    <string name="network_error_invalid_url">无效的URL</string>
+    <string name="network_error_invalid_url_with_url">无效的URL:&#160;%1$s</string>
+    <string name="network_error_load_hosts_failed">加载Hosts失败，请检查网络</string>
+
+    <!-- ============================= -->
+    <!--        服务器相关             -->
+    <!-- ============================= -->
+    <string name="server_action_set_ip">设置为联机ip</string>
+    <string name="server_action_set_ip_and_start_game">设置为联机ip并开始游戏</string>
+    <string name="server_status_already_running">服务器运行中，请勿重复创建</string>
+    <string name="server_status_cleanup_failed">服务器清理失败，%1$s</string>
+    <string name="server_status_close">服务器关闭</string>
+    <string name="server_status_creating">服务器创建中，端口：%1$d</string>
+    <string name="server_status_error">服务器错误</string>
+    <string name="server_status_not_running">本地服务器未运行</string>
+    <string name="server_status_running">服务器运行中</string>
+    <string name="server_status_start">服务器启动中</string>
+    <string name="server_status_start_failed">服务器创建失败:&#160;%1$s</string>
+    <string name="server_status_start_success">服务器启动成功, 可以尝试连接以下几个地址进入服务器</string>
+    <string name="server_status_stop">服务器终止</string>
+    <string name="server_status_stopped">本地服务器已停止</string>
+    <string name="server_status_stopping">服务器尝试停止</string>
+    <string name="server_ui_hint_ip_actions">(下列ip可一点击复制、设置到游戏内或者设置并启动游戏)</string>
+    <string name="server_ui_hint_start_button">点击启动按钮创建服务器, 也可以直接点击下方ip设置并开始游戏⬇️</string>
+    <string name="server_ui_label_available_servers">可用服务器（下列地址点击可弹出菜单）</string>
+    <string name="server_ui_label_ip_from_clipboard">来自剪切板的ip：</string>
+    <string name="server_ui_label_recent_connections">最近连接：</string>
+
+    <!-- ============================= -->
+    <!--        其他界面元素           -->
+    <!-- ============================= -->
+    <string name="btn_text_server_end" translatable="false">终</string>
+    <string name="btn_text_server_start" translatable="false">启</string>
+    <string name="github_info">https://github.com/nonameShijian/noname-android-app</string>
+    <string name="import_game_file">导入资源</string>
+    <string name="import_gamer_asset" translatable="false">刷</string>
+    <string name="loading_resource">资源导入中，请稍后</string>
+
+    <!-- ============================= -->
+    <!--        Preference           -->
+    <!-- ============================= -->
+    <string name="pref_title_sponsor">赞助</string>
+    <string name="pref_title_sponsor_author">点击赞助作者</string>
+    <string name="pref_summary_sponsor">如果这个应用对你有帮助，可以考虑支持一下作者</string>
+    <string name="pref_category_webview_settings">WebView设置</string>
+    <string name="pref_title_webview_protocol_type">协议类型</string>
+    <string name="pref_title_webview_http_domain">HTTP/HTTPS域名设置</string>
+    <string name="pref_dialog_option_https_protocol">HTTPS协议</string>
+    <string name="pref_dialog_option_http_protocol">HTTP协议</string>
+    <string name="pref_dialog_option_file_protocol">File协议</string>
+    <string name="pref_title_disable_cordova_and_bridge">禁用加载内置Cordova框架以及注入NonameAndroidBridge</string>
+    <string name="pref_summary_disable_cordova_and_bridge">开启后将不允许使用Cordova框架以及NonameAndroidBridge提供的安卓本地交互功能</string>
+    <string name="pref_title_webview_debug_mode">调试模式(Shizuku Root)</string>
+    <string name="pref_summary_webview_debug_mode">开启后将启动Chrome Devtools调试游戏网页</string>
+    <string name="pref_title_noname_compatibility_mode">无名杀兼容模式</string>
+    <string name="pref_summary_noname_compatibility_mode">开启后将使用内置的html文件进行游戏，未来版本将不需要开启此选项</string>
+    <string name="pref_title_font_size">字体大小</string>
+    <string name="pref_summary_font_size">调整WebView内文字大小百分比</string>
+    <string name="pref_title_webview_implementation">WebView实现</string>
+    <string name="pref_summary_webview_implementation">修改本应用内的WebView实现</string>
+    <string name="pref_category_network_settings">网络设置</string>
+    <string name="pref_title_github_acceleration">GitHub访问加速</string>
+    <string name="pref_summary_github_acceleration">访问github520提供的hosts来使App内访问GitHub加速(缓存七天)，开启VPN时此选项失效</string>
+    <string name="pref_title_github_download_acceleration">GitHub下载加速</string>
+    <string name="pref_summary_github_download_acceleration">输入加速链接开头，下载GitHub文件时将以此拼接</string>
+    <string name="pref_category_feature_settings">功能设置</string>
+    <string name="pref_title_auto_enter_game">自动进入游戏</string>
+    <string name="pref_summary_auto_enter_game">以正常方式启动App时，如果目录配置正确，则自动进入游戏</string>
+    <string name="pref_title_play_splash_animation">播放启动动画</string>
+    <string name="pref_summary_play_splash_animation">以正常方式启动App时，将播放启动动画</string>
+    <string name="pref_category_theme">主题</string>
+    <string name="pref_title_select_theme">选择主题</string>
+    <string name="pref_summary_select_theme">选择App主题</string>
+    <string name="pref_title_select_app_icon_and_animation">选择应用图标和启动动画</string>
+    <string name="pref_dialog_option_default_icon">默认图标</string>
+    <string name="pref_dialog_option_original_icon">原版图标</string>
+    <string name="pref_dialog_option_xiaowu_icon">小无图标</string>
+    <string name="pref_dialog_option_jiaozhu_icon">教主图标</string>
+    <string name="pref_title_select_dialog_style">选择弹窗样式</string>
+    <string name="pref_title_reset_tutorial">重置教程(新手引导)</string>
+    <string name="pref_title_reset_tutorial_main_page">重置主页面教程</string>
+    <string name="pref_summary_reset_tutorial_main_page">重置主页面显示的新手引导</string>
+    <string name="pref_title_reset_start_game_tutorial">重置开始游戏教程</string>
+    <string name="pref_summary_reset_start_game_tutorial">重置开始游戏界面的新手引导</string>
+    <string name="pref_title_reset_import_tutorial">重置导入文件教程</string>
+    <string name="pref_summary_reset_import_tutorial">重置导入文件页面的新手引导</string>
+    <string name="pref_title_reset_directory_tutorial">重置便捷目录选择教程</string>
+    <string name="pref_summary_reset_directory_tutorial">重置手动选择便捷目录页面的新手引导</string>
+    <string name="pref_title_reset_migration_tutorial">重置迁移教程</string>
+    <string name="pref_summary_reset_migration_tutorial">重置数据迁移页面的新手引导</string>
+    <string name="pref_title_reset_resource_tutorial">重置资源教程</string>
+    <string name="pref_summary_reset_resource_tutorial">重置资源管理页面的新手引导</string>
+    <string name="pref_title_reset_version_tutorial">重置版本控制教程</string>
+    <string name="pref_summary_reset_version_tutorial">重置版本控制页面的新手引导</string>
+    <string name="pref_title_reset_extension_tutorial">重置扩展管理教程</string>
+    <string name="pref_summary_reset_extension_tutorial">重置扩展管理页面的新手引导</string>
+    <string name="pref_title_reset_lan_tutorial">重置局域网联机教程</string>
+    <string name="pref_summary_reset_lan_tutorial">重置局域网联机功能页面的新手引导</string>
+    <string name="pref_title_reset_theme_switch_tutorial">重置主题教程</string>
+    <string name="pref_summary_reset_theme_switch_tutorial">重置主题功能页面的新手引导</string>
+    <string name="pref_category_about">关于</string>
+    <string name="pref_title_privacy_policy_disclaimer">隐私政策以及免责声明</string>
+    <string name="pref_summary_privacy_policy_disclaimer">查看我们的隐私政策以及免责声明</string>
+    <string name="pref_title_project_homepage">项目主页</string>
+    <string name="pref_title_author_shijian">作者-诗笺</string>
+    <string name="pref_title_upstream_project">上游项目主页(无名杀增强版)</string>
+    <string name="pref_title_upstream_author">上游作者(无名杀增强版)-可乐加冰</string>
+
+    <!-- ============================= -->
+    <!--       主题        -->
+    <!-- ============================= -->
+    <string name="theme_name_default" translatable="false">默认主题</string>
+    <string name="theme_settings_toast_changed">主题切换成功</string>
+    <string name="theme_title_select">请选择APP的主题</string>
+    <string name="theme_switch_title">主题管理</string>
+    <string name="theme_current">使用中</string>
+    <string name="theme_enable">启用主题</string>
+    <string name="theme_delete">删除主题</string>
+    <string name="theme_apply">应用主题</string>
+    <string name="theme_applied_successfully">主题应用成功</string>
+    <string name="theme_already_selected">已是当前主题</string>
+    <string name="theme_switch_message">您想如何设置主题\"%1$s\"？</string>
+    <string name="theme_enabled">主题\"%1$s\"已启用</string>
+    <string name="theme_disabled">主题\"%1$s\"已禁用</string>
+    <string name="theme_cannot_disable_current">无法禁用当前使用的主题</string>
+    <string name="theme_delete_title">删除主题</string>
+    <string name="theme_delete_message">确定要删除主题\"%1$s\"吗？此操作无法撤销。</string>
+    <string name="theme_deleted_successfully">主题删除成功</string>
+    <string name="theme_delete_failed">主题删除失败</string>
+    <string name="theme_delete_error">删除主题时出错</string>
+    <string name="theme_cannot_delete_default">默认主题不能删除</string>
+    <string name="theme_background">主题背景图片</string>
+    <string name="theme_import">从SD卡导入主题</string>
+    <string name="theme_detail_title">主题详情</string>
+    <string name="theme_preview">主题预览</string>
+    <string name="theme_description">主题描述</string>
+    <string name="theme_author">作者：%1$s</string>
+    <string name="theme_version">版本：%1$s</string>
+    <string name="theme_size">大小：%1$s</string>
+    <string name="default_theme_description">默认主题，简洁美观</string>
+    <string name="custom_theme_default_description">自定义主题</string>
+    <string name="theme_edit">编辑主题</string>
+    <string name="theme_select_background">选择背景图</string>
+    <string name="theme_select_background_hint">点击选择要应用的背景图片</string>
+    <string name="theme_video_preview">视频预览</string>
+    <string name="theme_play_video">播放视频</string>
+    <string name="theme_current_video">当前视频：%1$s</string>
+    <string name="theme_video_duration">时长：%1$s</string>
+    <string name="theme_no_video">该主题没有视频文件</string>
+    <string name="theme_app_icon">应用图标</string>
+    <string name="theme_app_icon_hint">点击应用主题后将使用此图标</string>
+</resources>

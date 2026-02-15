@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manifest
+    android:hardwareAccelerated="true"
+    android:versionCode="10000"
+    android:versionName="1.0"
+    android:enableOnBackInvokedCallback="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:targetApi="tiramisu">
+    <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:resizeable="true" android:smallScreens="true" android:xlargeScreens="true" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:name=".MyApplication"
+        android:appComponentFactory=".CustomAppComponentFactory"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="p"
+        tools:replace="android:appComponentFactory">
+        <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation" android:exported="true" android:label="@string/activity_name" android:launchMode="singleTop" android:name="MainActivity" android:theme="@style/Theme.App.SplashScreen" android:windowSoftInputMode="adjustResize" android:screenOrientation="sensorLandscape">
+            <intent-filter android:label="@string/launcher_name">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:exported="true" android:launchMode="singleTask" android:name=".LaunchActivity" android:screenOrientation="sensorLandscape" android:theme="@style/ActivityThemeLunch" tools:ignore="LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content"/>
+                <data android:host="*"/>
+                <data android:mimeType="application/zip"/>
+                <data android:mimeType="application/7z"/>
+                <data android:mimeType="application/x-7z-compressed"/>
+                <data android:mimeType="application/x-tar"/>
+                <data android:mimeType="application/rar"/>
+                <data android:mimeType="application/x-rar-compressed"/>
+            </intent-filter>
+        </activity>
+        <!--   启动动画     -->
+        <activity
+            android:name=".SplashScreenActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:exported="true"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/ActivityThemeLunch">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SplashScreenPlusActivity"
+            android:icon="@mipmap/ic_noname_plus_launcher"
+            android:enabled="false"
+            android:exported="true"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/ActivityThemeLunch">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SplashScreenXiaoWuActivity"
+            android:icon="@mipmap/ic_launcher_xiaowu"
+            android:enabled="false"
+            android:exported="true"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/ActivityThemeLunch">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SplashScreenJiaoZhuActivity"
+            android:icon="@mipmap/ic_launcher_jiaozhu"
+            android:enabled="false"
+            android:exported="true"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/ActivityThemeLunch">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <provider android:authorities="${applicationId}.cdv.core.file.provider" android:exported="false" android:grantUriPermissions="true" android:name="androidx.core.content.FileProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/cdv_core_file_provider_paths" />
+        </provider>
+        <provider android:authorities="${applicationId}.localnotifications.provider" android:exported="false" android:grantUriPermissions="true" android:name="de.appplant.cordova.plugin.localnotification.util.PluginFileProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/shared_files_provider_paths" />
+        </provider>
+        <activity android:excludeFromRecents="true" android:exported="false" android:name="de.appplant.cordova.plugin.localnotification.NotificationClickActivity" android:taskAffinity="" />
+        <receiver android:exported="false" android:name="de.appplant.cordova.plugin.localnotification.receiver.TriggerReceiver" />
+        <receiver android:exported="false" android:name="de.appplant.cordova.plugin.localnotification.receiver.ClearReceiver" />
+        <receiver android:exported="false" android:name="de.appplant.cordova.plugin.localnotification.receiver.RestoreReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="org.apache.cordova.devtools.DevToolsWindowService"
+            android:process=":devtools"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="specialUse"
+            android:permission="android.permission.FOREGROUND_SERVICE" />
+    </application>
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:maxSdkVersion="32" android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
+    <uses-permission android:maxSdkVersion="32" android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+</manifest>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/devtools_float_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:id="@+id/devtools_window"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#FF2C3E50"
+        android:elevation="10dp"
+        android:outlineProvider="bounds">
+
+        <LinearLayout
+            android:id="@+id/devtools_title"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:background="#FF2C3E50">
+
+            <TextView
+                android:id="@+id/devtools_title_text"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="WebView 调试器"
+                android:textColor="#FFFFFFFF"
+                android:textSize="14sp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/devtools_close"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:gravity="center"
+                android:text="×"
+                android:textColor="#FFFFFFFF"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/debug_content_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#FFFFFFFF">
+
+            <WebView
+                android:id="@+id/debug_webview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
+
+        <!-- 调整大小的手柄 -->
+        <org.apache.cordova.devtools.ScaleImage
+            android:id="@+id/resize_handle"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:src="@drawable/icon_scale"
+            android:scaleType="centerInside"
+            android:background="?android:attr/selectableItemBackground" />
+
+    </LinearLayout>
+</FrameLayout>

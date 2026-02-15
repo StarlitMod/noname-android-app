@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <queries>
+        <package android:name="com.tencent.mobileqq" />
+        <package android:name="com.tencent.mm" />
+        <package android:name="bin.mt.plus" />
+    </queries>
+    <application>
+        <provider
+            android:name="com.widget.noname.CustomDocumentsProvider"
+            android:authorities="com.widget.noname.documents"
+            android:exported="true"
+            android:permission="android.permission.MANAGE_DOCUMENTS"
+            android:grantUriPermissions="true">
+            <intent-filter>
+                <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+            </intent-filter>
+        </provider>
+        <service
+            android:name="com.widget.noname.CustomService"
+            android:authorities="com.widget.noname.CustomService"
+            android:process=":remote"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <service
+            android:name="com.widget.noname.okhttp.DownloadService"
+            android:foregroundServiceType="dataSync"
+            android:exported="false"/>
+        <provider
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:multiprocess="false"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+</manifest>

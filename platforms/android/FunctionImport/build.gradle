@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    namespace 'com.widget.noname.function.functionimport'
+    compileSdk {
+        version = release(36)
+    }
+
+    defaultConfig {
+        minSdk 24
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', project(':app').file('proguard-rules.pro')
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', project(':app').file('proguard-rules.pro')
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        //noinspection DataBindingWithoutKapt
+        dataBinding true
+    }
+}
+
+dependencies {
+    implementation project(":Common")
+    implementation project(":FunctionLibrary")
+    implementation project(":NonameCore")
+    implementation project(":DialogX:FileDialog")
+    implementation project(":DialogX:ShareDialog")
+}

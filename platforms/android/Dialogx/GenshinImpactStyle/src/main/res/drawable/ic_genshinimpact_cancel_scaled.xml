@@ -1,0 +1,10 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap
+            android:src="@drawable/ic_genshinimpact_cancel"
+            android:gravity="center"
+            android:tileMode="clamp"
+            android:width="25dp"
+            android:height="25dp" />
+    </item>
+</layer-list>

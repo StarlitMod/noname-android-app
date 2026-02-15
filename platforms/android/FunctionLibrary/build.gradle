@@ -1,0 +1,116 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    namespace 'com.widget.noname.function.functionlibrary'
+    compileSdk {
+        version = release(36)
+    }
+
+    defaultConfig {
+        minSdk 24
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', project(':app').file('proguard-rules.pro')
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        //noinspection DataBindingWithoutKapt
+        dataBinding true
+        aidl true
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation fileTree(dir: '../app/src/main/libs', include: '*.jar')
+    api fileTree(dir: './src/main/libs', include: '*.aar')
+
+    // 引入了：
+    // appcompat:1.7.0
+    // material:1.13.0
+    // mmkv:2.2.4
+    api project(":Common")
+
+    implementation project(":NonameCore")
+    // implementation project(":native-lib")
+    implementation project(":NonameUI")
+    implementation project(":CordovaLib")
+    // implementation project(":GenshinImpactStyle")
+
+    // implementation改成api可以共用
+    // DialogX
+    api fileTree(dir: '../DialogX/libs', include: '*.aar')
+    // var dialogx_version = "0.0.50"
+    // api("com.github.kongzue.DialogX:DialogX:${dialogx_version}")
+    // api("com.github.kongzue.DialogX:DialogXIOSStyle:${dialogx_version}")
+    // api("com.github.kongzue.DialogX:DialogXKongzueStyle:${dialogx_version}")
+    // api("com.github.kongzue.DialogX:DialogXMIUIStyle:${dialogx_version}")
+    // api("com.github.kongzue.DialogX:DialogXMaterialYou:${dialogx_version}")
+    // def dialogx_sample_version = "0.0.14"
+    // 分享选择对话框
+    // api("com.github.kongzue.DialogXSample:ShareDialog:${dialogx_sample_version}")
+
+    api "androidx.documentfile:documentfile:1.1.0"
+
+    api "androidx.webkit:webkit:1.12.1"
+    // implementation 'io.github.jonanorman.android.webviewup:core:0.1.0'
+    api 'com.android.support.constraint:constraint-layout:2.0.4'
+    api 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    api 'io.reactivex.rxjava3:rxjava:3.1.12'
+    api "androidx.viewpager2:viewpager2:1.0.0"
+    api 'com.guolindev.permissionx:permissionx:1.8.1'
+    api 'org.java-websocket:Java-WebSocket:1.5.2'
+    // fastjson 2.x不支持安卓7
+    // api 'com.alibaba:fastjson:2.0.21.android'
+    api 'com.alibaba:fastjson:1.2.83'
+    api 'org.greenrobot:eventbus:3.3.1'
+
+    api 'com.github.bumptech.glide:glide:4.12.0'
+    api 'androidx.recyclerview:recyclerview:1.4.0'
+    // 其他模块需要单独声明
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    api 'com.squareup.okhttp3:okhttp:5.3.2'
+
+    // shizuku
+    def shizuku_version = '13.1.5'
+    api "dev.rikka.shizuku:api:$shizuku_version"
+    api "dev.rikka.shizuku:provider:$shizuku_version"
+
+    // 第三方 Android UI 调试工具
+    // api 'com.github.android-notes.SwissArmyKnife:saklib:4.0.6'
+
+    api 'com.github.omicronapps:7-Zip-JBinding-4Android:Release-16.02-2.03'
+
+    // markdown
+    api "io.noties.markwon:core:4.6.2"
+    // 图片加载插件
+    api "io.noties.markwon:image-glide:4.6.2"
+    // 代码高亮插件和语法库
+    // api 'io.noties.markwon:syntax-highlight:4.6.2'
+    api ('io.noties.markwon:syntax-highlight:4.6.2') {
+        exclude group: 'org.jetbrains', module: 'annotations-java5'
+    }
+    // 表格插件
+    api 'io.noties.markwon:ext-tables:4.6.2'
+    // HTML 插件
+    api 'io.noties.markwon:html:4.6.2'
+
+    // 悬浮窗
+    api 'com.github.kongxiaojun:EasyFloat:3.0.1'
+}

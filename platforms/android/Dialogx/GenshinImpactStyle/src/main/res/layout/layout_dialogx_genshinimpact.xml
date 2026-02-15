@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.kongzue.dialogx.util.views.DialogXBaseRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/box_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black20"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.kongzue.dialogx.util.views.MaxRelativeLayout
+            android:id="@+id/bkg"
+            android:layout_width="450dp"
+            android:layout_height="300dp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
+            android:elevation="27dp">
+
+            <!-- 背景ImageView -->
+            <ImageView
+                android:id="@+id/backgroundImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/background_light"
+                android:scaleX="1.0"
+                android:scaleY="1.0"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_dialog_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="Title"
+                    android:textColor="#485365"
+                    android:textStyle="bold"
+                    android:textSize="24dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="35dp"
+                    android:paddingTop="15dp"
+                    android:paddingRight="35dp">
+
+                    <com.kongzue.dialogx.util.views.DialogScrollView
+                        android:id="@+id/scrollView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txt_dialog_tip"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="20dp"
+                                android:text="This is content text."
+                                android:textColor="#485365"
+                                android:textSize="16dp" />
+
+                            <RelativeLayout
+                                android:id="@+id/box_custom"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
+
+                            <EditText
+                                android:id="@+id/txt_input"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="20dp"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:scrollbars="vertical"
+                                android:text=""
+                                android:textColor="#485365"
+                                android:textSize="18dp"
+                                android:theme="@style/DialogXCompatThemeLight" />
+
+                        </LinearLayout>
+
+                    </com.kongzue.dialogx.util.views.DialogScrollView>
+
+                    <FrameLayout
+                        android:id="@+id/box_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/box_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="130dp"-->
+<!--                        android:layout_height="36dp"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:background="@drawable/button_dialogx_genshinimpact_oval"-->
+<!--                        android:clickable="true"-->
+<!--                        android:focusable="true"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:paddingStart="15dp"-->
+<!--                        android:paddingEnd="15dp"-->
+<!--                        android:layout_marginEnd="10dp"-->
+<!--                        android:visibility="gone"-->
+<!--                        >-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="25dp"-->
+<!--                            android:layout_height="25dp"-->
+<!--                            android:src="@drawable/ic_genshinimpact_cancel"-->
+<!--                            />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/btn_selectOther"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Other"-->
+<!--                            android:textColor="#E5E2DD"-->
+<!--                            android:textSize="15dp"-->
+<!--                            android:layout_marginStart="6dp"/>-->
+<!--                    </LinearLayout>-->
+                    <TextView
+                        android:id="@+id/btn_selectOther"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:background="@drawable/button_dialogx_genshinimpact_oval"
+                        android:clickable="true"
+                        android:drawableStart="@drawable/ic_genshinimpact_cancel"
+                        android:drawablePadding="6dp"
+                        android:gravity="center"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:text="Other"
+                        android:textColor="#E5E2DD"
+                        android:textSize="15dp"
+                        android:visibility="gone" />
+
+                    <Space
+                        android:id="@+id/space_other_button"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="0" />
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="130dp"-->
+<!--                        android:layout_height="36dp"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:background="@drawable/button_dialogx_genshinimpact_oval"-->
+<!--                        android:clickable="true"-->
+<!--                        android:focusable="true"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:paddingStart="15dp"-->
+<!--                        android:paddingEnd="15dp"-->
+<!--                        android:layout_marginEnd="10dp">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="25dp"-->
+<!--                            android:layout_height="25dp"-->
+<!--                            android:src="@drawable/ic_genshinimpact_cancel"-->
+<!--                            />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/btn_selectNegative"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="取消"-->
+<!--                            android:textColor="#E5E2DD"-->
+<!--                            android:textSize="15dp"-->
+<!--                            android:layout_marginStart="6dp"/>-->
+<!--                    </LinearLayout>-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="130dp"-->
+<!--                        android:layout_height="36dp"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:background="@drawable/button_dialogx_genshinimpact_oval"-->
+<!--                        android:clickable="true"-->
+<!--                        android:focusable="true"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:paddingStart="15dp"-->
+<!--                        android:paddingEnd="15dp"-->
+<!--                        android:layout_marginEnd="10dp">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="25dp"-->
+<!--                            android:layout_height="25dp"-->
+<!--                            android:src="@drawable/ic_genshinimpact_ok" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/btn_selectPositive"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="确认"-->
+<!--                            android:textColor="#E5E2DD"-->
+<!--                            android:textSize="15dp"-->
+<!--                            android:layout_marginStart="6dp" />-->
+<!--                    </LinearLayout>-->
+                    <!--   android:drawableStart="@drawable/ic_genshinimpact_cancel_scaled"  -->
+                    <TextView
+                        android:id="@+id/btn_selectNegative"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:background="@drawable/button_dialogx_genshinimpact_oval"
+                        android:clickable="true"
+
+                        android:drawablePadding="6dp"
+                        android:gravity="center"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:text="@android:string/cancel"
+                        android:textColor="#E5E2DD"
+                        android:textSize="15dp" />
+
+                    <!--  android:drawableStart="@drawable/ic_genshinimpact_ok_scaled"  -->
+                    <TextView
+                        android:id="@+id/btn_selectPositive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:background="@drawable/button_dialogx_genshinimpact_oval"
+                        android:clickable="true"
+                        android:drawablePadding="6dp"
+                        android:gravity="center"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:text="确认"
+                        android:textColor="#E5E2DD"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.kongzue.dialogx.util.views.MaxRelativeLayout>
+
+    </RelativeLayout>
+
+</com.kongzue.dialogx.util.views.DialogXBaseRelativeLayout>

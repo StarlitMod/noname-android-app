@@ -1,0 +1,22 @@
+// GENERATED FILE - DO NOT EDIT
+apply from: "cdv-gradle-name.gradle"
+include ":"
+include ":CordovaLib"
+include ":app"
+
+include ':Common'
+include ':NonameUI'
+include ':FunctionServer'
+include ':FunctionVersion'
+include ':FunctionGameShell'
+include ':FunctionLibrary'
+include ':NonameCore'
+include ':FunctionImport'
+include ':native-lib'
+include ':FunctionSettings'
+include ':FunctionTheme'
+
+// DialogX
+include ':DialogX:FileDialog'
+include ':DialogX:ShareDialog'
+// include ':DialogX:GenshinImpactStyle'

@@ -1,0 +1,2 @@
+import*as e from"./heap_snapshot_worker.js";const s=new e.HeapSnapshotWorkerDispatcher.HeapSnapshotWorkerDispatcher(self.postMessage.bind(self));self.addEventListener("message",s.dispatchMessage.bind(s),!1),self.postMessage("workerReady");
+//# sourceMappingURL=heap_snapshot_worker-entrypoint.js.map

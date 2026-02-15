@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.widget.noname" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="Permissions">
+        <param name="android-package" value="com.android.plugins.Permissions" />
+    </feature>
+    <feature name="Battery">
+        <param name="android-package" value="org.apache.cordova.batterystatus.BatteryListener" />
+    </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="Notification">
+        <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
+    </feature>
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+        <param name="onload" value="true" />
+    </feature>
+    <allow-navigation href="cdvfile:*" />
+    <feature name="FileTransfer">
+        <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <feature name="Insomnia">
+        <param name="android-package" value="nl.xservices.plugins.Insomnia" />
+    </feature>
+    <feature name="StatusBar">
+        <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="LocalNotification">
+        <param name="android-package" value="de.appplant.cordova.plugin.localnotification.LocalNotification" />
+    </feature>
+    <feature name="Badge">
+        <param name="android-package" value="de.appplant.cordova.plugin.badge.Badge" />
+    </feature>
+    <name>无名杀</name>
+    <description>Sample Apache Cordova App</description>
+    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
+        Apache Cordova Team
+    </author>
+    <content src="index.html" />
+    <allow-navigation href="cdvfile:*" />
+    <allow-navigation href="file://*/*" />
+    <allow-navigation href="http://*/*" />
+    <allow-navigation href="https://*/*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <preference name="loglevel" value="DEBUG" />
+    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="GradlePluginKotlinEnabled" value="true" />
+    <feature name="WebViewFileSystemLoader">
+        <param name="android-package" value="org.apache.cordova.webviewfilesystemloader.WebViewFileSystemLoader" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Devtools">
+        <param name="android-package" value="org.apache.cordova.devtools.Devtools" />
+        <param name="onload" value="true" />
+    </feature>
+    <preference name="android-versionCode" value="10000"/>
+    <!--    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/mipmap-xxxhdpi/icon.png"/>-->
+    <preference name="AutoHideSplashScreen" value="true"/>
+    <preference name="FadeSplashScreen" value="true"/>
+    <preference name="FadeSplashScreenDuration" value="100"/>
+    <preference name="AndroidWindowSplashScreenAnimationDuration" value="500"/>
+    <preference name="AndroidPostSplashScreenTheme" value="@style/Theme.AppCompat.NoActionBar"/>
+    <preference name="Fullscreen" value="true"/>
+    <preference name="Orientation" value="landscape"/>
+    <preference name="DisallowOverscroll" value="true"/>
+    <preference name="AndroidPersistentFileLocation" value="Compatibility"/>
+    <preference name="AndroidInsecureFileModeEnabled" value="false"/>
+    <preference name="AndroidLaunchMode" value="singleTask"/>
+    <preference name="android-targetSdkVersion" value="35"/>
+    <preference name="android-compileSdkVersion" value="36"/>
+    <preference name="android-buildToolsVersion" value="35.0.0"/>
+    <preference name="GradleVersion" value="8.13"/>
+    <preference name="scheme" value="https"/>
+    <preference name="hostname" value="localhost"/>
+    <!--  自定义WebView  -->
+    <preference name="webview" value="com.widget.noname.engine.CustomWebViewEngine"/>
+</widget>

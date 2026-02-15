@@ -1,0 +1,2 @@
+import*as e from"../../core/i18n/i18n.js";function o(o,t,n){const a=o.getLocalizedStringSetFor(e.DevToolsLocale.DevToolsLocale.instance().locale).getMessageFormatterFor(t),r=document.createElement("span");for(const e of a.getAst())if(1===e.type){const o=n[e.value];o&&r.append(o)}else"value"in e&&r.append(String(e.value));return r}export{o as getFormatLocalizedString};
+//# sourceMappingURL=i18n.js.map

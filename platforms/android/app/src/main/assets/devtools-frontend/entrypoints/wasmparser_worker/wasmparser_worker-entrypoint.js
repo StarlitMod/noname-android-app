@@ -1,0 +1,2 @@
+import*as s from"./wasmparser_worker.js";self.onmessage=e=>{"disassemble"===e.data.method&&self.postMessage(s.WasmParserWorker.dissambleWASM(e.data.params,s=>{self.postMessage(s)}))},self.postMessage("workerReady");
+//# sourceMappingURL=wasmparser_worker-entrypoint.js.map

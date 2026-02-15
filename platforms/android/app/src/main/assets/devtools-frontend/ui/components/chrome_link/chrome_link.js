@@ -1,0 +1,7 @@
+import*as e from"../../../core/common/common.js";import*as r from"../../../core/host/host.js";import*as t from"../../../core/platform/platform.js";import*as o from"../../../core/sdk/sdk.js";import{render as s,html as n}from"../../lit/lit.js";import*as i from"../../visual_logging/visual_logging.js";import*as a from"../helpers/helpers.js";var c=`.link{color:var(--sys-color-primary);text-decoration:underline;cursor:pointer;outline-offset:2px}\n/*# sourceURL=${import.meta.resolve("./chromeLink.css")} */`;class l extends HTMLElement{#e=this.attachShadow({mode:"open"});#r="";connectedCallback(){a.ScheduledRender.scheduleRender(this,this.#t)}set href(r){if(!e.ParsedURL.schemeIs(r,"chrome:"))throw new Error("ChromeLink href needs to start with 'chrome://'");this.#r=r,a.ScheduledRender.scheduleRender(this,this.#t)}#o(e){const t=o.TargetManager.TargetManager.instance().rootTarget();if(null===t)return;const s=this.#r;t.targetAgent().invoke_createTarget({url:s}).then(e=>{e.getError()&&r.InspectorFrontendHost.InspectorFrontendHostInstance.openInNewTab(s)}),e.consume(!0)}#t(){const e=new URL(this.#r);e.search="";const r=t.StringUtilities.toKebabCase(e.toString());s(n`
+        <style>${c}</style>
+        <a href=${this.#r} class="link" target="_blank"
+          jslog=${i.link().track({click:!0}).context(r)}
+          @click=${this.#o}><slot></slot></a>
+      `,this.#e,{host:this})}}customElements.define("devtools-chrome-link",l);var h=Object.freeze({__proto__:null,ChromeLink:l});export{h as ChromeLink};
+//# sourceMappingURL=chrome_link.js.map

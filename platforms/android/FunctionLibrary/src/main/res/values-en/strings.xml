@@ -1,0 +1,429 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- ============================= -->
+    <!--        Basic App Info         -->
+    <!-- ============================= -->
+    <string name="app_name" translatable="false">无名杀</string>
+    <string name="launcher_name" translatable="false">@string/app_name</string>
+    <string name="activity_name" translatable="false">@string/launcher_name</string>
+    <string name="app_free_warning">【无名杀】is a personal development software and is【completely free】. Illegal resale for profit will bear legal responsibility. The development team will pursue to the end.</string>
+
+    <!-- ============================= -->
+    <!--        Common Functions       -->
+    <!-- ============================= -->
+    <string name="common_action_check_update">Check for Updates</string>
+    <string name="common_action_click_to_update">Click to Update</string>
+    <string name="common_action_copy">Copy</string>
+    <string name="common_action_delete">Delete</string>
+    <string name="common_action_go_to_settings">Go to Settings</string>
+    <string name="common_action_import">Import</string>
+    <string name="common_action_overwrite">Overwrite</string>
+    <string name="common_action_reinput">Re-enter</string>
+    <string name="common_action_save">Save</string>
+    <string name="common_action_select_directory">Select Directory</string>
+    <string name="common_action_share">Share</string>
+    <string name="common_action_enable">Enable</string>
+    <string name="common_action_disable">Disable</string>
+    <string name="common_action_back">Back</string>
+    <string name="common_confirm_delete">Confirm Delete</string>
+    <string name="common_confirm_overwrite_file">Target file already exists, overwrite?</string>
+    <string name="common_content_no_release_notes">No release notes</string>
+    <string name="common_dialog_confirm_preference_change">Confirm %1$s?</string>
+    <string name="common_dialog_prompt_enter_game">Enter game?\nOtherwise will go to version page</string>
+    <string name="common_dialog_title_choose_app">Choose App</string>
+    <string name="common_error_cannot_create_file">Cannot create file</string>
+    <string name="common_error_cannot_open_link">Cannot open link</string>
+    <string name="common_error_cannot_open_link_with_url">Cannot open link:&#160;%1$s</string>
+    <string name="common_error_cannot_select_own_app">Cannot select current app</string>
+    <string name="common_error_create_folder_failed">Cannot create folder</string>
+    <string name="common_error_delete_failed">Delete failed</string>
+    <string name="common_error_dialog_style_failed">Dialog style switch failed, set to default</string>
+    <string name="common_error_execute_command_failed">Command execution failed</string>
+    <string name="common_error_execute_command_failed_reason">Command execution failed:&#160;</string>
+    <string name="common_error_folder_name_empty">Folder name cannot be empty</string>
+    <string name="common_error_folder_name_invalid">Invalid folder name</string>
+    <string name="common_error_launch_game_failed">Auto-start game failed, please start manually</string>
+    <string name="common_error_no_directory_selected">No directory selected</string>
+    <string name="common_error_open_input_stream_failed">Cannot open source file input stream</string>
+    <string name="common_error_operation_failed_with_stacktrace">Operation failed:&#160;%1$s</string>
+    <string name="common_error_parsing_failed">Parsing failed</string>
+    <string name="common_error_path_empty">File path cannot be empty</string>
+    <string name="common_error_root_not_exist">Root directory does not exist</string>
+    <string name="common_error_source_not_exist">Source file does not exist</string>
+    <string name="common_error_temp_not_exist">Temporary file does not exist</string>
+    <string name="common_error_uri_empty">URI is empty</string>
+    <string name="common_error_cache_not_exist">Cache file does not exist</string>
+    <string name="common_error_data_not_found">data directory not found</string>
+    <string name="common_error_webview_not_found">app_webview directory not found</string>
+    <string name="common_error_android_data_not_found">android_data directory not found</string>
+    <string name="common_extension_dialog_confirm_delete">Confirm delete extension \"%1$s\" files and configs?</string>
+    <string name="common_extension_error_no_info_json">No info.json, cannot read extension info</string>
+    <string name="common_extension_info_author">Author:&#160;</string>
+    <string name="common_extension_info_download">Download:&#160;</string>
+    <string name="common_extension_info_forum">Forum:&#160;</string>
+    <string name="common_extension_info_intro">Introduction:&#160;</string>
+    <string name="common_extension_info_version">Version:&#160;</string>
+    <string name="common_extension_status_none_found">No extensions found</string>
+    <string name="common_hint_scroll_more">Scroll for more content</string>
+    <string name="common_info_app_version">Version:&#160;%1$s</string>
+    <string name="common_info_change_icon_restart">App will restart after changing icon</string>
+    <string name="common_prompt_input">Please enter %1$s</string>
+    <string name="common_prompt_select_directory">Please select directory</string>
+    <string name="common_progress_creating_temp" tools:ignore="TypographyEllipsis">Creating temp file...</string>
+    <string name="common_progress_loading" tools:ignore="TypographyEllipsis">Loading...</string>
+    <string name="common_progress_refreshing" tools:ignore="TypographyEllipsis">Refreshing...</string>
+    <string name="common_progress_updating" tools:ignore="TypographyEllipsis">Updating...</string>
+    <string name="common_resource_configure_update_source">Configure Update Source</string>
+    <string name="common_resource_force_update">Force Update</string>
+    <string name="common_resource_latest_version">Latest Version:&#160;</string>
+    <string name="common_resource_path">Resource Path:&#160;</string>
+    <string name="common_resource_release_notes">Release Notes:&#160;</string>
+    <string name="common_resource_size">Resource Size:&#160;</string>
+    <string name="common_resource_update_source">Update Source:&#160;</string>
+    <string name="common_resource_version">Resource Version:&#160;</string>
+    <string name="common_source_error_fields_required">All fields required, please enter content!</string>
+    <string name="common_source_field_branch">Branch</string>
+    <string name="common_source_field_filename">Download File</string>
+    <string name="common_source_field_name">Config Name</string>
+    <string name="common_source_field_repository">Repository</string>
+    <string name="common_source_field_username">User/Org</string>
+    <string name="common_status_already_latest_version">Already latest version</string>
+    <string name="common_status_delete_success">Delete successful</string>
+    <string name="common_status_preparing" tools:ignore="TypographyEllipsis">Preparing...</string>
+    <string name="common_status_processing" tools:ignore="TypographyEllipsis">Processing...</string>
+    <string name="common_status_setup_complete">Setup complete</string>
+    <string name="common_title_update_source">Configure Update Source</string>
+    <string name="common_tip">Tip</string>
+    <string name="common_toast_copied">Copied:&#160;%1$s</string>
+    <string name="common_toast_dialog_style_changed">Dialog style changed successfully</string>
+    <string name="common_toast_preference_changed">%1$s changed</string>
+    <string name="common_warning_debug_mode_icon">Note:&#160;In debug mode, non-default icons cannot auto-start via ADB installation</string>
+    <string name="common_warning_file_exists">File already exists</string>
+    <string name="common_warning_folder_exists">Folder already exists</string>
+    <string name="common_image">image</string>
+
+    <!-- ============================= -->
+    <!--        Permissions & Agreements -->
+    <!-- ============================= -->
+    <string name="permission_action_agree">Agree</string>
+    <string name="permission_action_disagree">Disagree</string>
+    <string name="permission_action_disagree_enter_browse_mode">Disagree and enter browse-only mode</string>
+    <string name="permission_content_privacy_agreement_full">无名杀App Privacy Policy and Disclaimer\n\nWe value your privacy. This app does not actively upload any stored information or collect personal identity information.\n\n1. Information Collection\n1.1 This app does not actively collect personal information.\n1.2 This app does not actively upload data to the network.\n1.3 All game data is saved locally.\n\n2. Local Data Usage\n2.1 Game settings are saved only on your device.\n2.2 All operations except updates and WebView usage are local.\n\n3. Permissions\nThis app may require:\n- Storage:&#160;Save/read game data\n- Network:&#160;Game updates and WebView content\n- Notification:&#160;Show update progress\n- Vibration:&#160;For WebView vibration API\n- Install:&#160;Update the app\n\n4. Data Security\n4.1 All data saved locally.\n4.2 Clear app data anytime.\n\n5. Disclaimer\nThis project does not provide complete HTML project files. Developers are not responsible for losses from imported HTML files.\nApps from unofficial sources may be modified. Developers are not responsible for losses from such apps.\n\n6. Contact\nQuestions? Visit project homepage:&#160;https://github.com/nonameShijian/noname-android-app</string>
+    <string name="permission_dialog_title_privacy_agreement">Privacy Agreement and Disclaimer</string>
+    <string name="permission_error_no_shizuku_to_import">No Shizuku permission, cannot import file</string>
+    <string name="permission_error_no_shizuku_to_share">No Shizuku permission, cannot share file</string>
+    <string name="permission_error_storage_expired">Storage permission expired, please reselect directory</string>
+    <string name="permission_error_storage_permission_denied">Storage permission denied by user</string>
+    <string name="permission_error_video_permission_denied">Storage permission denied, please authorize in settings to play videos</string>
+    <string name="permission_info_privacy_updated">Privacy agreement and disclaimer updated</string>
+    <string name="permission_info_read_agreement_completely">Please read the entire privacy agreement and disclaimer</string>
+    <string name="permission_require_install_packages">Allow app installation permission to update the app</string>
+    <string name="permission_require_privacy_agreement">Agree to privacy agreement to use this feature</string>
+    <string name="permission_require_privacy_agreement_for_import">Agree to privacy agreement to use import feature</string>
+    <string name="permission_require_storage_for_custom_video">Storage permission required to play custom videos</string>
+    <string name="permission_require_video_access">App needs access to video files to play local videos</string>
+    <string name="permission_request_storage">Please grant storage permission</string>
+    <string name="permission_required_directory_access">Authorization required to read this directory</string>
+
+    <!-- ============================= -->
+    <!--        Game Main Related      -->
+    <!-- ============================= -->
+    <string name="gamemain_action_set_as_gamemain">Set as Game Main</string>
+    <string name="gamemain_dialog_confirm_delete_data">Delete \"%1$s\" and corresponding web data?</string>
+    <string name="gamemain_dialog_confirm_set">Set \"%1$s\" (%2$s) as Game Main? Restart required after setting</string>
+    <string name="gamemain_dialog_confirm_set_short">Set \"%1$s\" as Game Main? Restart required after setting</string>
+    <string name="gamemain_error_already_exists">\"%1$s\" Game Main already exists</string>
+    <string name="gamemain_error_create_importmap_failed">Failed to create game/importmap.js, please create manually</string>
+    <string name="gamemain_error_directory_empty">Game Main directory is empty</string>
+    <string name="gamemain_error_missing_required_files">Missing HTML files and game/game.js</string>
+    <string name="gamemain_error_not_set">Game Main not set</string>
+    <string name="gamemain_error_not_set_or_invalid">Game Main not set or directory does not exist</string>
+    <string name="gamemain_hint_input_new_name">Enter new Game Main name</string>
+    <string name="gamemain_progress_load_extension_config">Loading extension configs from Game Main, duplicate configs will be filtered</string>
+    <string name="gamemain_toast_set_complete">Game Main setup complete</string>
+
+    <!-- ============================= -->
+    <!--        Import Related         -->
+    <!-- ============================= -->
+    <string name="import_action_add_quick_directory">Add New Quick Import Directory</string>
+    <string name="import_action_create_directory">Create Main Directory</string>
+    <string name="import_action_overwrite_item">Overwrite \"%1$s\"</string>
+    <string name="import_action_overwrite_version">Overwrite current version \"%1$s\"</string>
+    <string name="import_action_select_directory">Select Import Directory</string>
+    <string name="import_action_start">Start Import</string>
+    <string name="import_action_start_file">Start importing file:&#160;%1$s</string>
+    <string name="import_action_use_saf_select">Use SAF to select directory</string>
+    <string name="import_dialog_confirm_delete">Confirm delete import directory \"%1$s\"?</string>
+    <string name="import_dialog_confirm_directory_mismatch">Selected directory is %1$s, but expected %2$s. Wrong selection?</string>
+    <string name="import_dialog_confirm_file">Import %1$s?</string>
+    <string name="import_error_cannot_delete_protected">This import directory or feature page cannot be deleted</string>
+    <string name="import_hint_long_press_delete">Tip:&#160;Long press tab to delete unwanted import directories</string>
+    <string name="import_info_path_calculation">Path calculated from app\'s files folder\nExample:&#160;foldername or filename.extension</string>
+    <string name="import_prompt_input_directory_name">Enter new main directory name</string>
+    <string name="import_prompt_input_path">Enter import file path</string>
+    <string name="import_prompt_select_config_path">Select import path for \"%1$s\"</string>
+    <string name="import_prompt_select_directory">Please select import directory first</string>
+    <string name="import_progress_importing_file" tools:ignore="TypographyEllipsis">Importing file...</string>
+    <string name="import_rule_folder_must_in_files">Folder path must be in app\'s files folder</string>
+    <string name="import_status_directory_selected">Directory selected</string>
+    <string name="import_status_extension_complete">Extension import complete, redirecting to config page</string>
+    <string name="import_status_failed">Import failed</string>
+    <string name="import_status_failed_reason">Import failed:&#160;%1$s</string>
+    <string name="import_status_progress">Import progress %1$d%%</string>
+    <string name="import_status_success">Import successful</string>
+    <string name="import_toast_directory_added">\"%1$s\" import directory added successfully</string>
+    <string name="import_toast_directory_success">Directory selection successful</string>
+
+    <!-- ============================= -->
+    <!--        Config & Settings      -->
+    <!-- ============================= -->
+    <string name="config_error_tag_exists">Tag already exists</string>
+    <string name="config_hint_input_tag_name">Enter tag name</string>
+    <string name="config_info_restart_required">Restart required to take effect</string>
+    <string name="config_info_webview_data_isolation_enabled">WebView data isolation enabled</string>
+    <string name="config_label_tag_name">Tag Name</string>
+    <string name="config_notification_set_failed">Config setup failed</string>
+    <string name="config_prompt_select_file">Please select config file to import</string>
+    <string name="config_toast_save_success">Save successful</string>
+    <string name="config_toast_set_success">Config file setup successful</string>
+
+    <!-- ============================= -->
+    <!--        Migration Related      -->
+    <!-- ============================= -->
+    <string name="migration_action_start">Start Migration</string>
+    <string name="migration_button_continue">Continue Migration</string>
+    <string name="migration_dialog_confirm_saf_permission">Use SAF to authorize access to all files in %1$s?</string>
+    <string name="migration_error_app_not_running">App for this directory may not be running, cannot read files now!</string>
+    <string name="migration_error_failed">Data migration failed</string>
+    <string name="migration_guide_select_provided_directory">Select directory provided by old version app</string>
+    <string name="migration_note_data_items">Note:&#160;This will migrate:\n1. data/app_webview (web data) directory\n2. android_data (external storage) directory</string>
+    <string name="migration_progress_data" tools:ignore="TypographyEllipsis">Migrating data...</string>
+    <string name="migration_progress_folder_detail" tools:ignore="TypographyEllipsis">Migrating data...\nCopying folder:&#160;%1$s to %2$s</string>
+    <string name="migration_prompt_select_legacy_directory">Please select old version app directory</string>
+    <string name="migration_prompt_select_version">Multiple versions found, select one to migrate</string>
+    <string name="migration_status_legacy_selected">Old version app directory selected</string>
+    <string name="migration_toast_success">Data migration successful</string>
+    <string name="migration_warning_android9_multiple_versions">Android 9 and below:&#160;data cannot be isolated between game versions!</string>
+    <string name="migration_warning_legacy_platform">Due to non-standard platform detection in old versions, enable compatibility mode in settings, start game once, then disable compatibility mode</string>
+    <string name="migration_warning_webview_version">Due to possible WebView version differences, manually export game settings from old app before migration!</string>
+
+    <!-- ============================= -->
+    <!--        Extraction Related     -->
+    <!-- ============================= -->
+    <string name="extract_action_select_type">Select Archive Type</string>
+    <string name="extract_error_archive_invalid">Archive invalid, may be corrupted</string>
+    <string name="extract_error_no_gamemain_limit">Without Game Main, can only import main packages or HTML project files. Extraction stopped</string>
+    <string name="extract_error_process_cancelled">Extraction failed:&#160;Process cancelled</string>
+    <string name="extract_error_temp_creation_failed">Temporary file creation failed, extraction stopped</string>
+    <string name="extract_error_temp_missing_stop">Temporary file does not exist, extraction stopped</string>
+    <string name="extract_error_tar_no_password">tar format does not support password</string>
+    <string name="extract_error_type_undetermined">Cannot determine archive type</string>
+    <string name="extract_error_unsupported_engine">Unsupported engine:&#160;%1$s</string>
+    <string name="extract_error_unsupported_type_no_target">Unsupported file type, no target path set, extraction stopped</string>
+    <string name="extract_file_status_recognized">File recognized:&#160;%1$s</string>
+    <string name="extract_hint_copy_destination">File will be copied to</string>
+    <string name="extract_hint_destination_path">File will be extracted to:&#160;%1$s</string>
+    <string name="extract_info_archive_type">Archive type:&#160;%1$s</string>
+    <string name="extract_info_copy_for_unsupported">Unsupported archive format, will copy to target directory</string>
+    <string name="extract_info_password_required">This archive requires password</string>
+    <string name="extract_info_rar_version">RAR version:&#160;%1$s</string>
+    <string name="extract_progress_deleting_temp" tools:ignore="TypographyEllipsis">Deleting temporary file...</string>
+    <string name="extract_progress_fixing_encoding" tools:ignore="TypographyEllipsis">Searching and fixing filename encoding...</string>
+    <string name="extract_progress_parsing_type" tools:ignore="TypographyEllipsis">Parsing archive type, please wait...</string>
+    <string name="extract_progress_unpacking_file">Extracting:&#160;%1$s</string>
+    <string name="extract_prompt_password_optional">Enter archive password (optional)</string>
+    <string name="extract_status_encoding_fixed">Filename encoding fixed</string>
+    <string name="extract_status_no_encoding_issue">No filename encoding issues</string>
+    <string name="extract_status_temp_deleted">Temporary file deleted successfully</string>
+    <string name="extract_warning_confirm_type">Confirm archive type, cannot undo if wrong</string>
+    <string name="extract_warning_temp_delete_failed">Temporary file deletion failed, will auto-delete when app exits!</string>
+
+    <!-- ============================= -->
+    <!--        Notification Related   -->
+    <!-- ============================= -->
+    <string name="notification_action_click_to_install">Click to Install Update</string>
+    <string name="notification_action_open_page">Open Page</string>
+    <string name="notification_action_restart">Restart</string>
+    <string name="notification_action_update_now">Update Now</string>
+    <string name="notification_channel_downloads_name">Download Notifications</string>
+    <string name="notification_channel_progress_downloading" tools:ignore="TypographyEllipsis">Downloading update...</string>
+    <string name="notification_channel_status_download_progress">Downloaded %1$d%% (%2$s / %3$s)</string>
+    <string name="notification_channel_updates_description">Shows update download progress, success/failure messages, and installation progress</string>
+    <string name="notification_content_update_info">Latest Version:&#160;%1$s\n\nUpdate Content:\n%2$s</string>
+    <string name="notification_error_restart_to_retry_update">Restart required to retry update\n%1$s</string>
+    <string name="notification_error_system_installer_failed">Failed to start system installer</string>
+    <string name="notification_error_system_installer_failed_reason">Failed to start system installer:&#160;%1$s</string>
+    <string name="notification_progress_initialize_data" tools:ignore="TypographyEllipsis">In the initialization data...</string>
+    <string name="notification_progress_checking_update" tools:ignore="TypographyEllipsis">Checking for updates...</string>
+    <string name="notification_progress_downloading" tools:ignore="TypographyEllipsis">Downloading</string>
+    <string name="notification_progress_downloading_file">Downloading:&#160;%1$s</string>
+    <string name="notification_reason_download_user_canceled">User cancelled download</string>
+    <string name="notification_status_apk_not_found">APK file not found, will open release page</string>
+    <string name="notification_status_check_update_failed">Update check failed</string>
+    <string name="notification_status_check_update_failed_reason">Update check failed:&#160;%1$s</string>
+    <string name="notification_status_download_canceled">Download cancelled</string>
+    <string name="notification_status_download_complete">Download complete</string>
+    <string name="notification_status_download_failed">Download failed</string>
+    <string name="notification_status_download_failed_reason">Download failed:&#160;%1$s</string>
+    <string name="notification_status_download_interrupted">Download interrupted, please maintain stable connection</string>
+    <string name="notification_status_downloaded_click_install">Download complete, click to install</string>
+    <string name="notification_status_downloading">Downloading</string>
+    <string name="notification_status_new_version_found">New version found</string>
+    <string name="notification_update_dialog_new_version_available">New version %1$s available, download?</string>
+
+    <!-- ============================= -->
+    <!--        Network Related        -->
+    <!-- ============================= -->
+    <string name="network_error_domain_format">Domain format error</string>
+    <string name="network_error_invalid_url">Invalid URL</string>
+    <string name="network_error_invalid_url_with_url">Invalid URL:&#160;%1$s</string>
+    <string name="network_error_load_hosts_failed">Failed to load Hosts, check network</string>
+
+    <!-- ============================= -->
+    <!--        Server Related         -->
+    <!-- ============================= -->
+    <string name="server_action_set_ip">Set as multiplayer IP</string>
+    <string name="server_action_set_ip_and_start_game">Set as multiplayer IP and start game</string>
+    <string name="server_status_already_running">Server running, do not create again</string>
+    <string name="server_status_cleanup_failed">Server cleanup failed, %1$s</string>
+    <string name="server_status_close">Server closed</string>
+    <string name="server_status_creating">Creating server, port:&#160;%1$d</string>
+    <string name="server_status_error">Server error</string>
+    <string name="server_status_not_running">Local server not running</string>
+    <string name="server_status_running">Server running</string>
+    <string name="server_status_start">Starting server</string>
+    <string name="server_status_start_failed">Server creation failed:&#160;%1$s</string>
+    <string name="server_status_start_success">Server started successfully, try connecting with these addresses</string>
+    <string name="server_status_stop">Server terminated</string>
+    <string name="server_status_stopped">Local server stopped</string>
+    <string name="server_status_stopping">Attempting to stop server</string>
+    <string name="server_ui_hint_ip_actions">(Click IPs to copy, set in game, or set and start game)</string>
+    <string name="server_ui_hint_start_button">Click start button to create server, or click IP below to set and start game⬇️</string>
+    <string name="server_ui_label_available_servers">Available servers (click addresses for menu)</string>
+    <string name="server_ui_label_ip_from_clipboard">IP from clipboard:</string>
+    <string name="server_ui_label_recent_connections">Recent connections:</string>
+
+    <!-- ============================= -->
+    <!--        Other UI Elements      -->
+    <!-- ============================= -->
+    <string name="btn_text_server_end" translatable="false">终</string>
+    <string name="btn_text_server_start" translatable="false">启</string>
+    <string name="github_info">https://github.com/nonameShijian/noname-android-app</string>
+    <string name="import_game_file">Import Resources</string>
+    <string name="import_gamer_asset" translatable="false">刷</string>
+    <string name="loading_resource">Importing resources, please wait</string>
+
+    <!-- ============================= -->
+    <!--        Preference           -->
+    <!-- ============================= -->
+    <string name="pref_title_sponsor">Sponsorship</string>
+    <string name="pref_title_sponsor_author">Sponsor the Author</string>
+    <string name="pref_summary_sponsor">If this app has been helpful to you, consider supporting the author</string>
+    <string name="pref_category_webview_settings">WebView Settings</string>
+    <string name="pref_title_webview_protocol_type">Protocol Type</string>
+    <string name="pref_title_webview_http_domain">HTTP/HTTPS Domain Settings</string>
+    <string name="pref_dialog_option_https_protocol">HTTPS Protocol</string>
+    <string name="pref_dialog_option_http_protocol">HTTP Protocol</string>
+    <string name="pref_dialog_option_file_protocol">File Protocol</string>
+    <string name="pref_title_disable_cordova_and_bridge">Disable loading built-in Cordova framework and NonameAndroidBridge injection</string>
+    <string name="pref_summary_disable_cordova_and_bridge">When enabled, Cordova framework and Android native interaction features provided by NonameAndroidBridge will not be available</string>
+    <string name="pref_title_webview_debug_mode">Debug Mode (Shizuku Root)</string>
+    <string name="pref_summary_webview_debug_mode">When enabled, Chrome Devtools will be launched to debug the game webpage</string>
+    <string name="pref_title_noname_compatibility_mode">无名杀 Compatibility Mode</string>
+    <string name="pref_summary_noname_compatibility_mode">When enabled, built-in HTML files will be used for gameplay; this option will not be needed in future versions</string>
+    <string name="pref_title_font_size">Font Size</string>
+    <string name="pref_summary_font_size">Adjust text size percentage in WebView</string>
+    <string name="pref_title_webview_implementation">WebView Implementation</string>
+    <string name="pref_summary_webview_implementation">Modify WebView implementation within this app</string>
+    <string name="pref_category_network_settings">Network Settings</string>
+    <string name="pref_title_github_acceleration">GitHub Access Acceleration</string>
+    <string name="pref_summary_github_acceleration">Use hosts provided by github520 to accelerate GitHub access within the app (cached for seven day). This option is invalid when VPN is enabled</string>
+    <string name="pref_title_github_download_acceleration">GitHub Download Acceleration</string>
+    <string name="pref_summary_github_download_acceleration">Enter the acceleration link prefix, which will be concatenated when downloading GitHub files</string>
+    <string name="pref_category_feature_settings">Feature Settings</string>
+    <string name="pref_title_auto_enter_game">Auto Enter Game</string>
+    <string name="pref_summary_auto_enter_game">When starting the app normally, if the directory configuration is correct, automatically enter the game</string>
+    <string name="pref_title_play_splash_animation">Play Splash Animation</string>
+    <string name="pref_summary_play_splash_animation">Play startup animation when launching the app normally</string>
+    <string name="pref_category_theme">Theme</string>
+    <string name="pref_title_select_theme">Select Theme</string>
+    <string name="pref_summary_select_theme">Select App Theme</string>
+    <string name="pref_title_select_app_icon_and_animation">Select App Icon and Startup Animation</string>
+    <string name="pref_dialog_option_default_icon">Default Icon</string>
+    <string name="pref_dialog_option_original_icon">Original Icon</string>
+    <string name="pref_dialog_option_xiaowu_icon">小无 Icon</string>
+    <string name="pref_dialog_option_jiaozhu_icon">教主图标Icon</string>
+    <string name="pref_title_select_dialog_style">Select Dialog Style</string>
+    <string name="pref_title_reset_tutorial">Reset Tutorial (Beginner\'s Guide)</string>
+    <string name="pref_title_reset_tutorial_main_page">Reset main page tutorial</string>
+    <string name="pref_summary_reset_tutorial_main_page">Reset the beginner\'s guide displayed on the main page</string>
+    <string name="pref_title_reset_start_game_tutorial">Reset start game tutorial</string>
+    <string name="pref_summary_reset_start_game_tutorial">Reset the beginner\'s guide on the start game interface</string>
+    <string name="pref_title_reset_import_tutorial">Reset import file tutorial</string>
+    <string name="pref_summary_reset_import_tutorial">Reset the beginner\'s guide on the import file page</string>
+    <string name="pref_title_reset_directory_tutorial">Reset quick directory selection tutorial</string>
+    <string name="pref_summary_reset_directory_tutorial">Reset the beginner\'s guide on the manual quick directory selection page</string>
+    <string name="pref_title_reset_migration_tutorial">Reset migration tutorial</string>
+    <string name="pref_summary_reset_migration_tutorial">Reset the beginner\'s guide on the data migration page</string>
+    <string name="pref_title_reset_resource_tutorial">Reset resource tutorial</string>
+    <string name="pref_summary_reset_resource_tutorial">Reset the beginner\'s guide on the resource management page</string>
+    <string name="pref_title_reset_version_tutorial">Reset version control tutorial</string>
+    <string name="pref_summary_reset_version_tutorial">Reset the beginner\'s guide on the version control page</string>
+    <string name="pref_title_reset_extension_tutorial">Reset extension management tutorial</string>
+    <string name="pref_summary_reset_extension_tutorial">Reset the beginner\'s guide on the extension management page</string>
+    <string name="pref_title_reset_lan_tutorial">Reset LAN multiplayer tutorial</string>
+    <string name="pref_summary_reset_lan_tutorial">Reset the beginner\'s guide on the LAN multiplayer function page</string>
+    <string name="pref_title_reset_theme_switch_tutorial">Reset Theme Tutorial</string>
+    <string name="pref_summary_reset_theme_switch_tutorial">Reset the beginner\'s guide on the theme page</string>
+    <string name="pref_category_about">About</string>
+    <string name="pref_title_privacy_policy_disclaimer">Privacy Policy and Disclaimer</string>
+    <string name="pref_summary_privacy_policy_disclaimer">View our privacy policy and disclaimer</string>
+    <string name="pref_title_project_homepage">Project Homepage</string>
+    <string name="pref_title_author_shijian">Author - 诗笺</string>
+    <string name="pref_title_upstream_project">Upstream Project Homepage(无名杀增强版)</string>
+    <string name="pref_title_upstream_author">Upstream Author(无名杀增强版) - 可乐加冰</string>
+
+    <!-- ============================= -->
+    <!--       theme        -->
+    <!-- ============================= -->
+    <string name="theme_name_default" translatable="false">默认主题</string>
+    <string name="theme_settings_toast_changed">Theme changed successfully</string>
+    <string name="theme_title_select">Select App Theme</string>
+    <string name="theme_switch_title">Theme Management</string>
+    <string name="theme_current">In Use</string>
+    <string name="theme_enable">Enable Theme</string>
+    <string name="theme_delete">Delete Theme</string>
+    <string name="theme_apply">Apply Theme</string>
+    <string name="theme_applied_successfully">Theme applied successfully</string>
+    <string name="theme_already_selected">Already the current theme</string>
+    <string name="theme_switch_message">How would you like to set up the theme "%1$s"?</string>
+    <string name="theme_enabled">Theme "%1$s" has been enabled</string>
+    <string name="theme_disabled">Theme "%1$s" has been disabled</string>
+    <string name="theme_cannot_disable_current">Cannot disable the currently active theme</string>
+    <string name="theme_delete_title">Delete Theme</string>
+    <string name="theme_delete_message">Are you sure you want to delete theme "%1$s"? This action cannot be undone.</string>
+    <string name="theme_deleted_successfully">Theme deleted successfully</string>
+    <string name="theme_delete_failed">Failed to delete theme</string>
+    <string name="theme_delete_error">Error occurred while deleting theme</string>
+    <string name="theme_cannot_delete_default">Default theme cannot be deleted</string>
+    <string name="theme_background">Theme background image</string>
+    <string name="theme_import">Import themes from SD card</string>
+    <string name="theme_detail_title">Theme Details</string>
+    <string name="theme_preview">Theme Preview</string>
+    <string name="theme_description">Description</string>
+    <string name="theme_author">Author: %1$s</string>
+    <string name="theme_version">Version: %1$s</string>
+    <string name="theme_size">Size: %1$s</string>
+    <string name="default_theme_description">Default theme, simple and beautiful</string>
+    <string name="custom_theme_default_description">Custom theme</string>
+    <string name="theme_edit">Edit Theme</string>
+    <string name="theme_select_background">Select Background</string>
+    <string name="theme_select_background_hint">Tap to choose the background image to apply</string>
+    <string name="theme_video_preview">Video Preview</string>
+    <string name="theme_play_video">Play Video</string>
+    <string name="theme_current_video">Current video: %1$s</string>
+    <string name="theme_video_duration">Duration: %1$s</string>
+    <string name="theme_no_video">This theme has no video files</string>
+    <string name="theme_app_icon">App Icon</string>
+    <string name="theme_app_icon_hint">This icon will be used after applying the theme</string>
+</resources>

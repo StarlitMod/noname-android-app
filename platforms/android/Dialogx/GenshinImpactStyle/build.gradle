@@ -1,0 +1,36 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    namespace 'com.widght.noname.dialogx.genshinimpact'
+    compileSdk {
+        version = release(36)
+    }
+
+    defaultConfig {
+        minSdk 24
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    // DialogX
+    var dialogx_version = "0.0.50"
+    implementation("com.github.kongzue.DialogX:DialogX:${dialogx_version}")
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.13.0'
+}

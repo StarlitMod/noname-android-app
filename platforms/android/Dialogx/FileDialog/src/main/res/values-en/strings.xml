@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialogx_filedialog_title_file">Select File</string>
+    <string name="dialogx_filedialog_title_folder">Select Folder</string>
+    <string name="dialogx_filedialog_select">Select</string>
+    <string name="dialogx_filedialog_cancel">Cancel</string>
+    <string name="error_dialogx_filedialog_max_selection_tip">Maximum %s files can be selected</string>
+    <string name="error_dialogx_filedialog_no_support_file_type_tip">Unsupported file type</string>
+    <string name="error_dialogx_filedialog_no_file_selected_tip">Please select a file</string>
+    <string name="dialogx_filedialog_default_date_format">yyyy/M/d HH:mm</string>
+    <string name="dialogx_filedialog_default_date_format_today">Today HH:mm</string>
+    <string name="dialogx_filedialog_default_date_format_yesterday">Yesterday HH:mm</string>
+</resources>

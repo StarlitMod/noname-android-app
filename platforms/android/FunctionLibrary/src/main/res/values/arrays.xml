@@ -1,0 +1,15 @@
+<resources>
+    <string-array name="app_icon_values">
+        <item>ic_launcher</item>
+        <item>ic_noname_plus_launcher</item>
+        <item>ic_launcher_xiaowu</item>
+        <item>ic_launcher_jiaozhu</item>
+    </string-array>
+
+    <string-array name="app_icon_activity">
+        <item>com.widget.noname.SplashScreenActivity</item>
+        <item>com.widget.noname.SplashScreenPlusActivity</item>
+        <item>com.widget.noname.SplashScreenXiaoWuActivity</item>
+        <item>com.widget.noname.SplashScreenJiaoZhuActivity</item>
+    </string-array>
+</resources>

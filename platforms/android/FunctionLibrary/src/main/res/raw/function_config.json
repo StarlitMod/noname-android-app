@@ -1,0 +1,32 @@
+[
+  {
+    "name": "开始",
+    "color": "orange",
+    "path": "FunctionGameShell"
+  },
+  {
+    "name": "导入",
+    "color": "yellow",
+    "path": "FunctionImport"
+  },
+  {
+    "name": "版本",
+    "color": "green",
+    "path": "FunctionVersion"
+  },
+  {
+    "name": "联机",
+    "color": "red",
+    "path": "FunctionServer"
+  },
+  {
+    "name": "主题",
+    "color": "purple",
+    "path": "FunctionTheme"
+  },
+  {
+    "name": "设置",
+    "color": "blue",
+    "path": "FunctionSettings"
+  }
+]

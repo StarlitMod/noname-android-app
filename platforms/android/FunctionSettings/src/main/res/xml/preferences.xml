@@ -1,0 +1,271 @@
+<PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="@string/pref_title_sponsor"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:icon="@mipmap/ic_author_shijian"
+            app:title="@string/pref_title_sponsor_author"
+            app:summary="@string/pref_summary_sponsor">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://afdian.com/a/sjahkl" />
+        </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_feature_settings"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreference
+            android:key="auto_start"
+            android:title="@string/pref_title_auto_enter_game"
+            android:summary="@string/pref_summary_auto_enter_game"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreference
+            android:key="splash_screen"
+            android:title="@string/pref_title_play_splash_animation"
+            android:summary="@string/pref_summary_play_splash_animation"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_network_settings"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreference
+            android:key="github_acceleration"
+            android:title="@string/pref_title_github_acceleration"
+            android:summary="@string/pref_summary_github_acceleration"
+            app:iconSpaceReserved="false" />
+
+        <EditTextPreference
+            android:key="github_download_acceleration"
+            android:title="@string/pref_title_github_download_acceleration"
+            android:summary="@string/pref_summary_github_download_acceleration"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_webview_settings"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:key="protocol"
+            android:title="@string/pref_title_webview_protocol_type"
+            android:entries="@array/protocol_options"
+            android:entryValues="@array/protocol_values"
+            android:defaultValue="https"
+            app:useSimpleSummaryProvider="true"
+            app:iconSpaceReserved="false" />
+
+        <EditTextPreference
+            android:key="hostname"
+            android:title="@string/pref_title_webview_http_domain"
+            android:defaultValue="localhost"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreference
+            android:key="disable_load_assets"
+            android:title="@string/pref_title_disable_cordova_and_bridge"
+            android:summary="@string/pref_summary_disable_cordova_and_bridge"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreference
+            android:key="debug_mode"
+            android:title="@string/pref_title_webview_debug_mode"
+            android:summary="@string/pref_summary_webview_debug_mode"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreference
+            android:key="compatibility_mode"
+            android:title="@string/pref_title_noname_compatibility_mode"
+            android:summary="@string/pref_summary_noname_compatibility_mode"
+            app:iconSpaceReserved="false" />
+
+        <SeekBarPreference
+            android:key="font_size"
+            android:title="@string/pref_title_font_size"
+            android:summary="@string/pref_summary_font_size"
+            android:max="200"
+            android:min="50"
+            android:defaultValue="100"
+            app:iconSpaceReserved="false"
+            app:showSeekBarValue="true"
+            tools:ignore="UnusedAttribute" />
+
+        <Preference
+            app:key="webview_upgrade"
+            app:title="@string/pref_title_webview_implementation"
+            app:summary="@string/pref_summary_webview_implementation">
+        </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_theme"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:key="dialog_theme"
+            android:title="@string/pref_title_select_dialog_style"
+            android:entries="@array/dialog_theme_options"
+            android:entryValues="@array/dialog_theme_values"
+            android:defaultValue="default"
+            app:useSimpleSummaryProvider="true"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_title_reset_tutorial"
+        app:initialExpandedChildrenCount="0"
+        app:iconSpaceReserved="false">
+
+        <!-- 主页面教程 -->
+        <Preference
+            app:key="reset_tutorial_in_launch_activity"
+            app:title="@string/pref_title_reset_tutorial_main_page"
+            app:summary="@string/pref_summary_reset_tutorial_main_page"
+            app:iconSpaceReserved="false">
+        </Preference>
+
+        <!-- 开始游戏教程 -->
+        <Preference
+            app:key="reset_tutorial_in_function_game_shell"
+            app:title="@string/pref_title_reset_start_game_tutorial"
+            app:summary="@string/pref_summary_reset_start_game_tutorial"
+            app:iconSpaceReserved="false">
+        </Preference>
+
+        <!-- 导入教程组 -->
+        <!-- 导入文件教程 -->
+        <Preference
+            app:key="reset_tutorial_in_import_file_fragment"
+            app:title="@string/pref_title_reset_import_tutorial"
+            app:summary="@string/pref_summary_reset_import_tutorial"
+            app:iconSpaceReserved="false">
+        </Preference>
+
+        <!-- 手动目录选择教程 -->
+        <Preference
+            app:key="reset_tutorial_in_manual_directory_select_fragment"
+            app:title="@string/pref_title_reset_directory_tutorial"
+            app:summary="@string/pref_summary_reset_directory_tutorial"
+            app:iconSpaceReserved="false">
+        </Preference>
+
+        <!-- 迁移教程 -->
+        <Preference
+            app:key="reset_tutorial_in_migration_fragment"
+            app:title="@string/pref_title_reset_migration_tutorial"
+            app:summary="@string/pref_summary_reset_migration_tutorial"
+            app:iconSpaceReserved="false">
+        </Preference>
+
+        <!-- 资源教程 -->
+        <Preference
+            app:key="reset_tutorial_in_asset_fragment"
+            app:title="@string/pref_title_reset_resource_tutorial"
+            app:summary="@string/pref_summary_reset_resource_tutorial"
+            app:iconSpaceReserved="false">
+        </Preference>
+
+        <!-- 版本控制教程 -->
+        <Preference
+            app:key="reset_tutorial_in_version_control_fragment"
+            app:title="@string/pref_title_reset_version_tutorial"
+            app:summary="@string/pref_summary_reset_version_tutorial"
+            app:iconSpaceReserved="false">
+        </Preference>
+
+        <!-- 扩展管理教程 -->
+        <Preference
+            app:key="reset_tutorial_in_ext_manage_fragment"
+            app:title="@string/pref_title_reset_extension_tutorial"
+            app:summary="@string/pref_summary_reset_extension_tutorial"
+            app:iconSpaceReserved="false">
+        </Preference>
+
+        <!-- 联机教程 -->
+        <Preference
+            app:key="reset_tutorial_in_function_server"
+            app:title="@string/pref_title_reset_lan_tutorial"
+            app:summary="@string/pref_summary_reset_lan_tutorial"
+            app:iconSpaceReserved="false">
+        </Preference>
+
+        <Preference
+            app:key="reset_tutorial_in_theme_switch_fragment"
+            app:title="@string/pref_title_reset_theme_switch_tutorial"
+            app:summary="@string/pref_summary_reset_theme_switch_tutorial"
+            app:iconSpaceReserved="false">
+        </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_about"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:key="privacy_policy"
+            app:title="@string/pref_title_privacy_policy_disclaimer"
+            app:summary="@string/pref_summary_privacy_policy_disclaimer"
+            app:iconSpaceReserved="false">
+        </Preference>
+
+        <Preference
+            app:icon="@mipmap/ic_launcher"
+            app:title="@string/pref_title_project_homepage"
+            app:summary="@string/github_info">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/github_info" />
+        </Preference>
+
+        <Preference
+            app:icon="@mipmap/ic_author_shijian"
+            app:title="@string/pref_title_author_shijian"
+            app:summary="https://github.com/nonameShijian">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/nonameShijian" />
+        </Preference>
+
+<!--        <Preference-->
+<!--            app:icon="@mipmap/ic_noname_shijian_launcher"-->
+<!--            app:title="上游项目主页(无名杀诗笺版)"-->
+<!--            app:summary="https://github.com/nonameShijian/noname-shijian-android">-->
+<!--            <intent-->
+<!--                android:action="android.intent.action.VIEW"-->
+<!--                android:data="https://github.com/nonameShijian/noname-shijian-android" />-->
+<!--        </Preference>-->
+
+        <Preference
+            app:icon="@mipmap/ic_noname_plus_launcher"
+            app:title="@string/pref_title_upstream_project"
+            app:summary="https://github.com/zhaiyanqi/noname-plus">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/zhaiyanqi/noname-plus" />
+        </Preference>
+
+        <Preference
+            app:icon="@mipmap/ic_author_zhaiyanqi"
+            app:title="@string/pref_title_upstream_author"
+            app:summary="https://github.com/zhaiyanqi">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/zhaiyanqi" />
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

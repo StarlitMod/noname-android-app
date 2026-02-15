@@ -1,0 +1,10 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 未聚焦状态 - 黑色 -->
+    <item android:color="@android:color/black" android:state_focused="false"/>
+
+    <!-- 聚焦状态 - 黑色 -->
+    <item android:color="@android:color/black" android:state_focused="true"/>
+
+    <!-- 默认状态 - 黑色 -->
+    <item android:color="@android:color/black"/>
+</selector>
