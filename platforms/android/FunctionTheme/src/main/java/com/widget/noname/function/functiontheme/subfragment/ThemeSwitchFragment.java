@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +38,7 @@ import com.widget.noname.LaunchActivity;
 import com.widget.noname.Settings;
 import com.widget.noname.TutorialFragment;
 import com.widget.noname.eventbus.SettingsChangeEvent;
+import com.widget.noname.eventbus.ThemeRefreshEvent;
 import com.widget.noname.function.functiontheme.R;
 import com.widget.noname.function.functiontheme.adapter.ThemeSwitchAdapter;
 import com.widget.noname.function.functiontheme.dialog.ThemeDetailDialog;
@@ -86,6 +91,12 @@ public class ThemeSwitchFragment extends TutorialFragment {
         initViews(view);
         loadThemes();
         setupAdapter();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onThemeRefreshEvent(ThemeRefreshEvent event) {
+        Log.d(TAG, "收到主题刷新事件");
+        updateThemes();
     }
 
     private void initViews(View view) {
@@ -233,12 +244,6 @@ public class ThemeSwitchFragment extends TutorialFragment {
             e.printStackTrace();
             PopTip.show(getString(com.widget.noname.function.functionlibrary.R.string.theme_delete_error)).iconError().show();
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateThemes();
     }
 
     @Override

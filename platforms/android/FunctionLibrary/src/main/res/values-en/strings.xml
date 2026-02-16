@@ -105,6 +105,7 @@
     <!-- ============================= -->
     <!--        Permissions & Agreements -->
     <!-- ============================= -->
+    <string name="permission_action_to_settings">Go to Settings</string>
     <string name="permission_action_agree">Agree</string>
     <string name="permission_action_disagree">Disagree</string>
     <string name="permission_action_disagree_enter_browse_mode">Disagree and enter browse-only mode</string>
@@ -124,6 +125,9 @@
     <string name="permission_require_video_access">App needs access to video files to play local videos</string>
     <string name="permission_request_storage">Please grant storage permission</string>
     <string name="permission_required_directory_access">Authorization required to read this directory</string>
+    <string name="permission_notification_required">Notification permission is required to send you download progress and completion notifications</string>
+    <string name="permission_notification_forward_to_settings">Please go to settings to enable notification permission to receive download notifications</string>
+    <string name="permission_notification_denied">Notification permission denied, download progress notifications will not be shown</string>
 
     <!-- ============================= -->
     <!--        Game Main Related      -->

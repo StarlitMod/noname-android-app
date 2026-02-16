@@ -18,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.widget.noname.common.function.BaseFunction;
 import com.widget.noname.eventbus.SettingsChangeEvent;
+import com.widget.noname.eventbus.ThemeRefreshEvent;
 import com.widget.noname.function.functionlibrary.data.ImportEventViewModel;
 import com.widget.noname.function.functiontheme.R;
 import com.widget.noname.function.functiontheme.adapter.ThemeFragmentAdapter;
@@ -92,6 +93,8 @@ public class FunctionTheme extends BaseFunction {
                         // 延迟 100ms 执行
                         new Handler(Looper.getMainLooper()).postDelayed(() -> {
                             viewPager2.setCurrentItem(finalTargetPosition, true); // true 表示启用滑动动画
+                            // 发送专门的刷新事件
+                            EventBus.getDefault().post(new ThemeRefreshEvent());
                         }, 100);
                     }
                 }

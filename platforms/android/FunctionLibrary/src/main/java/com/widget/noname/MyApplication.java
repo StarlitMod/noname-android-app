@@ -48,6 +48,19 @@ public class MyApplication extends NonameCoreApplication {
 
         // SAK.init(this, config);
 
+        // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        //            NotificationManager nm = getSystemService(NotificationManager.class);
+        //            List<NotificationChannel> channels = nm.getNotificationChannels();
+        //
+        //            for (NotificationChannel channel : channels) {
+        //                try {
+        //                    nm.deleteNotificationChannel(channel.getId());
+        //                } catch (SecurityException e) {
+        //                    Log.e("DownloadService", "无法删除渠道: " + channel.getId(), e);
+        //                }
+        //            }
+        //        }
+
         DownloadService.createNotificationChannel(this);
 
         ThemeManager.init(this);

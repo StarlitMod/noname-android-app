@@ -105,6 +105,7 @@
     <!-- ============================= -->
     <!--        权限与协议相关          -->
     <!-- ============================= -->
+    <string name="permission_action_to_settings">去设置</string>
     <string name="permission_action_agree">同意</string>
     <string name="permission_action_disagree">拒绝</string>
     <string name="permission_action_disagree_enter_browse_mode">拒绝并进入仅浏览模式</string>
@@ -124,6 +125,9 @@
     <string name="permission_require_video_access">应用需要访问您设备上的视频文件，以便播放本地视频</string>
     <string name="permission_request_storage">请授予存储权限</string>
     <string name="permission_required_directory_access">读取此目录需要授权</string>
+    <string name="permission_notification_required">需要通知权限才能向您发送下载进度和完成通知</string>
+    <string name="permission_notification_forward_to_settings">请前往设置页面开启通知权限，以便接收下载通知</string>
+    <string name="permission_notification_denied">通知权限被拒绝，将无法显示下载进度通知</string>
 
     <!-- ============================= -->
     <!--        游戏主体相关           -->

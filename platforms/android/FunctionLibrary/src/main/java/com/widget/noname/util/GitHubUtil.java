@@ -2,19 +2,35 @@ package com.widget.noname.util;
 
 import static com.kongzue.dialogx.dialogs.PopTip.tip;
 
+import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.kongzue.dialogx.dialogs.MessageDialog;
+import com.permissionx.guolindev.PermissionX;
+import com.permissionx.guolindev.callback.ExplainReasonCallback;
+import com.permissionx.guolindev.callback.ForwardToSettingsCallback;
+import com.permissionx.guolindev.callback.RequestCallback;
+import com.permissionx.guolindev.request.ExplainScope;
+import com.permissionx.guolindev.request.ForwardScope;
 import com.tencent.mmkv.MMKV;
 import com.widget.noname.Settings;
+import com.widget.noname.function.functionlibrary.R;
 import com.widget.noname.okhttp.DownloadService;
 import com.widget.noname.okhttp.DownloadStatusManager;
 import com.widget.noname.okhttp.HostsDns;
@@ -379,15 +395,15 @@ public class GitHubUtil {
     public static void downloadFile(String url, File outputFile, DownloadFileListener listener) {
         String acceleration = Settings.getGithubDownloadAcceleration();
         url = acceleration + url;
-        DownloadService.start(context, url, outputFile.getAbsolutePath());
+        final String finalUrl = url;
 
+        // 设置观察者
         DownloadStatusManager.getInstance().downloadEvent.observe((AppCompatActivity) context, event -> {
             if (event.type == DownloadStatusManager.DownloadEvent.Type.SUCCESS) {
                 listener.onSuccess(new File(event.data));
             } else if (event.type == DownloadStatusManager.DownloadEvent.Type.FAILURE) {
                 listener.onFailure(new Exception(event.data));
-            }
-            else if (event.type == DownloadStatusManager.DownloadEvent.Type.PROGRESS) {
+            } else if (event.type == DownloadStatusManager.DownloadEvent.Type.PROGRESS) {
                 try {
                     String[] parts = event.data.split(",");
                     if (parts.length != 2) {
@@ -403,6 +419,50 @@ public class GitHubUtil {
                 }
             }
         });
+
+        // 判断 Android 版本，只有 Android 13 (API 33) 及以上才需要动态请求通知权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // 检查是否已经有权限
+            if (NotificationUtil.canSendNotifications(context, DownloadService.CHANNEL_ID)) {
+                DownloadService.start(context, finalUrl, outputFile.getAbsolutePath());
+            } else {
+                // 需要请求权限
+                PermissionX.init((AppCompatActivity) context)
+                        .permissions(Manifest.permission.POST_NOTIFICATIONS)
+                        .onExplainRequestReason(new ExplainReasonCallback() {
+                            @Override
+                            public void onExplainReason(@NonNull ExplainScope scope, @NonNull List<String> deniedList) {
+                                String message = context.getString(R.string.permission_notification_required);
+                                scope.showRequestReasonDialog(deniedList, message, context.getString(R.string.permission_action_agree), context.getString(R.string.permission_action_disagree));
+                            }
+                        })
+                        .onForwardToSettings(new ForwardToSettingsCallback() {
+                            @Override
+                            public void onForwardToSettings(@NonNull ForwardScope scope, @NonNull List<String> deniedList) {
+                                String message = context.getString(R.string.permission_notification_forward_to_settings);
+                                scope.showForwardToSettingsDialog(deniedList, message, context.getString(R.string.permission_action_to_settings), context.getString(android.R.string.cancel));
+                            }
+                        })
+                        .request(new RequestCallback() {
+                            @Override
+                            public void onResult(boolean allGranted, @NonNull List<String> grantedList, @NonNull List<String> deniedList) {
+                                // 无论是否授予权限，都开始下载（只是可能无法显示通知）
+                                DownloadService.start(context, finalUrl, outputFile.getAbsolutePath());
+                                // 跳转渠道授权
+                                if (!NotificationUtil.isNotificationChannelEnabled(context, DownloadService.CHANNEL_ID)){
+                                    NotificationUtil.openNotificationChannelSettings(context, DownloadService.CHANNEL_ID);
+                                }
+                            }
+                        });
+            }
+        } else {
+            // Android 13 以下版本不需要动态请求通知权限
+            DownloadService.start(context, finalUrl, outputFile.getAbsolutePath());
+            // 但还是提示跳转
+            if (!NotificationUtil.canSendNotifications(context, DownloadService.CHANNEL_ID)) {
+                NotificationUtil.openNotificationChannelSettings(context, DownloadService.CHANNEL_ID);
+            }
+        }
     }
 
     public static String[] parseGitHubRawUrl(String url) {

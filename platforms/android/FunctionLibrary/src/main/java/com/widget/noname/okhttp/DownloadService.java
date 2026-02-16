@@ -1,5 +1,7 @@
 package com.widget.noname.okhttp;
 
+import static com.kongzue.dialogx.dialogs.PopTip.tip;
+
 import android.app.*;
 import android.content.*;
 import android.content.pm.ServiceInfo;
@@ -7,7 +9,9 @@ import android.os.*;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import com.permissionx.guolindev.PermissionX;
 import com.widget.noname.function.functionlibrary.R;
 import com.widget.noname.util.GitHubUtil;
 import com.widget.noname.util.VPNDetectionHelper;
@@ -24,11 +28,15 @@ public class DownloadService extends Service {
     public static final int SUCCESS_NOTIFICATION_ID = 2;
     public static final int FAILURE_NOTIFICATION_ID = 3;
     public static final int CANCEL_NOTIFICATION_ID = 4;
-    private static final String CHANNEL_ID = "DownloadChannel";
+    public static final String CHANNEL_ID = "DownloadChannel";
     private OkHttpClient client;
     private volatile boolean isDownloading = false;
 
     public static void createNotificationChannel(Context context) {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        if (!notificationManager.areNotificationsEnabled()) {
+            tip(context.getString(R.string.permission_notification_denied));
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
