@@ -59,13 +59,17 @@
         <param name="android-package" value="org.apache.cordova.devtools.Devtools" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="RenderProcessGone">
+        <param name="android-package" value="com.widget.noname.engine.RenderProcessGonePlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <preference name="android-versionCode" value="10000"/>
     <!--    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/mipmap-xxxhdpi/icon.png"/>-->
     <preference name="AutoHideSplashScreen" value="true"/>
     <preference name="FadeSplashScreen" value="true"/>
     <preference name="FadeSplashScreenDuration" value="100"/>
     <preference name="AndroidWindowSplashScreenAnimationDuration" value="500"/>
-    <preference name="AndroidPostSplashScreenTheme" value="@style/Theme.AppCompat.NoActionBar"/>
+    <preference name="AndroidPostSplashScreenTheme" value="@style/Theme.AppCompat.DayNight.NoActionBar"/>
     <preference name="Fullscreen" value="true"/>
     <preference name="Orientation" value="landscape"/>
     <preference name="DisallowOverscroll" value="true"/>

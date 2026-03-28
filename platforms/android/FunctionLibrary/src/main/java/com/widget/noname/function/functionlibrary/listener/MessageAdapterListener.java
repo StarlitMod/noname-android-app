@@ -6,4 +6,5 @@ public interface MessageAdapterListener {
 
     void onIpaddrMsgClick(View view, String ip);
 
+    void onPortMsgClick(View view, int port);
 }

@@ -74,7 +74,7 @@ public class DecompressHelper {
      */
     public void handleUri(Uri uri) {
         if (!Settings.hasAgreedToPrivacyPolicy()) {
-            tip(R.string.permission_require_privacy_agreement_for_import).iconError().show();
+            tip(R.string.permission_require_privacy_agreement_for_import).iconError().show(fragmentActivity);
             return;
         }
         this.sourceUri = uri;
@@ -131,6 +131,8 @@ public class DecompressHelper {
 
     // 输入密码
     private void showPasswordInputDialog() {
+        Log.e(TAG, "fragmentActivity: " + fragmentActivity);
+        Log.e(TAG, "showPasswordInputDialog");
         InputDialog.build()
                 .setTitle(com.widget.noname.function.functionlibrary.R.string.common_tip)
                 .setAutoShowInputKeyboard(false)
@@ -140,7 +142,7 @@ public class DecompressHelper {
                     handlePasswordInput(password);
                     return false;
                 })
-                .show();
+                .show(fragmentActivity);
     }
 
     // 输入密码后
@@ -283,7 +285,7 @@ public class DecompressHelper {
                 .setCancelable(false)
                 .setOkButton(android.R.string.ok, (baseDialog, v, folderName) -> {
                     if (TextUtils.isEmpty(folderName)) {
-                        tip(R.string.common_error_path_empty).iconError().show();
+                        tip(R.string.common_error_path_empty).iconError().show(fragmentActivity);
                         return true;
                     }
                     File externalFilesDirs = fragmentActivity.getExternalFilesDir(null);
@@ -295,7 +297,7 @@ public class DecompressHelper {
                         String canonicalChild = file.getCanonicalPath();
                         // file 不是 externalFilesDir 的子目录
                         if (!canonicalChild.startsWith(canonicalParent + File.separator)) {
-                            tip(R.string.import_rule_folder_must_in_files).iconError().show();
+                            tip(R.string.import_rule_folder_must_in_files).iconError().show(fragmentActivity);
                             return true;
                         }
                     } catch (Exception ignored) {
@@ -318,18 +320,18 @@ public class DecompressHelper {
                                     showFolderNameInputDialog(manager, importConfig, config);
                                     return false;
                                 })
-                                .show();
+                                .show(fragmentActivity);
                         return false;
                     }
                     if (!targetDir.exists() && !targetDir.mkdirs()) {
-                        tip(R.string.common_error_create_folder_failed).iconError().show();
+                        tip(R.string.common_error_create_folder_failed).iconError().show(fragmentActivity);
                         return true;
                     }
                     config.setExtractPath(file.getAbsolutePath());
                     startDecompression(manager, importConfig, config);
                     return false;
                 })
-                .show();
+                .show(fragmentActivity);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -429,7 +431,7 @@ public class DecompressHelper {
                 .setCancelable(false)
                 .setOkButton(android.R.string.ok, (baseDialog, v, folderName) -> {
                     if (TextUtils.isEmpty(folderName) || folderName.trim().isEmpty()) {
-                        tip(R.string.common_error_folder_name_empty).iconError().show();
+                        tip(R.string.common_error_folder_name_empty).iconError().show(fragmentActivity);
                         return true;
                     }
                     File externalFilesDirs = fragmentActivity.getExternalFilesDir(null);
@@ -440,32 +442,32 @@ public class DecompressHelper {
                         if (folderName.contains("../") || folderName.contains("..\\") ||
                                 folderName.startsWith("/") || folderName.startsWith("\\") ||
                                 folderName.contains(File.separator + ".." + File.separator)) {
-                            tip(R.string.common_error_folder_name_invalid).iconError().show();
+                            tip(R.string.common_error_folder_name_invalid).iconError().show(fragmentActivity);
                             return true;
                         }
 
                         // 确保是files的直接子目录（不包含路径分隔符）
                         if (folderName.contains("/") || folderName.contains("\\")) {
-                            tip(R.string.common_error_folder_name_invalid).iconError().show();
+                            tip(R.string.common_error_folder_name_invalid).iconError().show(fragmentActivity);
                             return true;
                         }
 
                         // 无效名称
                         if (".".equals(folderName) || "..".equals(folderName)) {
-                            tip(R.string.common_error_folder_name_invalid).iconError().show();
+                            tip(R.string.common_error_folder_name_invalid).iconError().show(fragmentActivity);
                             return true;
                         }
                     } catch (Exception e) {
-                        tip(e.getMessage()).iconError().show();
+                        tip(e.getMessage()).iconError().show(fragmentActivity);
                         return true;
                     }
 
                     if (targetDir.exists()) {
-                        tip(R.string.common_warning_folder_exists).iconError().show();
+                        tip(R.string.common_warning_folder_exists).iconError().show(fragmentActivity);
                         return true;
                     }
                     if (!targetDir.mkdirs()) {
-                        tip(R.string.common_error_create_folder_failed).iconError().show();
+                        tip(R.string.common_error_create_folder_failed).iconError().show(fragmentActivity);
                         return true;
                     }
                     String basePath = targetDir.getAbsolutePath();
@@ -474,7 +476,7 @@ public class DecompressHelper {
                     startDecompression(manager, importConfig, config);
                     return false;
                 })
-                .show();
+                .show(fragmentActivity);
     }
 
     private void startDecompression(DecompressManager manager, ImportConfig importConfig, DecompressConfig config) {
@@ -522,10 +524,10 @@ public class DecompressHelper {
                 StorageHelper.takePersistableUriPermission(fragmentActivity, treeUri);
             }
 
-            tip(com.widget.noname.function.functionlibrary.R.string.import_toast_directory_success).iconSuccess().show();
+            tip(com.widget.noname.function.functionlibrary.R.string.import_toast_directory_success).iconSuccess().show(fragmentActivity);
             // startDecompression(treeUri.toString());
         } else {
-            tip(com.widget.noname.function.functionlibrary.R.string.common_error_no_directory_selected).iconError().show();
+            tip(com.widget.noname.function.functionlibrary.R.string.common_error_no_directory_selected).iconError().show(fragmentActivity);
         }
     }
 }

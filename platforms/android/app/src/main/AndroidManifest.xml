@@ -1,8 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <manifest
+    android:appCategory="game"
     android:hardwareAccelerated="true"
-    android:versionCode="10000"
-    android:versionName="1.0"
+    android:versionCode="10005"
+    android:versionName="1.1.0"
     android:enableOnBackInvokedCallback="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"

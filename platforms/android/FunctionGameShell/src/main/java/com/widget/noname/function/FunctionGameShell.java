@@ -7,6 +7,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -26,6 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 
 public class FunctionGameShell extends BaseFunction {
+    private static final String TAG = "FunctionGameShell";
     public FunctionGameShell(@NonNull Context context) {
         super(context);
     }
@@ -41,6 +44,24 @@ public class FunctionGameShell extends BaseFunction {
         String tutorialTitle = "教程";
         SharedPreferences prefs = context.getSharedPreferences("nonameyuri", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
+
+        boolean isBetaVersion = isBetaVersion();
+        if (isBetaVersion) {
+            builder.add(
+                    MessageDialog.build()
+                            .setTitle(tutorialTitle + "——开始按钮")
+                            .setMessage("检测到您是内测版，是否跳过本教程？")
+                            .setCancelable(false)
+                            .setOkButton(android.R.string.ok, (dialog, v) -> {
+                                builder.clear();
+                                editor.putBoolean("readTutorialInFunctionGameShell", true).apply();
+                                checkAndStartGame();
+                                return false;
+                            })
+                            .setCancelButton(android.R.string.cancel)
+            );
+        }
+
         builder.add(
                 MessageDialog.build()
                         .setTitle(tutorialTitle + "——开始按钮")
@@ -179,6 +200,46 @@ public class FunctionGameShell extends BaseFunction {
                 }
             }
         }
+        return false;
+    }
+
+    /**
+     * 获取当前应用版本
+     */
+    private String getCurrentAppVersion() {
+        try {
+            String packageName = getContext().getPackageName();
+            return getContext().getPackageManager().getPackageInfo(packageName, 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "获取应用版本失败", e);
+            return "0.0.0"; // 返回默认版本号
+        }
+    }
+
+    /**
+     * 判断指定版本号是否为内测版
+     * @return true: 内测版, false: 正式版
+     */
+    private boolean isBetaVersion() {
+        String versionName = getCurrentAppVersion();
+        if (versionName == null || versionName.isEmpty()) {
+            return false;
+        }
+
+        try {
+            // 分割版本号，例如 "1.2.3" -> ["1", "2", "3"]
+            String[] parts = versionName.split("\\.");
+
+            // 检查是否有第三位
+            if (parts.length >= 3) {
+                // 获取第三位数字
+                int thirdPart = Integer.parseInt(parts[2]);
+                return thirdPart > 0;
+            }
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "解析版本号失败: " + versionName, e);
+        }
+
         return false;
     }
 }

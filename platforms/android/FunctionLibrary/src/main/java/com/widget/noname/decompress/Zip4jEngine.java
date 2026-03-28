@@ -72,6 +72,25 @@ public class Zip4jEngine extends BaseEngine {
 
             List<FileHeader> list = zipFile.getFileHeaders();
             callback.onLog(config.getContext().getString(R.string.extract_progress_fixing_encoding));
+//            for (FileHeader fileHeader : list) {
+//                if (fileHeader.getExtraDataRecords() != null) {
+//                    for (ExtraDataRecord extraDataRecord : fileHeader.getExtraDataRecords()) {
+//                        long identifier = extraDataRecord.getHeader();
+//                        if (identifier == 0x7075) {
+//                            byte[] bytes = extraDataRecord.getData();
+//                            ByteBuffer buffer = ByteBuffer.wrap(bytes);
+//                            byte version = buffer.get();
+//                            if (version == 1) {
+//                                String garbledName = fileHeader.getFileName();
+//                                String fixedName = new String(bytes, 5, bytes.length - 5, StandardCharsets.UTF_8);
+//                                Log.e(TAG, "乱码文件名: " + garbledName + " -> " + fixedName);
+//                                fixFileHeaders.put(garbledName, fixedName);
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
             for (FileHeader fileHeader : list) {
                 if (fileHeader.getExtraDataRecords() != null) {
                     for (ExtraDataRecord extraDataRecord : fileHeader.getExtraDataRecords()) {
@@ -82,7 +101,29 @@ public class Zip4jEngine extends BaseEngine {
                             byte version = buffer.get();
                             if (version == 1) {
                                 String garbledName = fileHeader.getFileName();
-                                String fixedName = new String(bytes, 5, bytes.length - 5, StandardCharsets.UTF_8);
+                                String utf8Name = new String(bytes, 5, bytes.length - 5, StandardCharsets.UTF_8);
+
+                                // 获取原乱码文件名的目录（如果有）
+                                String originalDir = "";
+                                int lastSeparator = garbledName.lastIndexOf('/');
+                                if (lastSeparator > 0) {
+                                    originalDir = garbledName.substring(0, lastSeparator + 1);
+                                }
+
+                                // 获取UTF-8文件名（去掉路径）
+                                String utf8FileName;
+                                if (utf8Name.contains("/")) {
+                                    utf8FileName = utf8Name.substring(utf8Name.lastIndexOf('/') + 1);
+                                } else {
+                                    utf8FileName = utf8Name;
+                                }
+
+                                // 组合：原目录 + UTF-8文件名
+                                String fixedName = originalDir + utf8FileName;
+
+                                Log.d(TAG, String.format("编码修复: %s -> %s (原始UTF-8: %s)",
+                                        garbledName, fixedName, utf8Name));
+
                                 fixFileHeaders.put(garbledName, fixedName);
                                 break;
                             }
@@ -289,6 +330,9 @@ public class Zip4jEngine extends BaseEngine {
                 // 设置进度监听
                 final ProgressMonitor progressMonitor = zipFile.getProgressMonitor();
 
+                Log.e(TAG, "嵌套路径: " + (nestedPathMap.containsKey(importConfig) ? "有" : "无"));
+                Log.e(TAG, "fixFileHeaders: " + fixFileHeaders);
+
                 // 获取嵌套解压路径
                 if (nestedPathMap.containsKey(importConfig)) {
                     // map: */a.js -> 嵌套目录/a.js
@@ -314,7 +358,7 @@ public class Zip4jEngine extends BaseEngine {
                         List<FileHeader> fileHeaders = zipFile.getFileHeaders();
                         for (FileHeader f: fileHeaders) {
                             String name = f.getFileName();
-                            if (!name.startsWith(rootPath) && rootPath.indexOf(name) != 0) {
+                            if (!name.startsWith(rootPath)) {
                                 filesToRemove.add(name);
                             } else if(!f.isDirectory()) {
                                 fileNamesMap.put(name, name.substring(rootPath.length()));

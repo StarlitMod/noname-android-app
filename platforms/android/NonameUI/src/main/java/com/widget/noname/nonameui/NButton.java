@@ -62,6 +62,30 @@ public class NButton extends RelativeLayout {
         return buttonText;
     }
 
+    /**
+     * 设置文字大小（单位：sp）
+     */
+    public void setTextSize(float spSize) {
+        if (firstText != null) {
+            firstText.setTextSize(spSize);
+        }
+        if (secondText != null) {
+            secondText.setTextSize(spSize);
+        }
+    }
+
+    /**
+     * 分别设置左上和右下的文字大小
+     */
+    public void setTextSize(float ltSize, float rbSize) {
+        if (firstText != null) {
+            firstText.setTextSize(ltSize);
+        }
+        if (secondText != null) {
+            secondText.setTextSize(rbSize);
+        }
+    }
+
     private void init() {
         setClipChildren(false);
         setClipToPadding(false);

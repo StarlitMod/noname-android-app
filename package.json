@@ -1,7 +1,7 @@
 {
   "name": "com.widget.noname",
   "displayName": "无名杀",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,11 @@
     "ecosystem:cordova"
   ],
   "author": "nonameShijian",
-  "license": "GPL-3.0-only",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nonameShijian/noname-android-app.git"
+  },
   "devDependencies": {
     "cordova-android": "^14.0.1",
     "cordova-plugin-android-permissions": "^1.1.5",

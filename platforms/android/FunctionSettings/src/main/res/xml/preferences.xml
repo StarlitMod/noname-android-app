@@ -18,6 +18,18 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/pref_category_update_settings"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreference
+            android:key="pre_update"
+            android:title="@string/pref_title_pre_update"
+            android:summary="@string/pref_summary_pre_update"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_category_feature_settings"
         app:iconSpaceReserved="false">
 

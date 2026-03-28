@@ -1,7 +1,10 @@
 package com.widget.noname.util;
 
 import android.text.TextUtils;
+import android.util.Log;
 
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -41,40 +44,98 @@ public class NetUtil {
         return nickname;
     }
 
-    public static String[] getIpaddr() {
-        List<String> list = new ArrayList<>();
+    /**
+     * 获取设备的所有有效IP地址（排除链路本地地址和回环地址）
+     * @return IP地址数组，IPv6地址会被格式化为[xxxx:xxxx]的形式
+     */
+    public static String[] getIpAddresses() {
+        List<String> ipList = new ArrayList<>();
 
         try {
-            Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
 
-            InetAddress ia = null;
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
 
-            while (nis.hasMoreElements()) {
-                NetworkInterface ni = nis.nextElement();
-                Enumeration<InetAddress> ias = ni.getInetAddresses();
+                // 跳过未激活的接口
+                if (!networkInterface.isUp()) {
+                    continue;
+                }
 
-                while (ias.hasMoreElements()) {
-                    ia = ias.nextElement();
-                    String hostAddress = ia.getHostAddress();
+                Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
 
-                    if (hostAddress.startsWith("fe80") || hostAddress.startsWith("::")) {
+                while (inetAddresses.hasMoreElements()) {
+                    InetAddress inetAddress = inetAddresses.nextElement();
+                    String hostAddress = inetAddress.getHostAddress();
+                    String name = networkInterface.getName();
+                    String displayName = networkInterface.getDisplayName();
+
+                    Log.d("NetworkInterface", "Name: " + name + ", DisplayName: " + displayName +  ",  Address: " + hostAddress);
+
+                    // 跳过回环地址 (127.0.0.1 和 ::1)
+                    if (inetAddress.isLoopbackAddress()) {
+                        Log.e("NetworkInterface", "Skipping loopback address: " + hostAddress);
                         continue;
                     }
 
-                    if (hostAddress.contains(":")) {
-                        list.add("[" + hostAddress + "]");
-                    } else {
-                        list.add(hostAddress);
+                    // 跳过链路本地地址
+                    if (isLinkLocalAddress(inetAddress, hostAddress)) {
+                        Log.e("NetworkInterface", "Skipping link-local address: " + hostAddress);
+                        continue;
                     }
+
+                    // 尝试跳过 VoLTE 专用接口
+                    if (displayName != null && (
+                            displayName.contains("Voice") ||
+                                    displayName.contains("VoLTE") ||
+                                    displayName.contains("IMS"))
+                    ) {
+                        Log.e("NetworkInterface", "Skipping VoLTE interface: " + name);
+                        continue;
+                    }
+
+                    // 格式化并添加地址
+                    Log.e("NetworkInterface", "add: " + hostAddress);
+                    ipList.add(formatIpAddress(hostAddress, inetAddress instanceof Inet6Address));
                 }
             }
         } catch (SocketException e) {
             e.printStackTrace();
+            return new String[0];
         }
 
-        String[] result = new String[list.size()];
+        return ipList.toArray(new String[0]);
+    }
 
-        return list.toArray(result);
+    /**
+     * 判断是否为链路本地地址
+     */
+    private static boolean isLinkLocalAddress(InetAddress inetAddress, String hostAddress) {
+        // IPv6 链路本地地址 (fe80::/10)
+        if (inetAddress instanceof Inet6Address) {
+            return hostAddress.startsWith("fe80");
+        }
+
+        // IPv4 链路本地地址 (169.254.0.0/16)
+        if (inetAddress instanceof Inet4Address) {
+            return hostAddress.startsWith("169.254.");
+        }
+
+        return false;
+    }
+
+    /**
+     * 格式化IP地址，IPv6地址添加方括号
+     */
+    private static String formatIpAddress(String hostAddress, boolean isIPv6) {
+        if (isIPv6) {
+            // 确保 IPv6 地址被正确格式化
+            // 如果地址已经包含方括号，则不再添加
+            if (!hostAddress.startsWith("[")) {
+                return "[" + hostAddress + "]";
+            }
+        }
+        return hostAddress;
     }
 
     public static boolean ipCheck(String text) {

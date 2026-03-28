@@ -16,7 +16,6 @@ import com.kongzue.dialogx.dialogs.PopTip;
 import com.kongzue.dialogx.interfaces.DialogXStyle;
 import com.kongzue.dialogx.interfaces.OnDialogButtonClickListener;
 import com.kongzue.dialogx.style.MaterialStyle;
-import com.noname.core.application.NonameCoreApplication;
 import com.tencent.mmkv.MMKV;
 import com.widget.noname.common.manager.FontManager;
 import com.widget.noname.common.manager.ThreadManager;
@@ -29,7 +28,7 @@ import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MyApplication extends NonameCoreApplication {
+public class MyApplication extends Application {
     private static final String TAG = "MyApplication";
     private static Typeface typeface = null;
     private static ExecutorService threadPool = null;
@@ -44,6 +43,13 @@ public class MyApplication extends NonameCoreApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        CrashHandler.register(this);
+
+        if (MyApplication.class.getSuperclass() != Application.class) {
+            throw new RuntimeException("this class is not MyApplication");
+        }
+
         context = this;
 
         // SAK.init(this, config);

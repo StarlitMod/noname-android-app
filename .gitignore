@@ -26,3 +26,47 @@ node_modules/
 # /platforms/
 
 package-lock.json
+
+# ==================== VS Code 配置 ====================
+.vscode/settings.json
+
+# ==================== Gradle 构建产物 ====================
+**/build/
+**/.gradle/
+.gradle/
+**/gen/
+
+# ==================== Android Lint 报告 ====================
+**/lint-report.html
+**/lint-report.xml
+**/lint-results*.html
+**/lint-results*.xml
+
+# ==================== Java 编译产物 ====================
+**/*.class
+**/*.jar
+**/*.war
+**/*.ear
+**/hs_err_pid*
+**/replay_pid*
+
+# ==================== Android Studio / IntelliJ IDEA ====================
+.idea/
+*.iml
+*.ipr
+*.iws
+.out/
+captures/
+.cxx/
+
+# ==================== 系统文件 ====================
+Thumbs.db
+.DS_Store
+~$*
+*.swp
+*.swo
+*~
+
+# ==================== 日志和临时文件 ====================
+**/*.log
+**/android-lint.log

@@ -101,6 +101,19 @@
     <string name="common_warning_file_exists">文件已存在</string>
     <string name="common_warning_folder_exists">文件夹已存在</string>
     <string name="common_image">图片</string>
+    <string name="common_not_install">未安装该应用</string>
+    <string name="common_unsupported">不支持此版本</string>
+    <string name="common_not_enabled">未启用此应用</string>
+    <string name="common_system_in_use">系统正在使用</string>
+    <string name="common_app_in_use">本APP正在使用</string>
+    <string name="common_unknown_reason">未知原因</string>
+    <string name="common_set_now">立即设置</string>
+    <string name="common_later">下次再说</string>
+    <string name="common_none">无</string>
+    <string name="common_sort_order">排序方式</string>
+    <string name="common_sort_by_name">名称排序</string>
+    <string name="common_sort_by_author">作者排序</string>
+    <string name="common_sort_by_version">版本排序</string>
 
     <!-- ============================= -->
     <!--        权限与协议相关          -->
@@ -249,6 +262,7 @@
     <string name="notification_action_open_page">打开页面</string>
     <string name="notification_action_restart">重新启动</string>
     <string name="notification_action_update_now">立即更新</string>
+    <string name="notification_action_open_browser">打开浏览器</string>
     <string name="notification_channel_downloads_name">下载通知</string>
     <string name="notification_channel_progress_downloading" tools:ignore="TypographyEllipsis">正在下载更新...</string>
     <string name="notification_channel_status_download_progress">已下载 %1$d%% (%2$s / %3$s)</string>
@@ -257,6 +271,7 @@
     <string name="notification_error_restart_to_retry_update">需要重新启动以进行重新更新\n%1$s</string>
     <string name="notification_error_system_installer_failed">启动系统安装器失败</string>
     <string name="notification_error_system_installer_failed_reason">启动系统安装器失败:&#160;%1$s</string>
+    <string name="notification_error_no_browser_available">没有可用的浏览器</string>
     <string name="notification_progress_initialize_data" tools:ignore="TypographyEllipsis">初始化数据中...</string>
     <string name="notification_progress_checking_update" tools:ignore="TypographyEllipsis">检查更新中...</string>
     <string name="notification_progress_downloading" tools:ignore="TypographyEllipsis">正在下载</string>
@@ -306,6 +321,11 @@
     <string name="server_ui_label_available_servers">可用服务器（下列地址点击可弹出菜单）</string>
     <string name="server_ui_label_ip_from_clipboard">来自剪切板的ip：</string>
     <string name="server_ui_label_recent_connections">最近连接：</string>
+    <string name="server_action_set_port">修改联机端口</string>
+    <string name="port_error_empty">端口号不能为空</string>
+    <string name="port_error_range">端口号必须在1–65535之间</string>
+    <string name="port_error_invalid">请输入有效的数字</string>
+    <string name="port_current_hint">当前将要启用的端口号(点击可更改): ${%1$d}</string>
 
     <!-- ============================= -->
     <!--        其他界面元素           -->
@@ -430,4 +450,53 @@
     <string name="theme_no_video">该主题没有视频文件</string>
     <string name="theme_app_icon">应用图标</string>
     <string name="theme_app_icon_hint">点击应用主题后将使用此图标</string>
+
+    <!-- ============================= -->
+    <!--       更新相关        -->
+    <!-- ============================= -->
+    <string name="pref_category_update_settings">更新设置</string>
+    <string name="pref_title_pre_update">接收内测更新</string>
+    <string name="pref_summary_pre_update">开启后，检查更新时将(强制)接收内测更新。请确保可以连接GitHub或配置了下载加速链接</string>
+
+    <!-- ============================= -->
+    <!--       切换WebView相关        -->
+    <!-- ============================= -->
+    <string name="webview_selection_activity_name">WebView 实现</string>
+    <string name="webview_selection_activity_title">设置本应用内的WebView实现</string>
+    <string name="webview_selection_activity_intro">修改此设置后退出本页面将自动重启应用(安卓8以下无法判断，将直接重启)！若选择比正在使用的Webview版本低的内核，Webview数据将会被清空！</string>
+    <string name="webview_updating">正在更新WebView内核</string>
+    <string name="webview_update_failed">WebView内核升级失败，是否设置其他WebView实现？(%s)</string>
+    <string name="webview_autostart_permission">请授予Webview(%s)自启动权限后重新进入APP，否则本App将无法正常使用Webview组件！</string>
+
+    <!-- ============================= -->
+    <!--       Crash相关        -->
+    <!-- ============================= -->
+    <string name="crash_title">应用程序发生错误</string>
+    <string name="crash_occurred_time">发生时间：%s</string>
+    <string name="crash_today_count">今日已发生 %d 次崩溃</string>
+    <string name="crash_device_info_title">设备信息</string>
+    <string name="crash_stack_trace_title">详细错误信息</string>
+    <string name="crash_no_stack_trace">无堆栈信息</string>
+    <string name="crash_device_brand">设备品牌：%s</string>
+    <string name="crash_device_model">设备型号：%s</string>
+    <string name="crash_android_version">Android版本：%s</string>
+    <string name="crash_sdk_version">SDK版本：%d</string>
+    <string name="crash_app_version">应用版本：%s</string>
+    <string name="crash_debug_mode">是否调试模式：%s</string>
+    <string name="crash_debug_mode_yes">是</string>
+    <string name="crash_debug_mode_no">否</string>
+    <string name="crash_btn_restart">重启应用</string>
+    <string name="crash_btn_exit">退出</string>
+    <string name="crash_copy_success">已复制到剪贴板</string>
+    <string name="crash_save_success">已保存到: %s</string>
+    <string name="crash_save_failed">保存失败: %s</string>
+    <string name="crash_share_title">分享崩溃信息</string>
+    <string name="crash_report_title">========== 应用崩溃报告 ==========</string>
+    <string name="crash_report_error_info">\n【错误信息】</string>
+    <string name="crash_report_device_info">\n【设备信息】</string>
+    <string name="crash_report_stack_trace">\n【堆栈信息】</string>
+    <string name="crash_report_footer">=================================</string>
+    <string name="crash_expand_description">展开详情</string>
+    <string name="crash_collapse_description">折叠详情</string>
+
 </resources>

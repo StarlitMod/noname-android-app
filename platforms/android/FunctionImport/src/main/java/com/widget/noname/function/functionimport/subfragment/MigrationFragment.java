@@ -71,6 +71,22 @@ public class MigrationFragment extends TutorialFragment {
         SharedPreferences prefs = context.getSharedPreferences("nonameyuri", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
+        boolean isBetaVersion = isBetaVersion();
+        if (isBetaVersion) {
+            builder.add(
+                    MessageDialog.build()
+                            .setTitle(tutorialTitle + "——导入按钮——迁移界面")
+                            .setMessage("检测到您是内测版，是否跳过本教程？")
+                            .setCancelable(false)
+                            .setOkButton(android.R.string.ok, (dialog, v) -> {
+                                builder.clear();
+                                editor.putBoolean("readTutorialInMigrationFragment", true).apply();
+                                return false;
+                            })
+                            .setCancelButton(android.R.string.cancel)
+            );
+        }
+
         builder.add(
                 MessageDialog.build()
                         .setTitle(tutorialTitle + "——导入按钮——迁移界面")

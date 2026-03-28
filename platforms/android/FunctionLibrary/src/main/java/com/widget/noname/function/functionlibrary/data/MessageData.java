@@ -4,6 +4,7 @@ public class MessageData {
 
     public static final int TYPE_NORMAL = 0;
     public static final int TYPE_IP = 1;
+    public static final int TYPE_PORT = 2;
 
     private int type = 0;
     private String date = null;
@@ -11,6 +12,7 @@ public class MessageData {
 
     public MessageData(String msg) {
         message = msg;
+        this.type = TYPE_NORMAL;
     }
 
     public MessageData(String message, int type) {

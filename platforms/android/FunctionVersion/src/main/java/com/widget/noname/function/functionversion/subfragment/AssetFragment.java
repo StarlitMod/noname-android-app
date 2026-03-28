@@ -146,6 +146,22 @@ public class AssetFragment extends TutorialFragment implements RadioGroup.OnChec
         SharedPreferences prefs = context.getSharedPreferences("nonameyuri", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
+        boolean isBetaVersion = isBetaVersion();
+        if (isBetaVersion) {
+            builder.add(
+                    MessageDialog.build()
+                            .setTitle(tutorialTitle + "——版本按钮——资源界面")
+                            .setMessage("检测到您是内测版，是否跳过本教程？")
+                            .setCancelable(false)
+                            .setOkButton(android.R.string.ok, (dialog, v) -> {
+                                builder.clear();
+                                editor.putBoolean("readTutorialInAssetFragment", true).apply();
+                                return false;
+                            })
+                            .setCancelButton(android.R.string.cancel)
+            );
+        }
+
         builder.add(
                 MessageDialog.build()
                         .setTitle(tutorialTitle + "——版本按钮——资源界面")
@@ -175,7 +191,7 @@ public class AssetFragment extends TutorialFragment implements RadioGroup.OnChec
         builder.add(
                 MessageDialog.build()
                         .setTitle(tutorialTitle + "——版本按钮——资源界面")
-                        .setMessage("从github下载文件较慢，可自行去设置页面手动设置github下载加速地址，此方面信息需要自行寻找教程，因为如果提供固定的更新源很有可能会以薅羊毛为由被封禁。\n下载完成后，会提示导入压缩包，此操作与导入本地压缩包的步骤一致。")
+                        .setMessage("从github下载文件较慢，可自行去设置页面手动设置github下载加速地址，此方面信息需要自行寻找下载加速地址转换连接取前缀并在设置页面中进行配置，因为如果提供固定的更新源很有可能会以薅羊毛为由被封禁。\n下载完成后，会提示导入压缩包，此操作与导入本地压缩包的步骤一致。")
                         .setCancelable(false)
                         .setOkButton(android.R.string.ok)
         );

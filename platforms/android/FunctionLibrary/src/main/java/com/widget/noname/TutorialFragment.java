@@ -1,5 +1,6 @@
 package com.widget.noname;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -97,6 +98,47 @@ public abstract class TutorialFragment extends Fragment {
         }
         tutorialShown = false;
         handler.removeCallbacksAndMessages(null);
+    }
+
+    /**
+     * 判断是否是内测版
+     * @return true: 内测版, false: 正式版
+     */
+    private String getCurrentAppVersion() {
+        try {
+            String packageName = requireContext().getPackageName();
+            return requireContext().getPackageManager()
+                    .getPackageInfo(packageName, 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "0.0.0"; // 返回默认版本号
+        }
+    }
+
+    /**
+     * 判断指定版本号是否为内测版
+     * @return true: 内测版, false: 正式版
+     */
+    protected boolean isBetaVersion() {
+        String versionName = getCurrentAppVersion();
+        if (versionName == null || versionName.isEmpty()) {
+            return false;
+        }
+
+        try {
+            // 分割版本号，例如 "1.2.3" -> ["1", "2", "3"]
+            String[] parts = versionName.split("\\.");
+
+            // 检查是否有第三位
+            if (parts.length >= 3) {
+                // 获取第三位数字
+                int thirdPart = Integer.parseInt(parts[2]);
+                return thirdPart > 0;
+            }
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "解析版本号失败: " + versionName, e);
+        }
+
+        return false;
     }
 
     private ViewPager2 findViewPager() {

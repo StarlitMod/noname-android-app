@@ -30,7 +30,6 @@ android {
 dependencies {
     implementation project(":Common")
     implementation project(":FunctionLibrary")
-    implementation project(":NonameCore")
     // implementation project(":GenshinImpactStyle")
 
     testImplementation 'junit:junit:4.13.2'

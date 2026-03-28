@@ -7,10 +7,14 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.InputType;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +32,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.kongzue.dialogx.DialogX;
 import com.kongzue.dialogx.dialogs.CustomDialog;
 import com.kongzue.dialogx.dialogs.GuideDialog;
+import com.kongzue.dialogx.dialogs.InputDialog;
 import com.kongzue.dialogx.dialogs.MessageDialog;
 import com.kongzue.dialogx.dialogs.PopMenu;
 import com.kongzue.dialogx.util.DialogListBuilder;
@@ -40,13 +45,13 @@ import com.widget.noname.eventbus.MsgToActivity;
 import com.widget.noname.common.function.BaseFunction;
 import com.widget.noname.common.manager.ThreadManager;
 import com.widget.noname.common.util.FileConstant;
-import com.widget.noname.common.util.NetUtil;
 import com.widget.noname.function.functionlibrary.adapter.MessageRecyclerAdapter;
 import com.widget.noname.function.functionserver.NonameWebSocketServer;
 import com.widget.noname.function.functionserver.R;
 import com.widget.noname.function.functionserver.view.RedDotTextView;
 import com.widget.noname.function.functionlibrary.listener.MessageAdapterListener;
 import com.widget.noname.util.DialogXUtil;
+import com.widget.noname.util.NetUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -54,11 +59,13 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 
 public class FunctionServer extends BaseFunction implements View.OnClickListener, MessageAdapterListener {
+    private static final String TAG = "FunctionServer";
     private static final int MSG_UPDATE_SERVER_IPADDR = 1;
     private static final int MSG_UPDATE_SERVER_START = 2;
     private static final int MSG_UPDATE_SCREEN_MESSAGE = 3;
+    private static final int MSG_UPDATE_SERVER_PORT = 4;
 
-    private static final int SERVER_PORT = 8080;
+    private static int SERVER_PORT = Settings.getOnlinePort();
 
     private static final Object serverLock = new Object();
 
@@ -77,6 +84,23 @@ public class FunctionServer extends BaseFunction implements View.OnClickListener
         String tutorialTitle = "教程";
         SharedPreferences prefs = context.getSharedPreferences("nonameyuri", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
+
+        boolean isBetaVersion = isBetaVersion();
+        if (isBetaVersion) {
+            builder.add(
+                    MessageDialog.build()
+                            .setTitle(tutorialTitle + "——联机按钮")
+                            .setMessage("检测到您是内测版，是否跳过本教程？")
+                            .setCancelable(false)
+                            .setOkButton(android.R.string.ok, (dialog, v) -> {
+                                builder.clear();
+                                editor.putBoolean("readTutorialInFunctionServer", true).apply();
+                                return false;
+                            })
+                            .setCancelButton(android.R.string.cancel)
+            );
+        }
+
         builder.add(
                 GuideDialog.build()
                         .baseView(startButton)
@@ -211,8 +235,10 @@ public class FunctionServer extends BaseFunction implements View.OnClickListener
     private void initMessageAdapter() {
         adapter.addMessage(getContext().getString(com.widget.noname.function.functionlibrary.R.string.server_ui_hint_start_button));
         adapter.addMessage(getContext().getString(com.widget.noname.function.functionlibrary.R.string.server_ui_label_available_servers));
-        adapter.addMessage(new MessageData("159.75.51.253", MessageData.TYPE_IP));
+        // adapter.addMessage(new MessageData("159.75.51.253", MessageData.TYPE_IP));
         adapter.addMessage(new MessageData("43.138.118.130", MessageData.TYPE_IP));
+
+        addPortToScreen(getContext().getString(com.widget.noname.function.functionlibrary.R.string.port_current_hint, SERVER_PORT));
 
         Runnable runnable = () -> {
             ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -285,7 +311,7 @@ public class FunctionServer extends BaseFunction implements View.OnClickListener
                     addMessageToScreen(getContext().getString(com.widget.noname.function.functionlibrary.R.string.server_status_start_success));
                     addMessageToScreen(getContext().getString(com.widget.noname.function.functionlibrary.R.string.server_ui_hint_ip_actions));
 
-                    String[] ipaddr = NetUtil.getIpaddr();
+                    String[] ipaddr = NetUtil.getIpAddresses();
 
                     for (String ip : ipaddr) {
                         addIpaddrToScreen(ip + ":" + SERVER_PORT);
@@ -319,6 +345,7 @@ public class FunctionServer extends BaseFunction implements View.OnClickListener
                     try {
                         server.stop();
                         addMessageToScreen(getContext().getString(com.widget.noname.function.functionlibrary.R.string.server_status_stopped));
+                        addPortToScreen(getContext().getString(com.widget.noname.function.functionlibrary.R.string.port_current_hint, SERVER_PORT));
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                         addMessageToScreen(getContext().getString(com.widget.noname.function.functionlibrary.R.string.common_error_operation_failed_with_stacktrace, Arrays.toString(e.getStackTrace())));
@@ -333,7 +360,6 @@ public class FunctionServer extends BaseFunction implements View.OnClickListener
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         stopLocalServer();
     }
 
@@ -348,6 +374,20 @@ public class FunctionServer extends BaseFunction implements View.OnClickListener
         Message message = handler.obtainMessage();
         message.what = MSG_UPDATE_SERVER_IPADDR;
         message.obj = ip;
+        message.sendToTarget();
+    }
+
+    private void addPortToScreen() {
+        Message message = handler.obtainMessage();
+        message.what = MSG_UPDATE_SERVER_PORT;
+        message.obj = SERVER_PORT;
+        message.sendToTarget();
+    }
+
+    private void addPortToScreen(String msg) {
+        Message message = handler.obtainMessage();
+        message.what = MSG_UPDATE_SERVER_PORT;
+        message.obj = msg;
         message.sendToTarget();
     }
 
@@ -404,6 +444,39 @@ public class FunctionServer extends BaseFunction implements View.OnClickListener
                     }
                     return false;
                 });
+    }
+
+    @Override
+    public void onPortMsgClick(View view, int port) {
+        InputDialog.build()
+                .setTitle(com.widget.noname.function.functionlibrary.R.string.server_action_set_port)
+                .setAutoShowInputKeyboard(false)
+                .setOkButton(android.R.string.ok, (baseDialog, v, newPortStr) -> {
+                    // 端口号验证
+                    String portStr = newPortStr.trim();
+                    if (TextUtils.isEmpty(portStr)) {
+                        tip(com.widget.noname.function.functionlibrary.R.string.port_error_empty);
+                        return true;
+                    }
+                    try {
+                        int newPort = Integer.parseInt(portStr);
+                        if (newPort < 1 || newPort > 65535) {
+                            tip(com.widget.noname.function.functionlibrary.R.string.port_error_range);
+                            return true;
+                        }
+                        SERVER_PORT = newPort;
+                        Settings.setOnlinePort(newPort);
+
+                        addPortToScreen(getContext().getString(com.widget.noname.function.functionlibrary.R.string.port_current_hint, SERVER_PORT));
+
+                        return false;
+                    } catch (NumberFormatException e) {
+                        tip(com.widget.noname.function.functionlibrary.R.string.port_error_invalid);
+                        return true;
+                    }
+                })
+                .setInputText(String.valueOf(port))
+                .show();
     }
 
     private void setToClipboard(String string) {
@@ -482,6 +555,46 @@ public class FunctionServer extends BaseFunction implements View.OnClickListener
         }
     }
 
+    /**
+     * 获取当前应用版本
+     */
+    private String getCurrentAppVersion() {
+        try {
+            String packageName = getContext().getPackageName();
+            return getContext().getPackageManager().getPackageInfo(packageName, 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "获取应用版本失败", e);
+            return "0.0.0"; // 返回默认版本号
+        }
+    }
+
+    /**
+     * 判断指定版本号是否为内测版
+     * @return true: 内测版, false: 正式版
+     */
+    private boolean isBetaVersion() {
+        String versionName = getCurrentAppVersion();
+        if (versionName == null || versionName.isEmpty()) {
+            return false;
+        }
+
+        try {
+            // 分割版本号，例如 "1.2.3" -> ["1", "2", "3"]
+            String[] parts = versionName.split("\\.");
+
+            // 检查是否有第三位
+            if (parts.length >= 3) {
+                // 获取第三位数字
+                int thirdPart = Integer.parseInt(parts[2]);
+                return thirdPart > 0;
+            }
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "解析版本号失败: " + versionName, e);
+        }
+
+        return false;
+    }
+
     private class ServerHandler extends Handler {
 
         public ServerHandler(Looper looper) {
@@ -503,6 +616,14 @@ public class FunctionServer extends BaseFunction implements View.OnClickListener
 
                 case MSG_UPDATE_SCREEN_MESSAGE: {
                     adapter.addMessage(String.valueOf(msg.obj));
+                    messageRecyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+                    break;
+                }
+
+                case MSG_UPDATE_SERVER_PORT: {
+                    String port = String.valueOf(msg.obj);
+                    MessageData data = new MessageData(port, MessageData.TYPE_PORT);
+                    adapter.addMessage(data);
                     messageRecyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
                     break;
                 }

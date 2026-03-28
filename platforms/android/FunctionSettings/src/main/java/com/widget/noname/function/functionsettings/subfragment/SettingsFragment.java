@@ -21,12 +21,11 @@ import com.kongzue.dialogx.DialogX;
 import com.kongzue.dialogx.dialogs.MessageDialog;
 import com.kongzue.dialogx.interfaces.DialogXStyle;
 import com.kongzue.dialogx.style.MaterialStyle;
-import com.noname.core.activities.WebViewSelectionActivity;
+import com.widget.noname.upgrade.WebViewSelectionActivity;
 import com.widget.noname.Settings;
 import com.widget.noname.common.util.TutorialConstant;
 import com.widget.noname.function.functionsettings.R;
 import com.widget.noname.function.functionsettings.preference.DialogXPreferenceFragmentCompat;
-import com.widget.noname.function.functionsettings.preference.IconPickerPreference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +41,13 @@ public class SettingsFragment extends DialogXPreferenceFragmentCompat implements
 
     // 同步设置
     private void syncSettingsWithUI() {
+        // 更新设置
+        SwitchPreference preUpdatePreference = findPreference(Settings.KEY_PRE_UPDATE);
+        if (preUpdatePreference != null) {
+            preUpdatePreference.setChecked(Settings.getPreUpdate());
+            preUpdatePreference.setOnPreferenceChangeListener(this);
+        }
+
         // webview设置
         ListPreference protocolPreference = findPreference(Settings.KEY_PROTOCOL);
         if (protocolPreference != null) {
@@ -217,6 +223,10 @@ public class SettingsFragment extends DialogXPreferenceFragmentCompat implements
                     return false;
                 }
             }
+            case Settings.KEY_PRE_UPDATE: {
+                Settings.setPreUpdate((boolean) newValue);
+                return true;
+            }
         }
         return false;
     }
@@ -311,7 +321,7 @@ public class SettingsFragment extends DialogXPreferenceFragmentCompat implements
                 defaultDrawable = getResources().getDrawable(resId, null);
             } else {
                 // 如果没有找到，则使用默认图标
-                defaultDrawable = getResources().getDrawable(com.noname.core.R.drawable.com_google_android_webview, null);
+                defaultDrawable = getResources().getDrawable(com.widget.noname.function.functionlibrary.R.drawable.com_google_android_webview, null);
             }
             webViewUpgradePreference.setIcon(defaultDrawable);
         }

@@ -265,6 +265,22 @@ public class ThemeSwitchFragment extends TutorialFragment {
         SharedPreferences prefs = getContext().getSharedPreferences("nonameyuri", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
+        boolean isBetaVersion = isBetaVersion();
+        if (isBetaVersion) {
+            builder.add(
+                    MessageDialog.build()
+                            .setTitle(tutorialTitle + "——主题按钮——主题管理")
+                            .setMessage("检测到您是内测版，是否跳过本教程？")
+                            .setCancelable(false)
+                            .setOkButton(android.R.string.ok, (dialog, v) -> {
+                                builder.clear();
+                                editor.putBoolean("readTutorialInThemeSwitchFragment", true).apply();
+                                return false;
+                            })
+                            .setCancelButton(android.R.string.cancel)
+            );
+        }
+
         MessageDialog dialog1 = MessageDialog.build()
                 .setTitle(tutorialTitle + "——主题按钮——主题管理")
                 .setMessage("主题管理界面将显示您所有的主题信息。\n您可以点击使用某个主题或**长按删除某个主题**，也可以通过底部按钮或应用外部导入第三方主题。")

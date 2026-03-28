@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ActivityThemeLunch" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:windowSplashScreenBackground">@color/transparent</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/transparent</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@color/transparent</item>
+        <item name="android:windowSplashScreenBrandingImage">@color/transparent</item>
+    </style>
+</resources>

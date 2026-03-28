@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
-import android.widget.ScrollView;
 
 import com.kongzue.dialogx.dialogs.MessageDialog;
 import com.kongzue.dialogx.dialogs.MessageMenu;
@@ -19,6 +18,7 @@ import com.kongzue.dialogx.interfaces.OnMenuItemSelectListener;
 import com.tencent.mmkv.MMKV;
 import com.widget.noname.eventbus.SettingsChangeEvent;
 import com.widget.noname.function.functionlibrary.R;
+import com.widget.noname.util.DialogXUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -37,6 +37,9 @@ public class Settings {
     private static final String TAG = "Settings";
     private static final String SETTINGS_MMKV_ID = "app_settings";
     private static final MMKV mmkv = MMKV.mmkvWithID(SETTINGS_MMKV_ID);
+
+    // 更新相关
+    public static final String KEY_PRE_UPDATE = "pre_update";
 
     // webview相关
     public static final String KEY_PROTOCOL = "protocol";
@@ -80,6 +83,30 @@ public class Settings {
 
     // 关于
     public static final String KEY_PRIVACY_POLICY = "privacy_policy";
+
+    // 联机
+    public static final String KEY_ONLINE_PORT = "online_port";
+
+    // 扩展管理相关
+    public static final String KEY_EXTENSION_SORT_TYPE = "extension_sort_type";
+
+    public static int getOnlinePort() {
+        return mmkv.getInt(KEY_ONLINE_PORT, 8080);
+    }
+
+    public static void setOnlinePort(int port) {
+        mmkv.putInt(KEY_ONLINE_PORT, port);
+        EventBus.getDefault().post(new SettingsChangeEvent(KEY_ONLINE_PORT));
+    }
+
+    public static boolean getPreUpdate() {
+        return mmkv.getBoolean(KEY_PRE_UPDATE, false);
+    }
+
+    public static void setPreUpdate(boolean preUpdate) {
+        mmkv.putBoolean(KEY_PRE_UPDATE, preUpdate);
+        EventBus.getDefault().post(new SettingsChangeEvent(KEY_PRE_UPDATE));
+    }
 
     // 配置file或https协议
     public static String getProtocol() {
@@ -198,6 +225,42 @@ public class Settings {
     public static void setGithubDownloadAcceleration(String githubDownloadAcceleration) {
         mmkv.putString(KEY_GITHUB_DOWNLOAD_ACCELERATION, githubDownloadAcceleration);
         EventBus.getDefault().post(new SettingsChangeEvent(KEY_GITHUB_DOWNLOAD_ACCELERATION));
+    }
+
+    // 扩展排序相关
+    public enum ExtensionSortType {
+        BY_NAME(0),      // 按名称排序
+        BY_AUTHOR(1),    // 按作者排序
+        BY_VERSION(2);   // 按版本排序
+
+        private final int value;
+
+        ExtensionSortType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public static ExtensionSortType fromValue(int value) {
+            for (ExtensionSortType type : values()) {
+                if (type.value == value) {
+                    return type;
+                }
+            }
+            return BY_NAME; // 默认返回按名称排序
+        }
+    }
+
+    public static ExtensionSortType getExtensionSortType() {
+        int sortType = mmkv.getInt(KEY_EXTENSION_SORT_TYPE, ExtensionSortType.BY_NAME.getValue());
+        return ExtensionSortType.fromValue(sortType);
+    }
+
+    public static void setExtensionSortType(ExtensionSortType sortType) {
+        mmkv.putInt(KEY_EXTENSION_SORT_TYPE, sortType.getValue());
+        EventBus.getDefault().post(new SettingsChangeEvent(KEY_EXTENSION_SORT_TYPE));
     }
 
     // 自定义主题相关
@@ -482,36 +545,21 @@ public class Settings {
     }
 
     public static MessageDialog getPrivacyPolicyDialog(String title) {
-        final boolean[] isScrolledToBottom = {false};
-
-        return MessageDialog.build()
+        return DialogXUtil.showReadRequiredDialog(
+                        R.string.permission_action_agree,
+                        (baseDialog, view) -> {
+                            mmkv.putBoolean(KEY_PRIVACY_POLICY, true);
+                            return false;
+                        },
+                        R.string.permission_action_disagree_enter_browse_mode,
+                        (baseDialog, view) -> {
+                            mmkv.putBoolean(KEY_PRIVACY_POLICY, false);
+                            return false;
+                        }
+                )
                 .setTitle(title)
                 .setMessage(getPrivacyPolicyContent())
-                .setCancelable(false)
-                .onShow(dialog -> {
-                    ScrollView view = (ScrollView) dialog.getDialogImpl().scrollView;
-                    view.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-                        // 判断是否滚动到底部
-                        View contentView = view.getChildAt(0);
-                        if (!isScrolledToBottom[0]) {
-                            isScrolledToBottom[0] = contentView.getMeasuredHeight() == scrollY + view.getHeight();
-                        }
-                    });
-                })
-                .setOkButton(R.string.permission_action_agree, (baseDialog, view) -> {
-                    if (!isScrolledToBottom[0]) {
-                        tip(R.string.permission_info_read_agreement_completely).iconError().show();
-                        return true;
-                    }
-                    else {
-                        mmkv.putBoolean(KEY_PRIVACY_POLICY, true);
-                        return false;
-                    }
-                })
-                .setCancelButton(R.string.permission_action_disagree_enter_browse_mode, (baseDialog, view) -> {
-                    mmkv.putBoolean(KEY_PRIVACY_POLICY, false);
-                    return false;
-                });
+                .setCancelable(false);
     }
 
     public static boolean hasAgreedToPrivacyPolicy() {

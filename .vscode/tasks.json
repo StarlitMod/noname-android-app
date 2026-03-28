@@ -1,0 +1,98 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "android: clean",
+            "type": "shell",
+            "command": "cd platforms/android; gradlew.bat clean",
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "清理 Android 项目"
+        },
+        {
+            "label": "android: build debug",
+            "type": "shell",
+            "command": "cd platforms/android; gradlew.bat assembleDebug",
+            "group": "build",
+            "problemMatcher": [
+                "$gradle-java"
+            ],
+            "detail": "构建 Android Debug APK"
+        },
+        {
+            "label": "android: build release",
+            "type": "shell",
+            "command": "cd platforms/android; gradlew.bat assembleRelease",
+            "group": "build",
+            "problemMatcher": [
+                "$gradle-java"
+            ],
+            "detail": "构建 Android Release APK"
+        },
+        {
+            "label": "android: lint",
+            "type": "shell",
+            "command": "cd platforms/android; gradlew.bat lint",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gradle-java"
+            ],
+            "detail": "运行 Android Lint 代码检查"
+        },
+        {
+            "label": "android: lint app module",
+            "type": "shell",
+            "command": "cd platforms/android; gradlew.bat :app:lint",
+            "group": "build",
+            "problemMatcher": [
+                "$gradle-java"
+            ],
+            "detail": "仅检查 app 模块的 Lint"
+        },
+        {
+            "label": "android: lint FunctionLibrary",
+            "type": "shell",
+            "command": "cd platforms/android; gradlew.bat :FunctionLibrary:lint",
+            "group": "build",
+            "problemMatcher": [
+                "$gradle-java"
+            ],
+            "detail": "检查 FunctionLibrary 模块的 Lint"
+        },
+        {
+            "label": "android: install debug",
+            "type": "shell",
+            "command": "cd platforms/android; gradlew.bat installDebug",
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "安装 Debug APK 到设备"
+        },
+        {
+            "label": "android: dependencies",
+            "type": "shell",
+            "command": "cd platforms/android; gradlew.bat app:dependencies",
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "查看项目依赖树"
+        },
+        {
+            "label": "cordova: prepare",
+            "type": "shell",
+            "command": "cordova prepare android",
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Cordova 准备 Android 平台"
+        },
+        {
+            "label": "cordova: build",
+            "type": "shell",
+            "command": "cordova build android",
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Cordova 构建 Android 项目"
+        }
+    ]
+}

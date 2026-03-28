@@ -1,11 +1,14 @@
 package com.widget.noname.function.functionlibrary.bridge;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.widget.noname.util.JsPathUtil;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class JsBridgeInterface {
@@ -23,7 +26,19 @@ public class JsBridgeInterface {
 
     @JavascriptInterface
     public String getAssetPath() {
-        return JsPathUtil.getGameRootPath(context);
+        String uri = JsPathUtil.getGameRootPath(context);
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                // API 33+ 使用 StandardCharsets
+                return URLDecoder.decode(uri, StandardCharsets.UTF_8);
+            } else {
+                // 低版本使用字符串指定字符集
+                return URLDecoder.decode(uri, "UTF-8");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return uri;
+        }
     }
 
     @JavascriptInterface

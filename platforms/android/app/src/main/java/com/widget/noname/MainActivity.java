@@ -21,13 +21,17 @@ package com.widget.noname;
 
 import static com.kongzue.dialogx.dialogs.PopTip.tip;
 
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.noname.core.NonameJavaScriptInterface;
+import androidx.appcompat.app.AppCompatDelegate;
+
+import com.widget.noname.function.functionlibrary.bridge.NonameJavaScriptInterface;
 import com.widget.noname.engine.CustomWebView;
 import com.widget.noname.function.functionlibrary.bridge.JsBridgeInterface;
 import com.widget.noname.eventbus.GameExitEvent;
@@ -39,11 +43,33 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 public class MainActivity extends CordovaActivity {
+    private CustomWebView webview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 如果是重建，那会失去很多初始化的内容
+        // 所以跳转到主界面
+        if (savedInstanceState != null) {
+            Log.e(TAG, "重建Activity");
+            try {
+                Intent intent = new Intent();
+                intent.setComponent(new ComponentName(getPackageName(), "com.widget.noname.LaunchActivity"));
+                startActivity(intent);
+                finish();
+                this.overridePendingTransition(
+                        com.widget.noname.function.functionlibrary.R.anim.zoom_in,
+                        com.widget.noname.function.functionlibrary.R.anim.zoom_out
+                );
+            } catch (Exception e) {
+                tip(e.getMessage()).iconError().show();
+            }
+        }
 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
@@ -63,7 +89,7 @@ public class MainActivity extends CordovaActivity {
             init();
         }
         View view = appView.getView();
-        CustomWebView webview = (CustomWebView) view;
+        webview = (CustomWebView) view;
         WebSettings settings = webview.getSettings();
         Log.e(TAG, settings.getUserAgentString());
         initWebviewSettings(webview, settings);
@@ -71,9 +97,33 @@ public class MainActivity extends CordovaActivity {
         // Set by <content src="index.js" /> in config.xml
         // loadUrl(launchUrl);
 
-        loadCustomUrl();
+        try {
+            if (extras != null && extras.getString("importExtensionName") != null) {
+                String extName = extras.getString("importExtensionName");
+                URI uri = URI.create(buildCustomUrl());
+                String newQuery = uri.getQuery();
+                String appendQuery = "importExtensionName=" + extName;
+                if (newQuery == null) {
+                    newQuery = appendQuery;
+                } else {
+                    newQuery += "&" + appendQuery;
+                }
+                URI newUri = new URI(uri.getScheme(), uri.getAuthority(), uri.getPath(), newQuery, uri.getFragment());
+                Log.e(TAG, newUri.toString());
+                loadUrl(newUri.toString());
+            }
+            else {
+                loadCustomUrl();
+            }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            loadCustomUrl();
+        }
+
         tip(com.widget.noname.function.functionlibrary.R.string.app_free_warning).iconWarning().show();
 
+        // 日间/夜间 跟随系统
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
     }
 
     @Override
@@ -99,6 +149,49 @@ public class MainActivity extends CordovaActivity {
         EventBus.getDefault().post(new GameExitEvent("退出游戏"));
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            String extName = extras.getString("importExtensionName");
+            boolean importPackage = extras.getBoolean("importPackage", false);
+            if (webview != null) {
+                if (extName != null) {
+                    webview.evaluateJavascript("(() => {" +
+                            "const event = new CustomEvent('importExtension', { " +
+                            "detail: { extensionName: '" + extName + "'}" +
+                            "});" +
+                            "window.dispatchEvent(event);" +
+                            "})();", null);
+                }
+                if (importPackage) {
+                    webview.evaluateJavascript("(() => {" +
+                            "const event = new CustomEvent('importPackage', { " +
+                            "detail: { importPackage: true }" +
+                            "});" +
+                            "window.dispatchEvent(event);" +
+                            "})();", null);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        View rootview = getWindow().getDecorView();
+        View focusView = rootview.findFocus();
+        Log.e(TAG, String.valueOf(focusView));
+        if (webview != null && focusView == webview && webview.canGoBack()) {
+            webview.goBack();
+            Log.e(TAG, "SystemWebView -> " + webview.getUrl());
+        }
+        else {
+            super.onBackPressed();
         }
     }
 

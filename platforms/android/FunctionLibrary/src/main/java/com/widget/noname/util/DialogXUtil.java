@@ -1,5 +1,7 @@
 package com.widget.noname.util;
 
+import static com.kongzue.dialogx.dialogs.PopTip.tip;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
@@ -7,14 +9,21 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.kongzue.dialogx.dialogs.GuideDialog;
 import com.kongzue.dialogx.dialogs.MessageDialog;
+import com.kongzue.dialogx.interfaces.OnDialogButtonClickListener;
 import com.widget.noname.GrammarLocatorDef;
 import com.widget.noname.MyApplication;
+import com.widget.noname.function.functionlibrary.R;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import io.noties.markwon.Markwon;
 import io.noties.markwon.ext.tables.TablePlugin;
@@ -241,5 +250,68 @@ public class DialogXUtil {
             if (msgTextView != null) markwon.setMarkdown(msgTextView, msgTextView.getText().toString());
             else Log.e(TAG, "setupMarkdownForMessage: msgTextView is null");
         }
+    }
+
+    // 需要阅读完毕的MessageDialog
+    public static MessageDialog showReadRequiredDialog(
+            int okTextRedId,
+            @Nullable OnDialogButtonClickListener<MessageDialog> okListener,
+            int cancelTextRedId,
+            @Nullable OnDialogButtonClickListener<MessageDialog> cancelListener
+    ) {
+        final boolean[] isScrolledToBottom = {false};
+        final AtomicBoolean isLayoutComplete = new AtomicBoolean(false);
+        return MessageDialog.build()
+                .onShow(dialog -> {
+                    ScrollView scrollView = (ScrollView) dialog.getDialogImpl().scrollView;
+                    View contentView = scrollView.getChildAt(0);
+
+                    // 使用ViewTreeObserver确保布局完成后再测量
+                    contentView.getViewTreeObserver().addOnGlobalLayoutListener(
+                            new ViewTreeObserver.OnGlobalLayoutListener() {
+                                @Override
+                                public void onGlobalLayout() {
+                                    if (isLayoutComplete.get()) return;
+
+                                    // 移除监听器避免重复执行
+                                    contentView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                                    isLayoutComplete.set(true);
+
+                                    boolean canScrollDown = scrollView.canScrollVertically(1);
+
+                                    // 如果不需要滚动，直接标记为已滚动到底部
+                                    if (!canScrollDown) {
+                                        isScrolledToBottom[0] = true;
+                                    }
+
+                                    Log.e("TAG", "isScrolledToBottom: " + isScrolledToBottom[0]);
+                                }
+                            });
+
+                    scrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                        // 判断是否滚动到底部
+                        if (!isScrolledToBottom[0]) {
+                            isScrolledToBottom[0] = contentView.getMeasuredHeight() == scrollY + scrollView.getHeight();
+                        }
+                    });
+                })
+                .setOkButton(okTextRedId, (baseDialog, view) -> {
+                    if (!isScrolledToBottom[0]) {
+                        tip(R.string.permission_info_read_agreement_completely).iconError().show();
+                        return true;
+                    }
+                    else {
+                        if (okListener != null) {
+                            return okListener.onClick(baseDialog, view);
+                        }
+                        return false;
+                    }
+                })
+                .setCancelButton(cancelTextRedId, (baseDialog, view) -> {
+                    if (cancelListener != null) {
+                        return cancelListener.onClick(baseDialog, view);
+                    }
+                    return false;
+                });
     }
 }

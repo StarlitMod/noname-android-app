@@ -9,12 +9,9 @@ import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.NotificationManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -22,14 +19,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
-import android.os.Process;
-import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -48,11 +41,10 @@ import com.kongzue.dialogx.DialogX;
 import com.kongzue.dialogx.dialogs.CustomDialog;
 import com.kongzue.dialogx.dialogs.GuideDialog;
 import com.kongzue.dialogx.dialogs.MessageDialog;
-import com.kongzue.dialogx.dialogs.TipDialog;
 import com.kongzue.dialogx.dialogs.WaitDialog;
 import com.kongzue.dialogx.interfaces.BaseDialog;
 import com.kongzue.dialogx.util.DialogListBuilder;
-import com.noname.core.activities.WebViewUpgradeAppCompatActivity;
+import com.widget.noname.upgrade.WebViewUpgradeAppCompatActivity;
 import com.tencent.mmkv.MMKV;
 import com.widget.noname.common.animation.AnimatorUtil;
 import com.widget.noname.common.util.FileConstant;
@@ -118,9 +110,6 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
     private ImageView backgroundImage = null;
     private ImportEventViewModel viewModel;
     private DecompressHelper decompressHelper;
-    private ICustomService customService;
-    private boolean isServiceBound = false;
-    private ServiceConnection serviceConnection;
     private TextView versionText;
     private WaitDialog waitDialog;
 
@@ -182,8 +171,6 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
         backgroundImage = findViewById(R.id.image_background);
         setBackgroundImage();
 
-        // MMKV.defaultMMKV().clearAll();
-
         functionContainer = findViewById(R.id.function_container);
         lunchViewContainer = findViewById(R.id.main_view);
 
@@ -207,7 +194,7 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
             );
         }
 
-        waitDialog = WaitDialog.show(this, getString(R.string.notification_progress_checking_update));
+        // waitDialog = WaitDialog.show(this, getString(R.string.notification_progress_checking_update));
 
         initFunctions();
 
@@ -330,6 +317,22 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
         String tutorialTitle = "教程";
         SharedPreferences prefs = getSharedPreferences("nonameyuri", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
+
+        boolean isBetaVersion = isBetaVersion();
+        if (isBetaVersion) {
+            builder.add(
+                    MessageDialog.build()
+                            .setTitle(tutorialTitle + "——主页面")
+                            .setMessage("检测到您是内测版，是否跳过本教程？")
+                            .setCancelable(false)
+                            .setOkButton(android.R.string.ok, (dialog, v) -> {
+                                builder.clear();
+                                editor.putBoolean("readTutorialInLaunchActivity", true).apply();
+                                return false;
+                            })
+                            .setCancelButton(android.R.string.cancel)
+            );
+        }
 
         MessageDialog dialog1 = MessageDialog.build()
                 .setTitle(tutorialTitle + "——主页面")
@@ -463,7 +466,7 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
         SharedPreferences.Editor editor = prefs.edit();
         // 未阅读或同意过隐私协议
         if (!Settings.hasAgreedToPrivacyPolicy()) {
-            waitDialog.doDismiss();
+            // waitDialog.doDismiss();
             MessageDialog dialog = Settings.getPrivacyPolicyDialog();
             dialog.onDismiss(dialog1 -> {
                 BaseDialog.BUTTON_SELECT_RESULT result = dialog1.getButtonSelectResult();
@@ -476,7 +479,7 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
         }
         // 隐私协议更新
         else if (Settings.getPrivacyPolicyVersion() > prefs.getInt("privacyPolicyVersion", 0)) {
-            waitDialog.doDismiss();
+            // waitDialog.doDismiss();
             MessageDialog dialog = Settings.getPrivacyPolicyDialog(getString(R.string.permission_info_privacy_updated));
             dialog.onDismiss(dialog1 -> {
                 BaseDialog.BUTTON_SELECT_RESULT result = dialog1.getButtonSelectResult();
@@ -493,7 +496,7 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
     }
 
     private void afterAgreedToPrivacyPolicy() {
-        waitDialog.doDismiss();
+        // waitDialog.doDismiss();
         if (!getSharedPreferences("nonameyuri", MODE_PRIVATE).getBoolean("readTutorialInLaunchActivity", false)) {
             DialogListBuilder builder = createTutorial();
             builder.show();
@@ -504,63 +507,7 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
 
     private void afterCheckAppUpdate() {
         Log.e(TAG, "afterTutorial");
-        Intent serviceIntent = new Intent(this, CustomService.class);
-        serviceIntent.setPackage(getPackageName());
-        boolean isServiceRunning = stopService(serviceIntent);
-        if (isServiceRunning) {
-            Log.e(TAG, "Service is running, stop it");
-        }
-        else {
-            Log.e(TAG, "Service is not running, start it");
-        }
-
-        cleanupBadProcesses();
-
         startNode(this);
-
-        new Handler().postDelayed(() -> {
-            serviceConnection = new ServiceConnection() {
-                @Override
-                public void onServiceConnected(ComponentName name, IBinder service) {
-                    Log.e(TAG, "Service connected");
-                    customService = ICustomService.Stub.asInterface(service);
-                    isServiceBound = true;
-                }
-
-                @Override
-                public void onServiceDisconnected(ComponentName name) {
-                    Log.e(TAG, "Service Disconnected");
-                    isServiceBound = false;
-                    performCleanup();
-                }
-
-                @Override
-                public void onBindingDied(ComponentName name) {
-                    Log.e(TAG, "Service onBindingDied");
-                    if (isServiceBound) {
-                        performCleanup();
-                    }
-                }
-
-                @Override
-                public void onNullBinding(ComponentName name) {
-                    Log.e(TAG, "Service onNullBinding");
-                    if (isServiceBound) {
-                        performCleanup();
-                    }
-                }
-            };
-
-            try {
-                // 启动并绑定Service
-                boolean bindResult = bindService(serviceIntent, serviceConnection,
-                        Context.BIND_AUTO_CREATE | Context.BIND_IMPORTANT);
-                Log.e(TAG, "bindService: " + bindResult);
-            } catch (SecurityException e) {
-                performCleanup();
-            }
-        }, 500);
-
         Intent intent = getIntent();
         Log.e(TAG, "intent: " + intent);
         if (null != intent) {
@@ -604,13 +551,13 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
      */
     private void checkAppUpdate() {
         Log.e(TAG, "checkAppUpdate");
-        waitDialog = WaitDialog.show(this, getString(R.string.notification_progress_checking_update));
+        // waitDialog = WaitDialog.show(this, getString(R.string.notification_progress_checking_update));
         // 获取当前应用版本
         String currentVersion = getCurrentAppVersion();
 
-        // 从 GitHub API 获取最新版本信息
-        String updateCheckUrl = "https://api.github.com/repos/nonameShijian/noname-android-app/releases/latest";
-        // String updateCheckUrl = "https://api.github.com/repos/nonameShijian/noname-shijian-android/releases/latest";
+        // 从 GitHub API 获取所有版本信息
+        String updateCheckUrl = "https://api.github.com/repos/nonameShijian/noname-android-app/releases";
+        // String updateCheckUrl = "https://api.github.com/repos/nonameShijian/noname-shijian-android/releases";
 
         // 使用现有的 OkHttp 客户端发起请求
         // 检测如果有vpn则不使用dns
@@ -632,41 +579,86 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.e(TAG, "检查更新失败", e);
-                waitDialog.doDismiss();
-                TipDialog.show(getString(R.string.notification_status_check_update_failed_reason, e.getMessage()), WaitDialog.TYPE.ERROR, 500);
+                // waitDialog.doDismiss();
+                // TipDialog.show(getString(R.string.notification_status_check_update_failed_reason, e.getMessage()), WaitDialog.TYPE.ERROR, 500);
                 runOnUiThread(() -> afterCheckAppUpdate());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Log.e(TAG, "检查更新成功");
-                waitDialog.doDismiss();
+                // waitDialog.doDismiss();
                 if (response.isSuccessful()) {
                     String responseBody = response.body().string();
                     try {
-                        // 解析响应 JSON
-                        JSONObject jsonObject = JSON.parseObject(responseBody);
-                        String latestVersion = jsonObject.getString("tag_name");
-                        String releaseNotes = jsonObject.getString("body");
-                        String downloadUrl = jsonObject.getString("html_url");
-                        JSONArray assets = jsonObject.getJSONArray("assets");
-                        boolean isPreRelease = jsonObject.getBooleanValue("prerelease");
+                        // 解析响应 JSONArray
+                        JSONArray releasesArray = JSON.parseArray(responseBody);
 
-                        // 移除版本号前的 "v" 前缀（如果有的话）
-                        if (latestVersion.startsWith("v")) {
-                            latestVersion = latestVersion.substring(1);
+                        String targetVersion = null;
+                        String targetReleaseNotes = null;
+                        String targetDownloadUrl = null;
+                        JSONArray targetAssets = null;
+
+                        // 遍历所有 releases，找到应该提示的版本
+                        for (int i = 0; i < releasesArray.size(); i++) {
+                            JSONObject release = releasesArray.getJSONObject(i);
+                            String version = release.getString("tag_name");
+                            boolean isPreRelease = release.getBooleanValue("prerelease");
+
+                            // 移除版本号前的 "v" 前缀
+                            if (version.startsWith("v")) {
+                                version = version.substring(1);
+                            }
+
+                            // 判断这个版本是否应该被考虑
+                            if (!isPreRelease) {
+                                // 正式版：总是考虑
+                                Log.e(TAG, "发现正式版: " + version);
+                            } else {
+                                // 预发布版：只有用户开启内测才考虑
+                                if (Settings.getPreUpdate()) {
+                                    Log.e(TAG, "发现预发布版，用户已开启内测: " + version);
+                                } else {
+                                    Log.e(TAG, "跳过预发布版（用户未开启内测）: " + version);
+                                    continue;
+                                }
+                            }
+
+                            // 如果还没有找到目标版本，或者这个版本比当前版本新
+                            if (targetVersion == null) {
+                                targetVersion = version;
+                                targetReleaseNotes = release.getString("body");
+                                targetDownloadUrl = release.getString("html_url");
+                                targetAssets = release.getJSONArray("assets");
+                            } else if (isNewerVersion(version, currentVersion) && isNewerVersion(version, targetVersion)) {
+                                // 如果这个版本比当前版本新，并且比已找到的目标版本更新
+                                targetVersion = version;
+                                targetReleaseNotes = release.getString("body");
+                                targetDownloadUrl = release.getString("html_url");
+                                targetAssets = release.getJSONArray("assets");
+                            }
                         }
 
-                        // 比较版本号
-                        if (isNewerVersion(latestVersion, currentVersion) && !isPreRelease) {
-                            // 有新版本，提示用户更新
-                            String finalLatestVersion = latestVersion;
-                            runOnUiThread(() -> showUpdateDialog(finalLatestVersion, releaseNotes, downloadUrl, assets));
-                        }
-                        else {
-                            // 没有新版本，继续执行后续流程
+                        // 检查最终找到的目标版本
+                        if (targetVersion != null && isNewerVersion(targetVersion, currentVersion)) {
+                            // 有可用的新版本
+                            String finalTargetVersion = targetVersion;
+                            String finalTargetReleaseNotes = targetReleaseNotes;
+                            String finalTargetDownloadUrl = targetDownloadUrl;
+                            JSONArray finalTargetAssets = targetAssets;
+
+                            runOnUiThread(() -> showUpdateDialog(
+                                    finalTargetVersion,
+                                    finalTargetReleaseNotes,
+                                    finalTargetDownloadUrl,
+                                    finalTargetAssets
+                            ));
+                        } else {
+                            // 没有找到可用的新版本
+                            Log.e(TAG, "没有找到可用的新版本");
                             runOnUiThread(() -> afterCheckAppUpdate());
                         }
+
                     } catch (Exception e) {
                         Log.e(TAG, "解析更新信息失败", e);
                         runOnUiThread(() -> afterCheckAppUpdate());
@@ -693,6 +685,33 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
             Log.e(TAG, "获取应用版本失败", e);
             return "0.0.0"; // 返回默认版本号
         }
+    }
+
+    /**
+     * 判断指定版本号是否为内测版
+     * @return true: 内测版, false: 正式版
+     */
+    private boolean isBetaVersion() {
+        String versionName = getCurrentAppVersion();
+        if (versionName == null || versionName.isEmpty()) {
+            return false;
+        }
+
+        try {
+            // 分割版本号，例如 "1.2.3" -> ["1", "2", "3"]
+            String[] parts = versionName.split("\\.");
+
+            // 检查是否有第三位
+            if (parts.length >= 3) {
+                // 获取第三位数字
+                int thirdPart = Integer.parseInt(parts[2]);
+                return thirdPart > 0;
+            }
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "解析版本号失败: " + versionName, e);
+        }
+
+        return false;
     }
 
     /**
@@ -753,6 +772,16 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
                         // 直接下载 APK 文件
                         downloadApkFile(newVersion, releaseNotes, apkDownloadUrl);
                         return false;
+                    })
+                    .setCancelButton(R.string.notification_action_open_browser, (dialog2, v) -> {
+                        // 跳转到浏览器下载更新
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(apkDownloadUrl));
+                        try {
+                            startActivity(browserIntent);
+                        } catch (Exception e) {
+                            tip(getString(R.string.notification_error_no_browser_available)).iconError().show();
+                        }
+                        return true;
                     });
             DialogXUtil.setupMarkdownForMessage(dialog);
             dialog.show();
@@ -950,6 +979,11 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
 
         try {
             startActivity(installIntent);
+            // 过渡动画
+            this.overridePendingTransition(
+                    android.R.anim.fade_in,
+                    android.R.anim.fade_out
+            );
         } catch (Exception e) {
             Log.e(TAG, "启动系统安装器失败", e);
             tip(getString(R.string.notification_error_system_installer_failed_reason, e.getMessage())).iconError().show();
@@ -984,23 +1018,26 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
     }
 
     private void importFileFromIntent(Intent intent) {
-        runOnUiThread(() -> {
-            Uri data = intent.getData();
-            if (intent.hasExtra("download_path")) {
-                data = Uri.fromFile(new File(intent.getStringExtra("download_path")));
-            }
-            viewModel.navigateTo("导入", "导入");
-            decompressHelper.handleUri(data);
-        });
+        new Handler().postDelayed(() -> {
+            runOnUiThread(() -> {
+                Uri data = intent.getData();
+                if (intent.hasExtra("download_path")) {
+                    data = Uri.fromFile(new File(intent.getStringExtra("download_path")));
+                }
+                viewModel.navigateTo("导入", "导入");
+                decompressHelper.handleUri(data);
+            });
+        }, 100);
     }
 
     private void importFileFromUri(Uri data) {
-        runOnUiThread(() -> {
-            viewModel.navigateTo("导入", "导入");
-            decompressHelper.handleUri(data);
-        });
+        new Handler().postDelayed(() -> {
+            runOnUiThread(() -> {
+                viewModel.navigateTo("导入", "导入");
+                decompressHelper.handleUri(data);
+            });
+        }, 100);
     }
-
 
     private void initFunctions() {
         InputStream stream = getResources().openRawResource(R.raw.function_config);
@@ -1242,18 +1279,6 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
         animatorsHolder.forEach(Animator::cancel);
         animatorsHolder.clear();
         super.onDestroy();
-        // 解绑
-        if (serviceConnection != null && isServiceBound) {
-            unbindService(serviceConnection);
-            if (customService != null) {
-                try {
-                    customService.killProcess();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-            }
-            isServiceBound = false;
-        }
     }
 
     @Override
@@ -1283,13 +1308,8 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
     public void onSettingsChangeEvent(SettingsChangeEvent event) {
         switch (event.getKey()) {
             case Settings.KEY_APP_ICON: {
-                if (isServiceBound && customService != null) {
-                    try {
-                        customService.onSettingsChanged(event.getKey(), Settings.getAppIcon());
-                    } catch (RemoteException e) {
-                        Log.e(TAG, "Failed to send settings change to service", e);
-                    }
-                }
+                // 按需启动 CustomService
+                startCustomServiceIfNeeded(Settings.getAppIcon());
                 break;
             }
             case Settings.KEY_CUSTOM_THEME:
@@ -1297,6 +1317,34 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
                 setBackgroundImage();
                 break;
             }
+        }
+    }
+
+    /**
+     * 按需启动 CustomService
+     */
+    private void startCustomServiceIfNeeded(String iconValue) {
+        Intent serviceIntent = new Intent(this, CustomService.class);
+        serviceIntent.setPackage(getPackageName());
+        serviceIntent.putExtra(CustomService.EXTRA_SETTINGS_KEY, Settings.KEY_APP_ICON);
+        serviceIntent.putExtra(CustomService.EXTRA_SETTINGS_VALUE, iconValue);
+
+        // 无论服务是否运行，都先停止再启动（确保验证逻辑重新执行）
+        try {
+            stopService(serviceIntent);
+            Log.d(TAG, "已停止 CustomService");
+
+            // 延迟一下再启动，确保服务完全停止
+            new Handler().postDelayed(() -> {
+                try {
+                    startService(serviceIntent);
+                    Log.d(TAG, "已启动 CustomService");
+                } catch (Exception e) {
+                    Log.e(TAG, "启动 CustomService 失败", e);
+                }
+            }, 100);
+        } catch (Exception e) {
+            Log.e(TAG, "操作 CustomService 失败", e);
         }
     }
 
@@ -1364,50 +1412,6 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
                         return false;
                     })
                     .show();
-        }
-    }
-
-    private void performCleanup() {
-        if (serviceConnection != null && isServiceBound) {
-            try {
-                if (customService != null) {
-                    customService.killProcess();
-                }
-                Intent serviceIntent = new Intent(this, CustomService.class);
-                stopService(serviceIntent);
-                unbindService(serviceConnection);
-            } catch (Exception e) {
-                Log.e(TAG, "解绑Service异常", e);
-            }
-        }
-        Process.killProcess(Process.myPid());
-        System.exit(1);
-    }
-
-    private void cleanupBadProcesses() {
-        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        // 杀死同包名的所有其他进程
-        List<ActivityManager.RunningAppProcessInfo> processes = am.getRunningAppProcesses();
-        if (processes != null) {
-            Log.d(TAG, "processes: " + processes.size());
-            for (ActivityManager.RunningAppProcessInfo process : processes) {
-                Log.d(TAG, "processName: " + process.processName);
-                if (process.processName.startsWith(getPackageName())) {
-                    // 判断是否为当前进程（通过PID匹配）
-                    if (process.pid == Process.myPid() || process.processName.equals(getPackageName())) {
-                        continue; // 跳过当前进程
-                    }
-                    Log.d(TAG, "杀死进程: " + process.processName);
-                    try {
-                        Process.killProcess(process.pid);
-                    } catch (Exception e) {
-                        Log.e(TAG, "杀死进程失败: " + process.processName, e);
-                    }
-                }
-            }
-        }
-        else {
-            Log.e(TAG, "无法获取运行中的进程列表");
         }
     }
 

@@ -46,7 +46,6 @@ dependencies {
     // mmkv:2.2.4
     api project(":Common")
 
-    implementation project(":NonameCore")
     // implementation project(":native-lib")
     implementation project(":NonameUI")
     implementation project(":CordovaLib")

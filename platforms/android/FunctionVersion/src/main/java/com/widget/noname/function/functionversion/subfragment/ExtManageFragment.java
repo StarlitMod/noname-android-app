@@ -6,15 +6,17 @@ import static com.kongzue.dialogx.dialogs.PopTip.tip;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +24,9 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.kongzue.dialogx.DialogX;
 import com.kongzue.dialogx.dialogs.MessageDialog;
+import com.kongzue.dialogx.dialogs.PopMenu;
+import com.kongzue.dialogx.interfaces.OnMenuItemClickListener;
+import com.kongzue.dialogx.style.MaterialStyle;
 import com.kongzue.dialogx.util.DialogListBuilder;
 import com.tencent.mmkv.MMKV;
 import com.widget.noname.MyApplication;
@@ -33,6 +38,7 @@ import com.widget.noname.function.functionlibrary.data.ExtensionInfo;
 import com.widget.noname.eventbus.UpdateExtListEvent;
 import com.widget.noname.function.functionversion.R;
 import com.widget.noname.function.functionversion.adapter.ExtensionListAdapter;
+import com.widget.noname.function.functionversion.dialog.ExtensionDetailDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -42,6 +48,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class ExtManageFragment extends TutorialFragment {
@@ -66,6 +73,22 @@ public class ExtManageFragment extends TutorialFragment {
         String tutorialTitle = "教程";
         SharedPreferences prefs = context.getSharedPreferences("nonameyuri", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
+
+        boolean isBetaVersion = isBetaVersion();
+        if (isBetaVersion) {
+            builder.add(
+                    MessageDialog.build()
+                            .setTitle(tutorialTitle + "——版本按钮——扩展界面")
+                            .setMessage("检测到您是内测版，是否跳过本教程？")
+                            .setCancelable(false)
+                            .setOkButton(android.R.string.ok, (dialog, v) -> {
+                                builder.clear();
+                                editor.putBoolean("readTutorialInExtManageFragment", true).apply();
+                                return false;
+                            })
+                            .setCancelButton(android.R.string.cancel)
+            );
+        }
 
         builder.add(
                 MessageDialog.build()
@@ -106,7 +129,9 @@ public class ExtManageFragment extends TutorialFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_extension_manage, container, false);
+        View view = inflater.inflate(R.layout.fragment_extension_manage, container, false);
+        setHasOptionsMenu(true);
+        return view;
     }
 
     @Override
@@ -116,6 +141,10 @@ public class ExtManageFragment extends TutorialFragment {
         noExtensionsText = view.findViewById(R.id.no_extensions);
         noExtensionsText.setTypeface(MyApplication.getTypeface());
         noExtensionsText.setVisibility(View.GONE);
+
+        // 设置排序按钮
+        AppCompatButton btnSort = view.findViewById(R.id.btn_sort);
+        btnSort.setOnClickListener(this::showSortMenu);
 
         RecyclerView recyclerView = view.findViewById(R.id.extension_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -142,7 +171,6 @@ public class ExtManageFragment extends TutorialFragment {
                             .setTitle(com.widget.noname.function.functionlibrary.R.string.common_confirm_delete)
                             .setMessage(getString(com.widget.noname.function.functionlibrary.R.string.common_extension_dialog_confirm_delete, extension.getName()))
                             .setOkButton(android.R.string.ok, (baseDialog, view) -> {
-                                // 删除扩展文件夹
                                 String gameRootPath = MMKV.defaultMMKV().getString(FileConstant.GAME_PATH_KEY, null);
                                 if (gameRootPath != null) {
                                     File extensionDir = new File(new File(gameRootPath, "extension"), extension.getName());
@@ -163,6 +191,11 @@ public class ExtManageFragment extends TutorialFragment {
         });
 
         recyclerView.setAdapter(adapter);
+
+        // 添加点击事件打开详情页
+        adapter.setOnItemClickListener(extension -> {
+            ExtensionDetailDialog.show(extension, bridgeCallback);
+        });
     }
 
     public void setBridgeCallback(OnJsBridgeCallback callback) {
@@ -174,7 +207,6 @@ public class ExtManageFragment extends TutorialFragment {
         if (gameRootPath == null) {
             return;
         }
-        // extensionList.clear();
         File extensionsDir = new File(gameRootPath, "extension");
         if (extensionsDir.exists() && extensionsDir.isDirectory()) {
             extensionList.clear();
@@ -196,10 +228,9 @@ public class ExtManageFragment extends TutorialFragment {
                             String infoJson = readFileToString(infoFile);
                             addExtensionInfo(ext, infoJson);
                         } catch (IOException e) {
-                            Log.e(TAG, "读取info.json文件失败: " + e.getMessage());
+                            Log.e(TAG, "读取 info.json 文件失败：" + e.getMessage());
                         }
                     }
-                    // 没有info.json
                     else if (extensionFile.exists() || extensionTsFile.exists()) {
                         ExtensionInfo info = new ExtensionInfo();
                         info.setName(ext);
@@ -212,6 +243,7 @@ public class ExtManageFragment extends TutorialFragment {
                     }
                 }
             }
+            applySortType(Settings.getExtensionSortType());
             adapter.setExtensionList(extensionList);
         }
         else {
@@ -224,6 +256,77 @@ public class ExtManageFragment extends TutorialFragment {
             noExtensionsText.setVisibility(View.GONE);
         }
         EventBus.getDefault().post(new UpdateExtListEvent("获取扩展列表"));
+    }
+
+    // 排序方法
+    private void sortExtensionsByName() {
+        extensionList.sort(Comparator.comparing(ExtensionInfo::getName));
+    }
+
+    private void sortByAuthor() {
+        extensionList.sort(Comparator.comparing(ExtensionInfo::getAuthor));
+    }
+
+    private void sortByVersion() {
+        extensionList.sort(Comparator.comparing(ExtensionInfo::getVersion));
+    }
+
+    // 应用排序类型
+    private void applySortType(Settings.ExtensionSortType sortType) {
+        switch (sortType) {
+            case BY_NAME:
+                sortExtensionsByName();
+                break;
+            case BY_AUTHOR:
+                sortByAuthor();
+                break;
+            case BY_VERSION:
+                sortByVersion();
+                break;
+        }
+    }
+
+    // 显示排序菜单
+    private void showSortMenu(View anchor) {
+        PopMenu.show(anchor, new String[]{
+                        getContext().getString(com.widget.noname.function.functionlibrary.R.string.common_sort_by_name),
+                        getContext().getString(com.widget.noname.function.functionlibrary.R.string.common_sort_by_author),
+                        getContext().getString(com.widget.noname.function.functionlibrary.R.string.common_sort_by_version)
+                })
+                // .setStyle(MaterialStyle.style())
+                .setOverlayBaseView(false)
+                .setOnMenuItemClickListener(new OnMenuItemClickListener<PopMenu>() {
+                    @Override
+                    public boolean onClick(PopMenu dialog, CharSequence text, int index) {
+                        Settings.ExtensionSortType newSortType;
+                        switch (index) {
+                            case 0:
+                                newSortType = Settings.ExtensionSortType.BY_NAME;
+                                sortExtensionsByName();
+                                break;
+                            case 1:
+                                newSortType = Settings.ExtensionSortType.BY_AUTHOR;
+                                sortByAuthor();
+                                break;
+                            case 2:
+                                newSortType = Settings.ExtensionSortType.BY_VERSION;
+                                sortByVersion();
+                                break;
+                            default:
+                                newSortType = Settings.ExtensionSortType.BY_NAME;
+                                break;
+                        }
+                        // 保存排序设置
+                        Settings.setExtensionSortType(newSortType);
+                        adapter.setExtensionList(extensionList);
+                        return false;
+                    }
+                })
+                .onShow(dialog -> {
+                    if (Settings.getDialogTheme().equals("com.kongzue.dialogx.style.MIUIStyle")) {
+                        dialog.setWidth(650);
+                    }
+                });
     }
 
     public void addExtensionInfo(String extName, String infoJson) {

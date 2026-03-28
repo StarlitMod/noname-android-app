@@ -281,6 +281,21 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            enableV2Signing  = true
+            enableV3Signing  = true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
     if (cdvReleaseSigningPropertiesFile) {
         signingConfigs {
             release {
@@ -354,7 +369,6 @@ dependencies {
     implementation project(":FunctionSettings")
     implementation project(":FunctionImport")
     implementation project(":FunctionTheme")
-    implementation project(":NonameCore")
     // implementation project(":native-lib")
     implementation project(":DialogX:FileDialog")
     implementation project(":DialogX:ShareDialog")
