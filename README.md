@@ -3,22 +3,27 @@
 本仓库在其基础上开发的`android 应用程序`。
 
 ## 关于
+
 程序开源代码：[https://github.com/nonameShijian/noname-android-app](https://github.com/nonameShijian/noname-android-app)，有任何程序上的问题可以到github上提 [issues](https://github.com/nonameShijian/noname-android-app/issues) 给我反馈。
 
 ## 功能说明
 
 #### 共存
+
 - 无名杀能够和原版共存，卸载、清除数据等操作不会影响到原有的游戏内容。
 - 安装后的应用名称为`无名杀`
 
 #### 版本管理
+
 无名杀作为网页游戏，一直使用的是游戏内更新的方式，但是经常遇到GitHub访问不通畅、更新失败导致游戏无法运行的情况，重新下载费时费力，本应用提供了以下几种游戏资源和版本的管理方式。
+
 - **从QQ群文件、文件管理器等直接导入资源、更新包到程序，便捷更新。**
 - **通过本应用更新游戏主体资源，使用Github加速避免网络不通畅的情况。(但下载需要手动配置加速地址)**
 - **不允许内置完整资源（即不允许被制作为懒人包）**
 - **多版本切换，数据互不干扰**
 
 [package.json](package.json)
+
 #### 联机服务器
 
 无名杀在`WebView`的基础上，结合`Android原生`开放的能力，实现了版本管理、资源下载、手机建立联机服务器等多种功能能力，用于解决原程序的`android版本`容易崩溃、无法创建联机服务器等问题。
@@ -31,7 +36,7 @@
 │   └── xx.jpg                  # 主题截图（文件名可自定义）
 │
 ├── assets/                     # 主题资源文件
-│   ├── video/             
+│   ├── video/
 │   │   └── splash_video.mp4    # 启动视频（可选，但文件名固定）
 │   └── images/
 │       └── background/         # 背景图片目录
@@ -42,6 +47,7 @@
 ```
 
 注: 应用图标(icon)的可用值为:
+
 1. ic_launcher
 2. ic_noname_plus_launcher
 3. ic_launcher_xiaowu
@@ -50,7 +56,9 @@
 ## 更新日志
 
 #### 版本1.1.0
+
 2026年3月28日
+
 1. 修复处于网页内无法导入压缩包的问题
 2. 修复平板等大屏幕设备不能确认协议的bug
 3. 补全教主主题的背景素材
@@ -76,8 +84,11 @@
 23. 重构启动更换图标服务的实现方式
 
 #### 版本1.0.0
+
 2026年2月17日
+
 > 注: 源代码将在正式发布后再进行上传。且本版本的更新日志是相对于增强版APP的
+
 1. 禁止内置zip资源以制作懒人包（仍然可以导入懒人包zip资源）
 2. 增强签名验证功能
 3. 初始进入游戏时显示隐私协议以及免责声明
@@ -105,10 +116,16 @@
 <summary>📅 2026年赞助记录（点击展开）</summary>
 
 ### 一月
+
 2026年1月赞助截图: [docs/sponsors/2026-01.jpg](docs/sponsors/2026-01.jpg)
 
 ### 二月
-2026年1月赞助截图: [docs/sponsors/2026-01.jpg](docs/sponsors/2026-02.jpg)
+
+2026年1月赞助截图: [docs/sponsors/2026-02.jpg](docs/sponsors/2026-02.jpg)
+
+### 三月
+
+2026年1月赞助截图: [docs/sponsors/2026-03.jpg](docs/sponsors/2026-03.jpg)
 
 </details>
 
