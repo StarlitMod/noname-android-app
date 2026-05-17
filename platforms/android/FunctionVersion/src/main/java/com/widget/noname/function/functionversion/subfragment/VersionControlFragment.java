@@ -6,7 +6,9 @@ import static com.kongzue.dialogx.dialogs.PopTip.tip;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +43,7 @@ import com.widget.noname.common.util.FileConstant;
 import com.widget.noname.function.functionlibrary.data.VersionData;
 import com.widget.noname.eventbus.MsgVersionControl;
 import com.widget.noname.function.functionlibrary.listener.VersionControlItemListener;
+import com.widget.noname.util.ApkUtil;
 import com.widget.noname.util.FileUtil;
 import com.widget.noname.util.JavaPathUtil;
 
@@ -258,6 +262,32 @@ public class VersionControlFragment extends TutorialFragment implements View.OnC
         MsgVersionControl msg = new MsgVersionControl();
         msg.setMsgType(MsgVersionControl.MSG_TYPE_CHANGE_ASSET_FINISH);
         EventBus.getDefault().post(msg);
+    }
+
+    @Override
+    public void onItemOpen(VersionData data) {
+        if (ApkUtil.isAppInstalled("bin.mt.plus")) {
+            try {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setPackage("bin.mt.plus");
+                // 使用 FileProvider 转换 URI
+                File file = new File(data.getPath());
+                Uri uri = FileProvider.getUriForFile(getContext(), getContext().getPackageName() + ".fileprovider", file);
+                intent.setData(uri);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(intent);
+                getActivity().overridePendingTransition(
+                        android.R.anim.fade_in,    // 新 Activity 进入动画
+                        android.R.anim.fade_out    // 当前 Activity 退出动画
+                );
+            } catch (Exception e) {
+                tip(getString(com.widget.noname.function.functionlibrary.R.string.common_error_cannot_open_file, e.getMessage()));
+                e.printStackTrace();
+            }
+        }
+        else {
+            tip(com.widget.noname.function.functionlibrary.R.string.common_error_not_install_mt);
+        }
     }
 
     @SuppressLint("CheckResult")

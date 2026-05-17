@@ -586,6 +586,17 @@ public class AppFloatWindow {
                                 path = "inspector.html";
                             }
                         }
+                        else if (path.startsWith("serve_internal_file/@")) {
+                            // 查找第一个斜杠之后的位置（在 @hash 之后）
+                            int slashAfterHash = path.indexOf('/', "serve_internal_file/@".length());
+                            if (slashAfterHash != -1) {
+                                // 提取 hash 之后的部分
+                                path = path.substring(slashAfterHash + 1);
+                            } else {
+                                // 如果没有斜杠，可能是无效路径
+                                path = "inspector.html";
+                            }
+                        }
 
                         if (path.isEmpty()) {
                             path = "inspector.html";

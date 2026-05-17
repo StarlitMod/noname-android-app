@@ -14,6 +14,7 @@
     <string name="common_action_check_update">检查更新</string>
     <string name="common_action_click_to_update">点击更新</string>
     <string name="common_action_copy">复制</string>
+    <string name="common_action_open">打开</string>
     <string name="common_action_delete">删除</string>
     <string name="common_action_go_to_settings">前往设置</string>
     <string name="common_action_import">导入</string>
@@ -34,6 +35,8 @@
     <string name="common_error_cannot_create_file">无法创建文件</string>
     <string name="common_error_cannot_open_link">无法打开链接</string>
     <string name="common_error_cannot_open_link_with_url">无法打开链接:&#160;%1$s</string>
+    <string name="common_error_cannot_open_file">无法打开对应文件: %1$s</string>
+    <string name="common_error_not_install_mt">未安装mt管理器，无法打开对应文件</string>
     <string name="common_error_cannot_select_own_app">不允许选择当前应用</string>
     <string name="common_error_create_folder_failed">无法创建该文件夹</string>
     <string name="common_error_delete_failed">删除失败</string>
@@ -467,6 +470,7 @@
     <string name="webview_updating">正在更新WebView内核</string>
     <string name="webview_update_failed">WebView内核升级失败，是否设置其他WebView实现？(%s)</string>
     <string name="webview_autostart_permission">请授予Webview(%s)自启动权限后重新进入APP，否则本App将无法正常使用Webview组件！</string>
+    <string name="webview_update_disabled_message">由于已启用App内置WebView，此功能被禁用！\nWebView包名: %1$s\nWebView版本: %2$s</string>
 
     <!-- ============================= -->
     <!--       Crash相关        -->

@@ -13,6 +13,7 @@
         <package android:name="com.google.android.webview.dev" />
         <package android:name="com.huawei.webview" />
         <package android:name="org.bromite.webview" />
+        <package android:name="bin.mt.plus" />
     </queries>
     <application>
         <provider

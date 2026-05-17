@@ -21,11 +21,13 @@ import com.kongzue.dialogx.DialogX;
 import com.kongzue.dialogx.dialogs.MessageDialog;
 import com.kongzue.dialogx.interfaces.DialogXStyle;
 import com.kongzue.dialogx.style.MaterialStyle;
+import com.norman.webviewup.lib.WebViewUpgrade;
 import com.widget.noname.upgrade.WebViewSelectionActivity;
 import com.widget.noname.Settings;
 import com.widget.noname.common.util.TutorialConstant;
 import com.widget.noname.function.functionsettings.R;
 import com.widget.noname.function.functionsettings.preference.DialogXPreferenceFragmentCompat;
+import com.widget.noname.upgrade.WebViewUpgradeUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -239,6 +241,18 @@ public class SettingsFragment extends DialogXPreferenceFragmentCompat implements
                 return true;
             }
             case Settings.KEY_WEBVIEW_UPGRADE: {
+                if (WebViewUpgradeUtils.UseAssetWebView) {
+                    String UpgradeWebViewPackageName = WebViewUpgrade.getUpgradeWebViewPackageName();
+                    String UpgradeWebViewVersion = WebViewUpgrade.getUpgradeWebViewVersion();
+                    MessageDialog.build()
+                            .setTitle(com.widget.noname.function.functionlibrary.R.string.common_tip)
+                            .setMessage(getString(com.widget.noname.function.functionlibrary.R.string.webview_update_disabled_message,
+                                    UpgradeWebViewPackageName,
+                                    UpgradeWebViewVersion))
+                            .setOkButton(android.R.string.ok)
+                            .show();
+                    break;
+                }
                 Intent intent = new Intent();
                 intent.setComponent(new ComponentName(getContext().getPackageName(), WebViewSelectionActivity.class.getCanonicalName()));
                 getContext().startActivity(intent);

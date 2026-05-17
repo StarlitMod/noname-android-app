@@ -6,5 +6,7 @@ public interface VersionControlItemListener {
 
     void onSetPathItemClick(VersionData data);
 
+    void onItemOpen(VersionData data);
+
     void onItemDelete(VersionData data);
 }

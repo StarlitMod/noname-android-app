@@ -3,10 +3,12 @@ package com.widget.noname.function.functionimport.adapter;
 import static com.kongzue.dialogx.dialogs.PopTip.tip;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 import android.view.Gravity;
@@ -27,6 +29,7 @@ import com.kongzue.dialogx.sharedialog.bean.ShareData;
 import com.widget.noname.function.functionimport.databinding.FileItemViewModel;
 import com.widget.noname.function.functionimport.databinding.ItemFileBinding;
 import com.widget.noname.function.functionimport.listener.ImportItemListener;
+import com.widget.noname.util.ApkUtil;
 import com.widget.noname.util.FileUtil;
 import com.widget.noname.util.ShizukuUtil;
 
@@ -89,7 +92,11 @@ public class ImportViewPagerAdapter extends RecyclerView.Adapter<ImportViewPager
             browseFolder(data);
         }
         else {
-            PopMenu.show(view, new String[] {context.getString(com.widget.noname.function.functionlibrary.R.string.common_action_import), context.getString(com.widget.noname.function.functionlibrary.R.string.common_action_share)})
+            PopMenu.show(view, new String[] {
+                            context.getString(com.widget.noname.function.functionlibrary.R.string.common_action_import),
+                            context.getString(com.widget.noname.function.functionlibrary.R.string.common_action_open),
+                            context.getString(com.widget.noname.function.functionlibrary.R.string.common_action_share)
+                    })
                     .setOverlayBaseView(false)
                     .setAlignGravity(Gravity.RIGHT | Gravity.BOTTOM)
                     .setWidth(view.getWidth() / 4)
@@ -97,12 +104,17 @@ public class ImportViewPagerAdapter extends RecyclerView.Adapter<ImportViewPager
                     .setAutoTintIconInLightOrDarkMode(true)
                     .setIconResIds(
                             com.widget.noname.function.functionlibrary.R.drawable.icon_import,
+                            com.widget.noname.function.functionlibrary.R.drawable.icon_open,
                             com.widget.noname.function.functionlibrary.R.drawable.icon_share
                     )
                     .setOnMenuItemClickListener((dialog, text, index) -> {
                         if (index == 0) {
                             importZip(data);
-                        } else if (index == 1) {
+                        }
+                        else if (index == 1) {
+                            openFile(data);
+                        }
+                        else if (index == 2) {
                             shareFile(data);
                         }
                         return false;
@@ -129,6 +141,37 @@ public class ImportViewPagerAdapter extends RecyclerView.Adapter<ImportViewPager
                 })
                 .setCancelButton(android.R.string.cancel)
                 .show();
+    }
+
+    private void openFile(FileItemViewModel data) {
+        if (ApkUtil.isAppInstalled("bin.mt.plus")) {
+            try {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setPackage("bin.mt.plus");
+                // 使用 FileProvider 转换 URI
+                Uri uri = null;
+                Object model = data.getModel();
+                if (model instanceof DocumentFile) {
+                    uri = ((DocumentFile) model).getUri();
+                }
+                else if (model instanceof File) {
+                    uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", (File) model);
+                }
+                intent.setData(uri);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(
+                        android.R.anim.fade_in,    // 新 Activity 进入动画
+                        android.R.anim.fade_out    // 当前 Activity 退出动画
+                );
+            } catch (Exception e) {
+                tip(context.getString(com.widget.noname.function.functionlibrary.R.string.common_error_cannot_open_file, e.getMessage()));
+                e.printStackTrace();
+            }
+        }
+        else {
+            tip(com.widget.noname.function.functionlibrary.R.string.common_error_not_install_mt);
+        }
     }
 
     private void shareFile(FileItemViewModel data) {

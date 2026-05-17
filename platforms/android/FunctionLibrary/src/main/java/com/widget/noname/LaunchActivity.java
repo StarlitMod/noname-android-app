@@ -129,24 +129,6 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        nativeLib = new NativeLib();
-
-        String GameRootPath = MMKV.defaultMMKV().getString(FileConstant.GAME_PATH_KEY, null);
-        if (GameRootPath != null) {
-            nativeLib.initializeWebViewFileSystemLoader(this, GameRootPath);
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-                boolean needTip = getSharedPreferences("nonameyuri", MODE_PRIVATE)
-                        .getBoolean("AndroidVersionPTip", false);
-
-                if (needTip) {
-                    this.getSharedPreferences("nonameyuri", MODE_PRIVATE)
-                            .edit()
-                            .putBoolean("AndroidVersionPTip", true)
-                            .apply();
-                    tip(R.string.migration_warning_android9_multiple_versions).iconWarning().show();
-                }
-            }
-        }
         super.onCreate(savedInstanceState);
 
         GitHubUtil.init(this);
@@ -195,8 +177,6 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
         }
 
         // waitDialog = WaitDialog.show(this, getString(R.string.notification_progress_checking_update));
-
-        initFunctions();
 
         viewModel = new ViewModelProvider(this).get(ImportEventViewModel.class);
         viewModel.getNavigationEvent().observe(this, funNameAndTabName -> {
@@ -306,6 +286,26 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
     protected void ActivityOnCreate(Bundle extras) {
         Log.e(TAG, "LaunchActivityOnCreate");
         super.ActivityOnCreate(extras);
+        nativeLib = new NativeLib();
+
+        String GameRootPath = MMKV.defaultMMKV().getString(FileConstant.GAME_PATH_KEY, null);
+        if (GameRootPath != null) {
+            nativeLib.initializeWebViewFileSystemLoader(this, GameRootPath);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+                boolean needTip = getSharedPreferences("nonameyuri", MODE_PRIVATE)
+                        .getBoolean("AndroidVersionPTip", false);
+
+                if (needTip) {
+                    this.getSharedPreferences("nonameyuri", MODE_PRIVATE)
+                            .edit()
+                            .putBoolean("AndroidVersionPTip", true)
+                            .apply();
+                    tip(R.string.migration_warning_android9_multiple_versions).iconWarning().show();
+                }
+            }
+        }
+        // Functions会加载webview
+        initFunctions();
         deleteDownloadCache();
         loadHostsAndInitClient();
     }

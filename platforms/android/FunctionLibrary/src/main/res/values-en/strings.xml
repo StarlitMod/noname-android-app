@@ -14,6 +14,7 @@
     <string name="common_action_check_update">Check for Updates</string>
     <string name="common_action_click_to_update">Click to Update</string>
     <string name="common_action_copy">Copy</string>
+    <string name="common_action_open">Open</string>
     <string name="common_action_delete">Delete</string>
     <string name="common_action_go_to_settings">Go to Settings</string>
     <string name="common_action_import">Import</string>
@@ -34,6 +35,8 @@
     <string name="common_error_cannot_create_file">Cannot create file</string>
     <string name="common_error_cannot_open_link">Cannot open link</string>
     <string name="common_error_cannot_open_link_with_url">Cannot open link:&#160;%1$s</string>
+    <string name="common_error_cannot_open_file">Cannot open file: %1$s</string>
+    <string name="common_error_not_install_mt">MT Manager is not installed. Cannot open the file.</string>
     <string name="common_error_cannot_select_own_app">Cannot select current app</string>
     <string name="common_error_create_folder_failed">Cannot create folder</string>
     <string name="common_error_delete_failed">Delete failed</string>
@@ -467,6 +470,7 @@
     <string name="webview_updating">Updating WebView kernel</string>
     <string name="webview_update_failed">WebView kernel upgrade failed. Would you like to set another WebView implementation? (%s)</string>
     <string name="webview_autostart_permission">Please grant autostart permission to WebView(%s) and restart the app, otherwise this app cannot use the WebView component properly!</string>
+    <string name="webview_update_disabled_message">This feature is disabled because the built-in WebView is enabled!\nWebView package: %1$s\nWebView version: %2$s</string>
 
     <!-- ============================= -->
     <!--       Crash相关        -->

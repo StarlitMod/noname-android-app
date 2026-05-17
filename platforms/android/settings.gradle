@@ -11,7 +11,7 @@ include ':FunctionVersion'
 include ':FunctionGameShell'
 include ':FunctionLibrary'
 include ':FunctionImport'
-include ':native-lib'
+// include ':native-lib'
 include ':FunctionSettings'
 include ':FunctionTheme'
 

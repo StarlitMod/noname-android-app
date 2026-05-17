@@ -1,6 +1,7 @@
 package org.apache.cordova.devtools;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.ParcelFileDescriptor;
 
 import com.widget.noname.util.ShizukuUtil;
@@ -165,7 +166,8 @@ public class DevToolsProxy {
                         try { localWebViewOut.close(); } catch (IOException ignored) {}
                     }
                 }
-            } else if (path.startsWith("/serve_rev/") ||
+            } else if (
+                    (path.startsWith("/serve_rev/") || path.startsWith("/serve_internal_file/")) ||
                     path.contains("inspector.html") ||
                     path.contains("worker_app.html") ||
                     path.contains("js_app.html") ||
@@ -448,7 +450,12 @@ public class DevToolsProxy {
     private String generateWebSocketKey() {
         byte[] randomBytes = new byte[16];
         new Random().nextBytes(randomBytes);
-        return Base64.getEncoder().encodeToString(randomBytes);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return Base64.getEncoder().encodeToString(randomBytes);
+        }
+        else {
+            return android.util.Base64.encodeToString(randomBytes, android.util.Base64.NO_WRAP);
+        }
     }
 
     /**
@@ -766,9 +773,10 @@ public class DevToolsProxy {
      */
     private void handleDevToolsFrontend(String path, OutputStream output) throws IOException {
         try {
+            Log.e(TAG, "handleDevToolsFrontend: " + path);
             // 处理serve_rev/@hash/路径
             String assetPath = path;
-            if (path.startsWith("/serve_rev/@")) {
+            if (path.startsWith("/serve_rev/@") || path.startsWith("/serve_internal_file/@")) {
                 int hashEnd = path.indexOf('/', 12);
                 if (hashEnd != -1) {
                     assetPath = path.substring(hashEnd);

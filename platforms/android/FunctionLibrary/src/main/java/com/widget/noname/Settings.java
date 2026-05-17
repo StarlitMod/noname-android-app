@@ -219,7 +219,7 @@ public class Settings {
     }
 
     public static String getGithubDownloadAcceleration() {
-        return mmkv.getString(KEY_GITHUB_DOWNLOAD_ACCELERATION, "");
+        return mmkv.getString(KEY_GITHUB_DOWNLOAD_ACCELERATION, "https://ghfast.top/");
     }
 
     public static void setGithubDownloadAcceleration(String githubDownloadAcceleration) {

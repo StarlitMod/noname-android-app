@@ -2,7 +2,6 @@ package com.widget.noname.upgrade;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -21,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.norman.webviewup.lib.WebViewUpgrade;
+import com.widget.noname.Settings;
 import com.widget.noname.function.functionlibrary.R;
 
 import java.util.HashMap;
@@ -134,7 +134,7 @@ public class WebViewSelectionActivity extends Activity {
         // 如果不一致
         if (!LAST_SELECTED_WEBVIEW_PACKAGE.equals(SELECTED_WEBVIEW_PACKAGE)) {
             // 重启
-            restartApp();
+            Settings.restartApp(this);
         }
     }
 
@@ -350,26 +350,5 @@ public class WebViewSelectionActivity extends Activity {
             return applicationInfo.metaData.getString("com.android.webview.WebViewLibrary") != null;
         }
         return false;
-    }
-
-    public void restartApp() {
-        PackageManager packageManager = getPackageManager();
-        Intent launchIntent = packageManager.getLaunchIntentForPackage(getPackageName());
-        if (launchIntent != null) {
-            // 设置Intent标志，确保新的Activity作为新的任务栈顶部运行，并清除当前任务栈
-            launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            // 启动主Activity
-            startActivity(launchIntent);
-        }
-
-        try {
-            // 杀掉当前进程
-            android.os.Process.killProcess(android.os.Process.myPid());
-            // 退出Java虚拟机
-            System.exit(0);
-        } catch (Exception e) {
-            // 处理启动Activity时可能出现的异常
-            e.printStackTrace();
-        }
     }
 }

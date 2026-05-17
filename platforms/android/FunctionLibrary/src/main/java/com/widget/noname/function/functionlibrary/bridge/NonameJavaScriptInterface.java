@@ -15,7 +15,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 
+import com.kongzue.dialogx.dialogs.MessageDialog;
+import com.norman.webviewup.lib.WebViewUpgrade;
 import com.widget.noname.upgrade.WebViewSelectionActivity;
+import com.widget.noname.upgrade.WebViewUpgradeUtils;
 import com.widget.noname.util.ScreenshotUtil;
 
 import net.lingala.zip4j.ZipFile;
@@ -262,13 +265,26 @@ public class NonameJavaScriptInterface {
     @JavascriptInterface
     @SuppressWarnings("unused")
     public void changeWebviewProvider() {
-        Intent newIntent = new Intent(context, WebViewSelectionActivity.class);
-        newIntent.setAction(Intent.ACTION_VIEW);
-        activity.startActivity(newIntent);
-        activity.overridePendingTransition(
-                android.R.anim.fade_in,
-                android.R.anim.fade_out
-        );
+        if (WebViewUpgradeUtils.UseAssetWebView) {
+            String UpgradeWebViewPackageName = WebViewUpgrade.getUpgradeWebViewPackageName();
+            String UpgradeWebViewVersion = WebViewUpgrade.getUpgradeWebViewVersion();
+            MessageDialog.build()
+                    .setTitle(com.widget.noname.function.functionlibrary.R.string.common_tip)
+                    .setMessage(context.getString(com.widget.noname.function.functionlibrary.R.string.webview_update_disabled_message,
+                            UpgradeWebViewPackageName,
+                            UpgradeWebViewVersion))
+                    .setOkButton(android.R.string.ok)
+                    .show();
+        }
+        else {
+            Intent newIntent = new Intent(context, WebViewSelectionActivity.class);
+            newIntent.setAction(Intent.ACTION_VIEW);
+            activity.startActivity(newIntent);
+            activity.overridePendingTransition(
+                    android.R.anim.fade_in,
+                    android.R.anim.fade_out
+            );
+        }
     }
 
     @JavascriptInterface

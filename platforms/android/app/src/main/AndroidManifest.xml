@@ -2,8 +2,8 @@
 <manifest
     android:appCategory="game"
     android:hardwareAccelerated="true"
-    android:versionCode="10005"
-    android:versionName="1.1.0"
+    android:versionCode="102000"
+    android:versionName="1.2.0"
     android:enableOnBackInvokedCallback="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"

@@ -504,6 +504,11 @@ public class DevToolsWindowService extends Service {
                             if (slashAfterHash != -1) path = path.substring(slashAfterHash + 1);
                             else path = "inspector.html";
                         }
+                        else if (path.startsWith("serve_internal_file/@")) {
+                            int slashAfterHash = path.indexOf('/', "serve_internal_file/@".length());
+                            if (slashAfterHash != -1) path = path.substring(slashAfterHash + 1);
+                            else path = "inspector.html";
+                        }
                         if (path.isEmpty()) path = "inspector.html";
                         AssetManager am = getAssets();
                         InputStream is = am.open("devtools-frontend/" + path, AssetManager.ACCESS_STREAMING);

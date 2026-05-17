@@ -54,6 +54,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -391,6 +392,7 @@ public class ImportFragment extends Fragment implements View.OnClickListener, Im
     }
 
     private void loadFiles(Uri uri) {
+        Log.e(TAG, "loadFiles: " + uri);
         if ("content".equals(uri.getScheme())) {
             DocumentFile documentFile = DocumentFile.fromTreeUri(requireContext(), uri);
             if (documentFile != null) loadFiles(documentFile);
@@ -440,6 +442,7 @@ public class ImportFragment extends Fragment implements View.OnClickListener, Im
         Log.e(TAG, "documentFile: " + documentFile.getName());
         Log.e(TAG, "documentFile: " + documentFile.isDirectory());
         Log.e(TAG, "documentFile: " + documentFile.getUri());
+        Uri treeUri = documentFile.getUri();
 
         if (documentFile.getName() == null &&
                 !documentFile.isDirectory() &&
@@ -453,13 +456,14 @@ public class ImportFragment extends Fragment implements View.OnClickListener, Im
         }
 
         DocumentFile[] files = documentFile.listFiles();
-        Uri treeUri = documentFile.getUri();
+        Log.e(TAG, "files: " + Arrays.toString(files));
         List<FileItemViewModel> viewModels = new ArrayList<>();
 
         // 添加../功能
         // 判断是根目录还是子目录
         Uri rootUri = Uri.parse(getRootPath());
         if (!StorageHelper.isSameDocument(treeUri, rootUri)) {
+            Log.e(TAG, "不是根目录");
             DocumentFile parentFile;
             // 使用手动构建的父 URI
             Uri parentUri = getParentUri(treeUri);
@@ -496,6 +500,7 @@ public class ImportFragment extends Fragment implements View.OnClickListener, Im
             } else {
                 model = new FileItemViewModel((File) fileObj);
             }
+            Log.e(TAG, "文件: " + model.getFileName());
             viewModels.add(model);
         }
 
