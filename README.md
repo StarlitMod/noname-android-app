@@ -146,7 +146,7 @@
 
 ### 四月
 
-2026年4月赞助截图: [docs/sponsors/2026-03.jpg](docs/sponsors/2026-03.jpg)
+2026年4月赞助截图: [docs/sponsors/2026-04.jpg](docs/sponsors/2026-04.jpg)
 
 </details>
 
