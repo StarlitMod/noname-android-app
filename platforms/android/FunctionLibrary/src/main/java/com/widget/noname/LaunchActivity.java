@@ -60,7 +60,6 @@ import com.widget.noname.eventbus.UriReceivedEvent;
 import com.widget.noname.function.FunctionBean;
 import com.widget.noname.function.FunctionManager;
 import com.widget.noname.function.functionlibrary.R;
-import com.widget.noname.nativelib.NativeLib;
 import com.widget.noname.nonameui.NButton;
 import com.widget.noname.okhttp.DownloadService;
 import com.widget.noname.okhttp.HostsDns;
@@ -124,8 +123,6 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
             }
         }
     };
-
-    NativeLib nativeLib;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -286,11 +283,10 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
     protected void ActivityOnCreate(Bundle extras) {
         Log.e(TAG, "LaunchActivityOnCreate");
         super.ActivityOnCreate(extras);
-        nativeLib = new NativeLib();
 
         String GameRootPath = MMKV.defaultMMKV().getString(FileConstant.GAME_PATH_KEY, null);
         if (GameRootPath != null) {
-            nativeLib.initializeWebViewFileSystemLoader(this, GameRootPath);
+            initializeWebViewFileSystemLoader(GameRootPath);
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
                 boolean needTip = getSharedPreferences("nonameyuri", MODE_PRIVATE)
                         .getBoolean("AndroidVersionPTip", false);
@@ -308,6 +304,21 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
         initFunctions();
         deleteDownloadCache();
         loadHostsAndInitClient();
+    }
+
+    private void initializeWebViewFileSystemLoader(String gameRootPath) {
+        try {
+            if (!gameRootPath.endsWith("/") && !gameRootPath.endsWith(File.separator)) {
+                gameRootPath += File.separator;
+            }
+            Class<?> clazz = Class.forName("org.apache.cordova.webviewfilesystemloader.WebViewFileSystemLoader");
+            clazz.getMethod("setPrefix", String.class).invoke(null, gameRootPath);
+            clazz.getMethod("setLoadAssets", boolean.class).invoke(null, !Settings.getDisableLoadAssets());
+            clazz.getMethod("setInDocuments", boolean.class).invoke(null, false);
+            Log.e(TAG, "WebViewFileSystemLoader initialized by Java reflection: " + gameRootPath);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to initialize WebViewFileSystemLoader", e);
+        }
     }
 
     private DialogListBuilder createTutorial() {

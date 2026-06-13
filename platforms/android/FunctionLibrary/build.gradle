@@ -38,7 +38,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     implementation fileTree(dir: '../app/src/main/libs', include: '*.jar')
-    api fileTree(dir: './src/main/libs', include: '*.aar')
 
     // 引入了：
     // appcompat:1.7.0
@@ -52,8 +51,11 @@ dependencies {
     // implementation project(":GenshinImpactStyle")
 
     // implementation改成api可以共用
-    // DialogX
-    api fileTree(dir: '../DialogX/libs', include: '*.aar')
+    // DialogX (via flatDir)
+    api(name: 'DialogX-release', ext: 'aar')
+    api(name: 'DialogXIOSStyle-release', ext: 'aar')
+    api(name: 'DialogXKongzueStyle-release', ext: 'aar')
+    api(name: 'DialogXMIUIStyle-release', ext: 'aar')
     // var dialogx_version = "0.0.50"
     // api("com.github.kongzue.DialogX:DialogX:${dialogx_version}")
     // api("com.github.kongzue.DialogX:DialogXIOSStyle:${dialogx_version}")
@@ -95,6 +97,10 @@ dependencies {
     // api 'com.github.android-notes.SwissArmyKnife:saklib:4.0.6'
 
     api 'com.github.omicronapps:7-Zip-JBinding-4Android:Release-16.02-2.03'
+
+    api 'net.lingala.zip4j:zip4j:2.11.5'
+
+    implementation project(":WebViewUpgrade")
 
     // markdown
     api "io.noties.markwon:core:4.6.2"

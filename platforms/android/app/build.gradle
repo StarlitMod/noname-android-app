@@ -283,6 +283,10 @@ android {
 
     signingConfigs {
         release {
+            storeFile file('noname-release.jks')
+            storePassword 'noname123'
+            keyAlias 'noname'
+            keyPassword 'noname123'
             enableV2Signing  = true
             enableV3Signing  = true
         }
@@ -325,6 +329,9 @@ android {
     }
     lint {
         abortOnError false
+    }
+    aaptOptions {
+        noCompress "apk"
     }
 }
 

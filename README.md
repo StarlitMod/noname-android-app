@@ -1,3 +1,11 @@
+## 本版本更新内容
+
+1. 移除 native 签名校验逻辑，重新签名后不再弹出“请勿修改本App”提示。
+2. 保留并内置 Android WebView 119 内核：`com.google.android.webview_119.0.6045.194.apk`。
+3. 新增 MT 管理器本地存储访问支持，添加 `bin.mt.file.content` 相关 Provider/Activity。
+4. 修复项目直接 Gradle 编译问题，补齐 WebViewUpgrade、zip4j、DialogX 本地 AAR 等依赖配置。
+5. 生成临时 release 签名配置，可直接编译 arm64 release APK。
+
 > [无名杀](https://github.com/libnoname/noname)是优秀的`HTML单机三国杀`，游戏实现方式本质上来说是一个 网页+“浏览器”，通过能够在不同平台的浏览器运行无名杀网页，从而组成了各个平台的版本，版本的区别仅仅体现在浏览器的差异。 无名杀有强大的DIY功能，可以与网友讨论交流，设计自己喜欢的武将，目前支持联机功能。有着自己原创的模式，以及三国杀的众多玩法。
 
 本仓库在其基础上开发的`android 应用程序`。

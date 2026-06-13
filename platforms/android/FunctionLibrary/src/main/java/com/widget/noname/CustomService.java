@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Handler;
 import android.os.IBinder;
 import android.os.Process;
 import android.util.Log;
@@ -15,8 +14,6 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.widget.noname.function.functionlibrary.R;
-import com.widget.noname.nativelib.NativeLib;
-
 public class CustomService extends Service {
     private static final String TAG = "CustomService";
 
@@ -40,13 +37,6 @@ public class CustomService extends Service {
             }
         }
 
-        new Handler().postDelayed(() -> {
-            NativeLib nativeLib = new NativeLib();
-            String result = nativeLib.stringFromJNI(this);
-            if (result != null) Log.d(TAG, result);
-            stopSelf();
-        }, 500);
-
     }
 
     @Override
@@ -55,6 +45,7 @@ public class CustomService extends Service {
         if (intent != null) {
             handleIntentAction(intent);
         }
+        stopSelf(startId);
         return START_NOT_STICKY;
     }
 

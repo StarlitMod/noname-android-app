@@ -27,4 +27,8 @@ ext.repos = {
     google()
     mavenCentral()
     jcenter()
+    flatDir {
+        dirs "${rootProject.projectDir}/FunctionLibrary/src/main/libs"
+        dirs "${rootProject.projectDir}/DialogX/libs"
+    }
 }

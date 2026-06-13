@@ -384,11 +384,11 @@ public class Zip4jEngine extends BaseEngine {
                     }
 
                     zipFile.setRunInThread(true);
-                    zipFile.extractAll(extractPath, fixFileHeaders);
+                    zipFile.extractAll(extractPath);
                 }
                 else {
                     zipFile.setRunInThread(true);
-                    zipFile.extractAll(extractPath, fixFileHeaders);
+                    zipFile.extractAll(extractPath);
                 }
 
                 while (!progressMonitor.getState().equals(ProgressMonitor.State.READY)) {
@@ -409,6 +409,22 @@ public class Zip4jEngine extends BaseEngine {
                 }
                 else if (progressMonitor.getResult().equals(ProgressMonitor.Result.SUCCESS)) {
                     zipFile.setRunInThread(false);
+
+                    // Fix garbled filenames using fixFileHeaders map
+                    if (!fixFileHeaders.isEmpty()) {
+                        for (Map.Entry<String, String> entry : fixFileHeaders.entrySet()) {
+                            File garbledFile = new File(extractPath, entry.getKey());
+                            File fixedFile = new File(extractPath, entry.getValue());
+                            if (garbledFile.exists()) {
+                                File fixedParent = fixedFile.getParentFile();
+                                if (fixedParent != null && !fixedParent.exists()) {
+                                    fixedParent.mkdirs();
+                                }
+                                garbledFile.renameTo(fixedFile);
+                            }
+                        }
+                    }
+
                     callback.onLog(config.getContext().getString(R.string.extract_progress_deleting_temp));
                     zipFile = null;
                     if (file.delete()) {
