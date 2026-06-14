@@ -61,19 +61,16 @@
 
 构建及功能修复：
 
-1. 移除 native 签名校验逻辑，重新签名后不再弹出"请勿修改本App"提示
+1. 移除 native 签名校验逻辑，重新签名后不再弹出“请勿修改本 App”提示
 2. 保留并内置 Android WebView 119 内核：`com.google.android.webview_119.0.6045.194.apk`
-3. 修复项目直接 Gradle 编译问题，补齐 WebViewUpgrade、zip4j、DialogX 本地 AAR 等依赖配置
-4. 生成临时 release 签名配置，可直接编译 arm64 release APK
-5. 修复 `WebViewFileSystemLoader` prefix 路径问题，将原生 JNI 实现替换为 Java 反射并修正为相对路径，解决首次进游戏连接 localhost 失败的问题
-6. 修复 `Settings.restartApp()` 在 Android 12+ 上进程自杀不可靠的问题，改用 `finishAffinity()` 确保导入资源后重启生效
-7. 设置页新增「关闭所有新手引导」按钮，一键关闭全部页面的新手引导
-8. 首次启动弹窗询问是否需要新手引导，选择"不需要"直接关闭所有引导，节省时间
-9. 优化「播放启动动画」开关的文字说明，明确提示关闭可跳过启动视频、节省时间
-10. 导入/迁移后统一修复外部目录权限，文件夹可读写、文件可读写，方便文件管理器直接操作插件和游戏目录
-11. 版本页扩展管理补充状态回填修复，并新增“设置目录为可读写”入口
-12. 编译产出的 APK 文件名改为 `NoName_版本号(版本code)-架构.apk`，避免中文文件名影响 release 发布
-13. 将 `MTDataFilesProvider` 移至 `FunctionLibrary` 模块的 `bin.mt.file.content` 包下，并添加 `MTDataFilesWakeUpActivity`，统一在 `FunctionLibrary` 中注册
+3. 补齐 WebViewUpgrade、zip4j、DialogX 本地 AAR 等依赖配置，并生成临时 release 签名配置，支持直接 Gradle 编译 arm64 release APK
+4. 修复 `WebViewFileSystemLoader` 的 prefix 路径问题：以 Java 反射替换原生 JNI 实现并改为相对路径，解决首次进入游戏连接 localhost 失败的问题
+5. 修复 `Settings.restartApp()` 在 Android 12+ 上重启不可靠的问题，改用 `finishAffinity()` 确保导入资源后重启生效
+6. 新增首次启动新手引导询问弹窗，并在设置页加入「关闭所有新手引导」按钮，可一键关闭全部引导
+7. 优化「播放启动动画」开关说明，明确关闭后可跳过启动视频；导入或迁移后会统一修复外部目录权限，便于文件管理器直接操作插件和游戏目录
+8. 修复版本页扩展管理的状态回填问题，并新增“设置目录为可读写”入口
+9. 将编译产出的 APK 文件名改为 `NoName_版本号(版本code)-架构.apk`，避免中文文件名影响 release 发布
+10. 将 `MTDataFilesProvider` 移至 `FunctionLibrary` 模块的 `bin.mt.file.content` 包下，并新增 `MTDataFilesWakeUpActivity`，统一在 `FunctionLibrary` 中注册
 
 #### 版本1.2.0
 
