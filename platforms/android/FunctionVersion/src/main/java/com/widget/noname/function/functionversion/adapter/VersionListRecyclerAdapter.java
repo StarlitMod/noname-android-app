@@ -67,6 +67,7 @@ public class VersionListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         PopMenu popMenu = PopMenu.show(view, new String[] {
                 context.getString(com.widget.noname.function.functionlibrary.R.string.gamemain_action_set_as_gamemain),
                 context.getString(com.widget.noname.function.functionlibrary.R.string.common_action_open),
+                context.getString(com.widget.noname.function.functionlibrary.R.string.gamemain_action_set_directory_writable),
                 context.getString(com.widget.noname.function.functionlibrary.R.string.common_action_delete)
         });
 
@@ -78,6 +79,8 @@ public class VersionListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                         } else if (position == 1) {
                             openPath(data);
                         } else if (position == 2) {
+                            setWritable(data);
+                        } else if (position == 3) {
                             delGamePath(data);
                         }
                         return false;
@@ -85,6 +88,7 @@ public class VersionListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                     .setIconResIds(
                             com.widget.noname.function.functionlibrary.R.drawable.icon_setting,
                             com.widget.noname.function.functionlibrary.R.drawable.icon_open,
+                            com.widget.noname.function.functionlibrary.R.drawable.icon_setting,
                             com.widget.noname.function.functionlibrary.R.drawable.icon_delete
                     );
         }
@@ -92,6 +96,7 @@ public class VersionListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
             popMenu.
                     setMenuList(new String[] {
                             context.getString(com.widget.noname.function.functionlibrary.R.string.common_action_open),
+                            context.getString(com.widget.noname.function.functionlibrary.R.string.gamemain_action_set_directory_writable),
                             context.getString(com.widget.noname.function.functionlibrary.R.string.common_action_delete)
                     })
                     .setOnMenuItemClickListener((dialog, text, position) -> {
@@ -99,12 +104,16 @@ public class VersionListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                             openPath(data);
                         }
                         else if (position == 1) {
+                            setWritable(data);
+                        }
+                        else if (position == 2) {
                             delGamePath(data);
                         }
                         return false;
                     })
                     .setIconResIds(
                             com.widget.noname.function.functionlibrary.R.drawable.icon_open,
+                            com.widget.noname.function.functionlibrary.R.drawable.icon_setting,
                             com.widget.noname.function.functionlibrary.R.drawable.icon_delete
                     );
         }
@@ -137,6 +146,12 @@ public class VersionListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     private void openPath(VersionData data) {
         if (null != listener) {
             listener.onItemOpen(data);
+        }
+    }
+
+    private void setWritable(VersionData data) {
+        if (null != listener) {
+            listener.onItemSetWritable(data);
         }
     }
 

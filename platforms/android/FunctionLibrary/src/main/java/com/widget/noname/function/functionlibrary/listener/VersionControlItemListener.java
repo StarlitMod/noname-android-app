@@ -8,5 +8,7 @@ public interface VersionControlItemListener {
 
     void onItemOpen(VersionData data);
 
+    void onItemSetWritable(VersionData data);
+
     void onItemDelete(VersionData data);
 }

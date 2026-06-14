@@ -481,10 +481,69 @@ public class DecompressHelper {
 
     private void startDecompression(DecompressManager manager, ImportConfig importConfig, DecompressConfig config) {
         try {
-            manager.startDecompression(config, importConfig, callback);
+            manager.startDecompression(config, importConfig, new DecompressCallback() {
+                @Override
+                public void onStart() {
+                    callback.onStart();
+                }
+
+                @Override
+                public void onProgress(int percent) {
+                    callback.onProgress(percent);
+                }
+
+                @Override
+                public void onLog(String log) {
+                    callback.onLog(log);
+                }
+
+                @Override
+                public void onSuccess(String extractPath, ImportConfig importConfig) {
+                    normalizeImportedPath(extractPath);
+                    callback.onSuccess(extractPath, importConfig);
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    callback.onFailure(e);
+                }
+
+                @Override
+                public void onProgressUpdate(String currentFile, long completedBytes, long totalBytes) {
+                    callback.onProgressUpdate(currentFile, completedBytes, totalBytes);
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
             callback.onFailure(e);
+        }
+    }
+
+    private void normalizeImportedPath(String extractPath) {
+        if (TextUtils.isEmpty(extractPath)) {
+            Log.w(TAG, "normalizeImportedPath skipped, empty path");
+            return;
+        }
+
+        try {
+            File externalFilesDir = fragmentActivity.getExternalFilesDir(null);
+            if (externalFilesDir == null) {
+                Log.w(TAG, "normalizeImportedPath skipped, externalFilesDir is null: " + extractPath);
+                return;
+            }
+
+            File target = new File(extractPath);
+            String externalRoot = externalFilesDir.getCanonicalPath();
+            String targetPath = target.getCanonicalPath();
+            if (!targetPath.equals(externalRoot) && !targetPath.startsWith(externalRoot + File.separator)) {
+                Log.d(TAG, "normalizeImportedPath skipped, outside external root: target=" + targetPath + ", root=" + externalRoot);
+                return;
+            }
+
+            Log.d(TAG, "normalizeImportedPath apply: target=" + targetPath + ", root=" + externalRoot);
+            FileUtil.normalizeExternalStoragePermissions(target);
+        } catch (Exception e) {
+            Log.w(TAG, "normalizeImportedPath failed: " + extractPath, e);
         }
     }
 

@@ -149,6 +149,7 @@
     <!--        Game Main Related      -->
     <!-- ============================= -->
     <string name="gamemain_action_set_as_gamemain">Set as Game Main</string>
+    <string name="gamemain_action_set_directory_writable">Set Directory Writable</string>
     <string name="gamemain_dialog_confirm_delete_data">Delete \"%1$s\" and corresponding web data?</string>
     <string name="gamemain_dialog_confirm_set">Set \"%1$s\" (%2$s) as Game Main? Restart required after setting</string>
     <string name="gamemain_dialog_confirm_set_short">Set \"%1$s\" as Game Main? Restart required after setting</string>
@@ -160,6 +161,7 @@
     <string name="gamemain_error_not_set_or_invalid">Game Main not set or directory does not exist</string>
     <string name="gamemain_hint_input_new_name">Enter new Game Main name</string>
     <string name="gamemain_progress_load_extension_config">Loading extension configs from Game Main, duplicate configs will be filtered</string>
+    <string name="gamemain_toast_directory_writable_set">Directory is now writable</string>
     <string name="gamemain_toast_set_complete">Game Main setup complete</string>
 
     <!-- ============================= -->

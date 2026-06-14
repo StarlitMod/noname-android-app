@@ -1,6 +1,7 @@
 package com.widget.noname.function.functionlibrary.data;
 
 public class ExtensionInfo {
+    private String directoryName;
     private String name;
     private String intro;
     private String author;
@@ -12,7 +13,8 @@ public class ExtensionInfo {
     public ExtensionInfo() {
     }
 
-    public ExtensionInfo(String name, String intro, String author, String diskURL, String forumURL, String version, boolean enabled) {
+    public ExtensionInfo(String directoryName, String name, String intro, String author, String diskURL, String forumURL, String version, boolean enabled) {
+        this.directoryName = directoryName;
         this.name = name;
         this.intro = intro;
         this.author = author;
@@ -20,6 +22,14 @@ public class ExtensionInfo {
         this.forumURL = forumURL;
         this.version = version;
         this.enabled = enabled;
+    }
+
+    public String getDirectoryName() {
+        return directoryName == null ? "" : directoryName;
+    }
+
+    public void setDirectoryName(String directoryName) {
+        this.directoryName = directoryName;
     }
 
     public String getName() {

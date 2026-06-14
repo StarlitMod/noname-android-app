@@ -152,6 +152,7 @@ public class FunctionVersion extends BaseFunction implements OnJsBridgeCallback 
 
     private BridgeHelper bridgeHelper = null;
     private WebView webView = null;
+    private boolean pendingExtensionRefresh = false;
 
     private boolean startGameWhenSetIp = false;
 
@@ -162,11 +163,14 @@ public class FunctionVersion extends BaseFunction implements OnJsBridgeCallback 
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 Fragment fragment = adapter.getFragment(PagerHelper.SUB_FRAGMENT_EXT_MANAGE);
                 if (fragment instanceof ExtManageFragment) {
+                    initWebView();
                     extManageFragment = (ExtManageFragment) fragment;
                     extManageFragment.setBridgeCallback(FunctionVersion.this);
                     extManageFragment.updateExtensionList();
                     if (null != bridgeHelper) {
                         bridgeHelper.getExtensions();
+                    } else {
+                        pendingExtensionRefresh = true;
                     }
                 }
             }, 100);
@@ -248,21 +252,25 @@ public class FunctionVersion extends BaseFunction implements OnJsBridgeCallback 
 
     @Override
     public void onExtensionGet(String[] extensions) {
+        pendingExtensionRefresh = false;
         if (null != extensions) {
-            if (null != bridgeHelper) {
-                // 获取所有已安装扩展的状态
-                for (String ext : extensions) {
-                    if (null != ext && !ext.isEmpty()) {
-                        bridgeHelper.getExtensionState(ext);
-                    }
+            if (null == bridgeHelper) {
+                Log.e(TAG, "getExtensions skipped: bridgeHelper is null");
+                pendingExtensionRefresh = true;
+                return;
+            }
+            // 获取所有已安装扩展的状态
+            for (String ext : extensions) {
+                if (null != ext && !ext.isEmpty()) {
+                    bridgeHelper.getExtensionState(ext);
                 }
-                // 获取所有未安装扩展的状态
-                if (extManageFragment != null) {
-                    List<String> extList = Arrays.asList(extensions);
-                    for (ExtensionInfo extensionInfo : extManageFragment.extensionList) {
-                        if (!extList.contains(extensionInfo.getName())){
-                            bridgeHelper.getExtensionState(extensionInfo.getName());
-                        }
+            }
+            // 获取所有未安装扩展的状态
+            if (extManageFragment != null) {
+                List<String> extList = Arrays.asList(extensions);
+                for (ExtensionInfo extensionInfo : extManageFragment.extensionList) {
+                    if (!extList.contains(extensionInfo.getDirectoryName())){
+                        bridgeHelper.getExtensionState(extensionInfo.getDirectoryName());
                     }
                 }
             }
@@ -308,6 +316,16 @@ public class FunctionVersion extends BaseFunction implements OnJsBridgeCallback 
     public void onPageStarted() {
         if (bridgeHelper != null) {
             bridgeHelper.getExtensions();
+        } else {
+            pendingExtensionRefresh = true;
+        }
+
+        if (pendingExtensionRefresh) {
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                if (bridgeHelper != null) {
+                    bridgeHelper.getExtensions();
+                }
+            }, 150);
         }
     }
 

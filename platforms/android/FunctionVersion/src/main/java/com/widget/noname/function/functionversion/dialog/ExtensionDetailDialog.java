@@ -148,11 +148,11 @@ public class ExtensionDetailDialog {
                             info.getName()))
                     .setOkButton(android.R.string.ok, (baseDialog, view2) -> {
                         if (gameRootPath != null) {
-                            File extensionDir = new File(new File(gameRootPath, "extension"), info.getName());
+                            File extensionDir = new File(new File(gameRootPath, "extension"), info.getDirectoryName());
                             deleteDirectory(extensionDir);
                         }
                         if (bridgeCallback != null) {
-                            bridgeCallback.onExtensionRemove(info.getName());
+                            bridgeCallback.onExtensionRemove(info.getDirectoryName());
                         }
                         return false;
                     })

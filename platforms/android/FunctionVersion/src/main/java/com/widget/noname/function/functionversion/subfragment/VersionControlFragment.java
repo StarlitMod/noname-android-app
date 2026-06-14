@@ -292,6 +292,32 @@ public class VersionControlFragment extends TutorialFragment implements View.OnC
 
     @SuppressLint("CheckResult")
     @Override
+    public void onItemSetWritable(VersionData data) {
+        WaitDialog.show(getString(com.widget.noname.function.functionlibrary.R.string.common_status_processing));
+        Observable.create(emitter -> {
+            try {
+                File targetDir = new File(data.getPath());
+                Log.d(TAG, "开始修复游戏目录权限: " + targetDir.getAbsolutePath());
+                FileUtil.normalizeExternalStoragePermissions(targetDir);
+                emitter.onNext(true);
+                emitter.onComplete();
+            } catch (Exception e) {
+                emitter.onError(e);
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(obj -> {
+                    tip(com.widget.noname.function.functionlibrary.R.string.gamemain_toast_directory_writable_set).iconSuccess().show();
+                    WaitDialog.dismiss();
+                }, throwable -> {
+                    tip(getString(com.widget.noname.function.functionlibrary.R.string.common_error_operation_failed_with_stacktrace, throwable.getMessage())).iconError().show();
+                    WaitDialog.dismiss();
+                    throwable.printStackTrace();
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
     public void onItemDelete(VersionData data) {
         WaitDialog.show("Please Wait!");
         Context context = this.getContext();

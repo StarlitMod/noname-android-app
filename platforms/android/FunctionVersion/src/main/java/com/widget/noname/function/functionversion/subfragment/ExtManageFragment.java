@@ -157,9 +157,9 @@ public class ExtManageFragment extends TutorialFragment {
                 extension.setEnabled(enable);
                 if (bridgeCallback != null) {
                     if (enable) {
-                        bridgeCallback.onExtensionEnable(extension.getName());
+                        bridgeCallback.onExtensionEnable(extension.getDirectoryName());
                     } else {
-                        bridgeCallback.onExtensionDisable(extension.getName());
+                        bridgeCallback.onExtensionDisable(extension.getDirectoryName());
                     }
                 }
             }
@@ -173,11 +173,11 @@ public class ExtManageFragment extends TutorialFragment {
                             .setOkButton(android.R.string.ok, (baseDialog, view) -> {
                                 String gameRootPath = MMKV.defaultMMKV().getString(FileConstant.GAME_PATH_KEY, null);
                                 if (gameRootPath != null) {
-                                    File extensionDir = new File(new File(gameRootPath, "extension"), extension.getName());
+                                    File extensionDir = new File(new File(gameRootPath, "extension"), extension.getDirectoryName());
                                     deleteDirectory(extensionDir);
                                 }
                                 if (bridgeCallback != null) {
-                                    bridgeCallback.onExtensionRemove(extension.getName());
+                                    bridgeCallback.onExtensionRemove(extension.getDirectoryName());
                                 }
                                 extensionList.remove(extension);
                                 adapter.setExtensionList(extensionList);
@@ -332,6 +332,7 @@ public class ExtManageFragment extends TutorialFragment {
     public void addExtensionInfo(String extName, String infoJson) {
         Log.d(TAG, "addExtensionInfo: " + extName);
         ExtensionInfo info = new ExtensionInfo();
+        info.setDirectoryName(extName);
         try {
             JSONObject jsonObject = JSONObject.parseObject(infoJson);
             if (jsonObject.getString("name") != null) {
@@ -362,6 +363,7 @@ public class ExtManageFragment extends TutorialFragment {
 
     public void changeExtensionInfo(ExtensionInfo info, String extName, String infoJson) {
         Log.d(TAG, "changeExtensionInfo: " + extName);
+        info.setDirectoryName(extName);
         try {
             JSONObject jsonObject = JSONObject.parseObject(infoJson);
             if (jsonObject.getString("name") != null) {
@@ -390,9 +392,11 @@ public class ExtManageFragment extends TutorialFragment {
 
     public void updateExtensionState(String extName, boolean enabled) {
         getActivity().runOnUiThread(() -> {
+            Log.d(TAG, "updateExtensionState: " + extName + " => " + enabled);
             for (ExtensionInfo info : extensionList) {
-                if (info.getName().equals(extName)) {
+                if (info.getDirectoryName().equals(extName)) {
                     info.setEnabled(enabled);
+                    Log.d(TAG, "matched extension directory: " + info.getDirectoryName() + ", displayName=" + info.getName());
                     adapter.setExtensionList(extensionList);
                     break;
                 }

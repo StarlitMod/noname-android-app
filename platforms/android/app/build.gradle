@@ -337,14 +337,14 @@ android {
         noCompress "apk"
     }
 
-    // 自定义 APK 输出名称：无名杀_版本号(版本code).apk
+    // 自定义 APK 输出名称：NoName_版本号(版本code).apk
     applicationVariants.configureEach { variant ->
         variant.outputs.all { output ->
             def flavor = variant.flavorName
             def versionName = variant.versionName ?: "unknown"
             def versionCode = variant.versionCode
             def abi = (flavor != null && !flavor.isEmpty()) ? (flavor == "virtualMachine" ? "vm" : flavor) : null
-            outputFileName = abi ? "无名杀_${versionName}(${versionCode})-${abi}.apk" : "无名杀_${versionName}(${versionCode}).apk"
+            outputFileName = abi ? "NoName_${versionName}(${versionCode})-${abi}.apk" : "NoName_${versionName}(${versionCode}).apk"
         }
     }
 }

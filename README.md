@@ -70,8 +70,10 @@
 7. 设置页新增「关闭所有新手引导」按钮，一键关闭全部页面的新手引导
 8. 首次启动弹窗询问是否需要新手引导，选择"不需要"直接关闭所有引导，节省时间
 9. 优化「播放启动动画」开关的文字说明，明确提示关闭可跳过启动视频、节省时间
-10. 编译产出的 APK 文件名改为 `无名杀_版本号(版本code)-架构.apk`，更直观识别版本
-11. 将 `MTDataFilesProvider` 移至 `FunctionLibrary` 模块的 `bin.mt.file.content` 包下，并添加 `MTDataFilesWakeUpActivity`，统一在 `FunctionLibrary` 中注册
+10. 导入/迁移后统一修复外部目录权限，文件夹可读写、文件可读写，方便文件管理器直接操作插件和游戏目录
+11. 版本页扩展管理补充状态回填修复，并新增“设置目录为可读写”入口
+12. 编译产出的 APK 文件名改为 `NoName_版本号(版本code)-架构.apk`，避免中文文件名影响 release 发布
+13. 将 `MTDataFilesProvider` 移至 `FunctionLibrary` 模块的 `bin.mt.file.content` 包下，并添加 `MTDataFilesWakeUpActivity`，统一在 `FunctionLibrary` 中注册
 
 #### 版本1.2.0
 

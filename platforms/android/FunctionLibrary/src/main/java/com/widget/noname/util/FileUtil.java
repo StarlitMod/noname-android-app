@@ -429,6 +429,65 @@ public class FileUtil {
         }
     }
 
+    public static void normalizeExternalStoragePermissions(File target) {
+        if (target == null || !target.exists()) {
+            Log.w(TAG, "normalizeExternalStoragePermissions skipped, target missing: " + (target == null ? "null" : target.getAbsolutePath()));
+            return;
+        }
+
+        Log.d(TAG, "normalizeExternalStoragePermissions start: " + target.getAbsolutePath());
+        normalizeWithJava(target);
+        Log.d(TAG, "normalizeExternalStoragePermissions java fallback applied: " + target.getAbsolutePath());
+        if (ShizukuUtil.checkPermission()) {
+            normalizeWithShell(target);
+        } else {
+            Log.d(TAG, "normalizeExternalStoragePermissions shizuku unavailable, java-only: " + target.getAbsolutePath());
+        }
+        Log.d(TAG, "normalizeExternalStoragePermissions end: " + target.getAbsolutePath());
+    }
+
+    private static boolean normalizeWithShell(File target) {
+        try {
+            String path = target.getAbsolutePath().replace("\"", "\\\"");
+            StringBuilder command = new StringBuilder();
+            command.append("chgrp -hR ext_data_rw \"").append(path).append("\" >/dev/null 2>&1 || true");
+            if (target.isDirectory()) {
+                command.append("; find \"").append(path).append("\" -type d -exec chmod 775 {} + >/dev/null 2>&1 || true");
+                command.append("; find \"").append(path).append("\" -type f -exec chmod 664 {} + >/dev/null 2>&1 || true");
+            } else {
+                command.append("; chmod 664 \"").append(path).append("\" >/dev/null 2>&1 || true");
+            }
+            Log.d(TAG, "normalizeWithShell exec: " + command);
+            ShizukuUtil.exec(command.toString());
+            Log.d(TAG, "normalizeWithShell applied: " + target.getAbsolutePath());
+            return true;
+        } catch (Exception e) {
+            Log.w(TAG, "normalizeWithShell failed: " + target.getAbsolutePath(), e);
+            return false;
+        }
+    }
+
+    private static void normalizeWithJava(File target) {
+        if (!target.exists()) {
+            return;
+        }
+
+        target.setReadable(true, false);
+        target.setWritable(true, false);
+        if (target.isDirectory()) {
+            target.setExecutable(true, false);
+            Log.d(TAG, "normalizeWithJava dir => rwx for all: " + target.getAbsolutePath());
+            File[] children = target.listFiles();
+            if (children != null) {
+                for (File child : children) {
+                    normalizeWithJava(child);
+                }
+            }
+        } else {
+            Log.d(TAG, "normalizeWithJava file => rw for all: " + target.getAbsolutePath());
+        }
+    }
+
     public static void copyFile(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024];
 

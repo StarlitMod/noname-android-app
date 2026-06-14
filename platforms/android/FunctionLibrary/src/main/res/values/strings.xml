@@ -149,6 +149,7 @@
     <!--        游戏主体相关           -->
     <!-- ============================= -->
     <string name="gamemain_action_set_as_gamemain">设置为游戏主体</string>
+    <string name="gamemain_action_set_directory_writable">设置目录为可读写</string>
     <string name="gamemain_dialog_confirm_delete_data">是否删除「%1$s」以及对应的网页数据？</string>
     <string name="gamemain_dialog_confirm_set">是否设置「%1$s」(%2$s)为游戏主体？成功设置后需要重启才能生效</string>
     <string name="gamemain_dialog_confirm_set_short">是否设置「%1$s」为游戏主体？成功设置后需要重启才能生效</string>
@@ -160,6 +161,7 @@
     <string name="gamemain_error_not_set_or_invalid">未设置游戏主体或游戏主体目录不存在</string>
     <string name="gamemain_hint_input_new_name">请输入新的游戏主体名称</string>
     <string name="gamemain_progress_load_extension_config">正在从游戏主体的扩展加载压缩包类型配置，其中重名配置将被过滤</string>
+    <string name="gamemain_toast_directory_writable_set">目录已设为可读写</string>
     <string name="gamemain_toast_set_complete">游戏主体设置完成</string>
 
     <!-- ============================= -->

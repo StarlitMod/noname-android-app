@@ -39,6 +39,7 @@ public class ExtensionListAdapter extends RecyclerView.Adapter<ExtensionListAdap
         TextView nameText, authorText, versionText;
         SwitchCompat enableSwitch;
         ExtensionInfo extension;
+        private boolean binding;
         public ExtensionViewHolder(View itemView, ExtensionListAdapter adapter) {
             super(itemView);
             nameText = itemView.findViewById(R.id.extension_name);
@@ -47,6 +48,7 @@ public class ExtensionListAdapter extends RecyclerView.Adapter<ExtensionListAdap
             enableSwitch = itemView.findViewById(R.id.extension_switch);
 
             enableSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (binding) return;
                 if (extension == null) return;
                 if (actionListener != null) {
                     actionListener.onToggleEnable(extension, isChecked);
@@ -74,10 +76,12 @@ public class ExtensionListAdapter extends RecyclerView.Adapter<ExtensionListAdap
     public void onBindViewHolder(ExtensionViewHolder holder, int position) {
         ExtensionInfo extension = extensionList.get(position);
         holder.extension = extension;
+        holder.binding = true;
         holder.nameText.setText(extension.getName());
         holder.authorText.setText(extension.getAuthor());
         holder.versionText.setText(extension.getVersion());
         holder.enableSwitch.setChecked(extension.isEnabled());
+        holder.binding = false;
     }
 
     @Override
