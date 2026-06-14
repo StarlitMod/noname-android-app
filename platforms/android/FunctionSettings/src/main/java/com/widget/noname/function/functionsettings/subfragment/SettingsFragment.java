@@ -148,6 +148,24 @@ public class SettingsFragment extends DialogXPreferenceFragmentCompat implements
             }
         }
 
+        // 关闭所有新手引导
+        Preference disableAllTutorialsPref = findPreference("disable_all_tutorials");
+        if (disableAllTutorialsPref != null) {
+            disableAllTutorialsPref.setOnPreferenceClickListener(pref -> {
+                MessageDialog.build()
+                        .setTitle(com.widget.noname.function.functionlibrary.R.string.common_tip)
+                        .setMessage(getString(com.widget.noname.function.functionlibrary.R.string.common_dialog_confirm_preference_change, disableAllTutorialsPref.getTitle()))
+                        .setOkButton(android.R.string.ok, (baseDialog, view) -> {
+                            TutorialConstant.disableAllTutorials(requireContext());
+                            tip(com.widget.noname.function.functionlibrary.R.string.tutorial_toast_all_disabled).iconSuccess().show();
+                            return false;
+                        })
+                        .setCancelButton(android.R.string.cancel)
+                        .show();
+                return true;
+            });
+        }
+
         // 关于
         Preference privacyPolicyPreference = findPreference(Settings.KEY_PRIVACY_POLICY);
         if (privacyPolicyPreference != null) {

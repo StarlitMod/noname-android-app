@@ -402,6 +402,13 @@
     <string name="pref_summary_reset_lan_tutorial">Reset the beginner\'s guide on the LAN multiplayer function page</string>
     <string name="pref_title_reset_theme_switch_tutorial">Reset Theme Tutorial</string>
     <string name="pref_summary_reset_theme_switch_tutorial">Reset the beginner\'s guide on the theme page</string>
+    <string name="pref_title_disable_all_tutorials">Disable All Tutorials</string>
+    <string name="pref_summary_disable_all_tutorials">Disable all beginner\'s guides, they will no longer pop up</string>
+    <string name="tutorial_first_launch_title">Beginner\'s Guide</string>
+    <string name="tutorial_first_launch_message">It looks like this is your first time using this app. Would you like to see the beginner\'s guide?\n\nSelecting "No" will disable all beginner\'s guides. You can re-enable them later in Settings.</string>
+    <string name="tutorial_first_launch_yes">Yes</string>
+    <string name="tutorial_first_launch_no">No</string>
+    <string name="tutorial_toast_all_disabled">All beginner\'s guides have been disabled</string>
     <string name="pref_category_about">About</string>
     <string name="pref_title_privacy_policy_disclaimer">Privacy Policy and Disclaimer</string>
     <string name="pref_summary_privacy_policy_disclaimer">View our privacy policy and disclaimer</string>

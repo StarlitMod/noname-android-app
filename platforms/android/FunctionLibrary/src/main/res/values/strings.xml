@@ -402,6 +402,13 @@
     <string name="pref_summary_reset_lan_tutorial">重置局域网联机功能页面的新手引导</string>
     <string name="pref_title_reset_theme_switch_tutorial">重置主题教程</string>
     <string name="pref_summary_reset_theme_switch_tutorial">重置主题功能页面的新手引导</string>
+    <string name="pref_title_disable_all_tutorials">关闭所有新手引导</string>
+    <string name="pref_summary_disable_all_tutorials">关闭所有页面的新手引导，不再弹出</string>
+    <string name="tutorial_first_launch_title">新手引导</string>
+    <string name="tutorial_first_launch_message">检测到您是第一次使用本应用，是否需要新手引导？\n\n选择"不需要"将关闭所有页面的新手引导，之后可在设置中重新开启。</string>
+    <string name="tutorial_first_launch_yes">需要</string>
+    <string name="tutorial_first_launch_no">不需要</string>
+    <string name="tutorial_toast_all_disabled">已关闭所有新手引导</string>
     <string name="pref_category_about">关于</string>
     <string name="pref_title_privacy_policy_disclaimer">隐私政策以及免责声明</string>
     <string name="pref_summary_privacy_policy_disclaimer">查看我们的隐私政策以及免责声明</string>

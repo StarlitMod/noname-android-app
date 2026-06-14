@@ -55,4 +55,17 @@ public class TutorialConstant {
         SharedPreferences prefs = context.getSharedPreferences("nonameyuri", Context.MODE_PRIVATE);
         prefs.edit().putBoolean(key, false).apply();
     }
+
+    /**
+     * 关闭所有教程（将所有教程状态设为已完成）
+     * @param context Context 对象
+     */
+    public static void disableAllTutorials(@NonNull Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("nonameyuri", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        for (String key : VALID_KEYS) {
+            editor.putBoolean(key, true);
+        }
+        editor.apply();
+    }
 }

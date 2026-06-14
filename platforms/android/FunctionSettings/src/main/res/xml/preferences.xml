@@ -220,6 +220,14 @@
             app:iconSpaceReserved="false">
         </Preference>
 
+        <!-- 关闭所有新手引导 -->
+        <Preference
+            app:key="disable_all_tutorials"
+            app:title="@string/pref_title_disable_all_tutorials"
+            app:summary="@string/pref_summary_disable_all_tutorials"
+            app:iconSpaceReserved="false">
+        </Preference>
+
     </PreferenceCategory>
 
     <PreferenceCategory
