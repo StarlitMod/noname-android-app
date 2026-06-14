@@ -119,6 +119,12 @@ public class SettingsFragment extends DialogXPreferenceFragmentCompat implements
             splashScreenPreference.setOnPreferenceChangeListener(this);
         }
 
+        SwitchPreference autoFixPermissionsPreference = findPreference(Settings.KEY_AUTO_FIX_PERMISSIONS);
+        if (autoFixPermissionsPreference != null) {
+            autoFixPermissionsPreference.setChecked(Settings.getAutoFixPermissions());
+            autoFixPermissionsPreference.setOnPreferenceChangeListener(this);
+        }
+
         // 主题
 
         ListPreference dialogThemePreference = findPreference(Settings.KEY_DIALOG_THEME);
@@ -245,6 +251,10 @@ public class SettingsFragment extends DialogXPreferenceFragmentCompat implements
             }
             case Settings.KEY_PRE_UPDATE: {
                 Settings.setPreUpdate((boolean) newValue);
+                return true;
+            }
+            case Settings.KEY_AUTO_FIX_PERMISSIONS: {
+                Settings.setAutoFixPermissions((boolean) newValue);
                 return true;
             }
         }

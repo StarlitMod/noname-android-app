@@ -89,6 +89,8 @@ public class Settings {
 
     // 扩展管理相关
     public static final String KEY_EXTENSION_SORT_TYPE = "extension_sort_type";
+    // 导入权限相关
+    public static final String KEY_AUTO_FIX_PERMISSIONS = "auto_fix_permissions";
 
     public static int getOnlinePort() {
         return mmkv.getInt(KEY_ONLINE_PORT, 8080);
@@ -261,6 +263,16 @@ public class Settings {
     public static void setExtensionSortType(ExtensionSortType sortType) {
         mmkv.putInt(KEY_EXTENSION_SORT_TYPE, sortType.getValue());
         EventBus.getDefault().post(new SettingsChangeEvent(KEY_EXTENSION_SORT_TYPE));
+    }
+
+    // 权限相关
+    public static boolean getAutoFixPermissions() {
+        return mmkv.getBoolean(KEY_AUTO_FIX_PERMISSIONS, true);
+    }
+
+    public static void setAutoFixPermissions(boolean autoFix) {
+        mmkv.putBoolean(KEY_AUTO_FIX_PERMISSIONS, autoFix);
+        EventBus.getDefault().post(new SettingsChangeEvent(KEY_AUTO_FIX_PERMISSIONS));
     }
 
     // 自定义主题相关

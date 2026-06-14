@@ -45,6 +45,12 @@
             android:summary="@string/pref_summary_play_splash_animation"
             app:iconSpaceReserved="false" />
 
+        <SwitchPreference
+            android:key="auto_fix_permissions"
+            android:title="@string/pref_title_auto_fix_permissions"
+            android:summary="@string/pref_summary_auto_fix_permissions"
+            app:iconSpaceReserved="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

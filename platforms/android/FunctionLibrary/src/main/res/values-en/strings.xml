@@ -374,6 +374,8 @@
     <string name="pref_summary_auto_enter_game">When starting the app normally, if the directory configuration is correct, automatically enter the game</string>
     <string name="pref_title_play_splash_animation">Play Splash Animation</string>
     <string name="pref_summary_play_splash_animation">Disable to skip the splash video and enter the main page faster</string>
+    <string name="pref_title_auto_fix_permissions">Auto-fix permissions after import</string>
+    <string name="pref_summary_auto_fix_permissions">Automatically fix directory and file permissions to writable after extraction or migration. Can also be fixed manually in version page.</string>
     <string name="pref_category_theme">Theme</string>
     <string name="pref_title_select_theme">Select Theme</string>
     <string name="pref_summary_select_theme">Select App Theme</string>

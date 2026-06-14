@@ -451,9 +451,11 @@ public class MigrationFragment extends TutorialFragment {
             long webviewTime = System.currentTimeMillis() - webviewStart;
 
             long androidDataStart = System.currentTimeMillis();
-            copyDirectoryRecursive(variant.androidDataUri, externalFilesTargetDir);
-            Log.d(TAG, "开始修复迁移后外部目录权限(变体): " + externalFilesTargetDir.getAbsolutePath());
-            FileUtil.normalizeExternalStoragePermissions(externalFilesTargetDir);
+copyDirectoryRecursive(variant.androidDataUri, externalFilesTargetDir);
+            if (Settings.getAutoFixPermissions()) {
+                Log.d(TAG, "开始修复迁移后外部目录权限(变体): " + externalFilesTargetDir.getAbsolutePath());
+                FileUtil.normalizeExternalStoragePermissions(externalFilesTargetDir);
+            }
             long androidDataTime = System.currentTimeMillis() - androidDataStart;
 
             long totalTime = System.currentTimeMillis() - startTime;
@@ -476,9 +478,11 @@ public class MigrationFragment extends TutorialFragment {
             copyWebViewData(privateWebViewTargetDir.getAbsolutePath());
 
             // 复制标准结构的 Android 数据
-            copyAndroidData(externalFilesTargetDir.getAbsolutePath());
-            Log.d(TAG, "开始修复迁移后外部目录权限(标准结构): " + externalFilesTargetDir.getAbsolutePath());
-            FileUtil.normalizeExternalStoragePermissions(externalFilesTargetDir);
+copyAndroidData(externalFilesTargetDir.getAbsolutePath());
+            if (Settings.getAutoFixPermissions()) {
+                Log.d(TAG, "开始修复迁移后外部目录权限(标准结构): " + externalFilesTargetDir.getAbsolutePath());
+                FileUtil.normalizeExternalStoragePermissions(externalFilesTargetDir);
+            }
 
             Log.d(TAG, "标准结构迁移完成");
             return true;
@@ -742,8 +746,10 @@ public class MigrationFragment extends TutorialFragment {
                                             outputStream.write(buffer, 0, bytesRead);
                                         }
 
-                                        outputStream.flush();
-                                        FileUtil.normalizeExternalStoragePermissions(targetFile);
+outputStream.flush();
+                                        if (Settings.getAutoFixPermissions()) {
+                                            FileUtil.normalizeExternalStoragePermissions(targetFile);
+                                        }
                                         tip(com.widget.noname.function.functionlibrary.R.string.config_toast_set_success).iconSuccess().show();
                                     } finally {
                                         if (inputStream != null) {

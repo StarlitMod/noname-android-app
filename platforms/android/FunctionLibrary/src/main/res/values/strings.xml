@@ -374,6 +374,8 @@
     <string name="pref_summary_auto_enter_game">以正常方式启动App时，如果目录配置正确，则自动进入游戏</string>
     <string name="pref_title_play_splash_animation">播放启动动画</string>
     <string name="pref_summary_play_splash_animation">关闭可跳过启动视频，节省进入主页的时间</string>
+    <string name="pref_title_auto_fix_permissions">导入后自动设置目录可读写</string>
+    <string name="pref_summary_auto_fix_permissions">开启后解压、迁移等操作完成后自动修正目录和文件权限为可读写状态，可在版本页手动修正</string>
     <string name="pref_category_theme">主题</string>
     <string name="pref_title_select_theme">选择主题</string>
     <string name="pref_summary_select_theme">选择App主题</string>

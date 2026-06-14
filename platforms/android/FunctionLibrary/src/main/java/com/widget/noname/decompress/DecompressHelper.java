@@ -519,9 +519,14 @@ public class DecompressHelper {
         }
     }
 
-    private void normalizeImportedPath(String extractPath) {
+private void normalizeImportedPath(String extractPath) {
         if (TextUtils.isEmpty(extractPath)) {
             Log.w(TAG, "normalizeImportedPath skipped, empty path");
+            return;
+        }
+
+        if (!Settings.getAutoFixPermissions()) {
+            Log.d(TAG, "normalizeImportedPath skipped, auto-fix disabled in settings");
             return;
         }
 

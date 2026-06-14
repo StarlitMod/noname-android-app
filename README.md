@@ -67,10 +67,11 @@
 4. 修复 `WebViewFileSystemLoader` 的 prefix 路径问题：以 Java 反射替换原生 JNI 实现并改为相对路径，解决首次进入游戏连接 localhost 失败的问题
 5. 修复 `Settings.restartApp()` 在 Android 12+ 上重启不可靠的问题，改用 `finishAffinity()` 确保导入资源后重启生效
 6. 新增首次启动新手引导询问弹窗，并在设置页加入「关闭所有新手引导」按钮，可一键关闭全部引导
-7. 优化「播放启动动画」开关说明，明确关闭后可跳过启动视频；导入或迁移后会统一修复外部目录权限，便于文件管理器直接操作插件和游戏目录
-8. 修复版本页扩展管理的状态回填问题，并新增“设置目录为可读写”入口
-9. 将编译产出的 APK 文件名改为 `NoName_版本号(版本code)-架构.apk`，避免中文文件名影响 release 发布
-10. 将 `MTDataFilesProvider` 移至 `FunctionLibrary` 模块的 `bin.mt.file.content` 包下，并新增 `MTDataFilesWakeUpActivity`，统一在 `FunctionLibrary` 中注册
+7. 优化「播放启动动画」开关说明，明确关闭后可跳过启动视频
+8. 导入或迁移后统一修复目录权限为可读写状态，便于文件管理器直接操作插件和游戏目录；设置页新增开关，可选择关闭自动修复、改为在版本页手动点击「设置目录为可读写」
+9. 修复版本页扩展管理的状态回填问题（显示名与目录名不一致导致重启后开关错误），并修复首次直进扩展页时状态不刷新的时序问题
+10. 将编译产出的 APK 文件名改为 `NoName_版本号(版本code)-架构.apk`，避免中文文件名影响 release 发布
+11. 将 `MTDataFilesProvider` 移至 `FunctionLibrary` 模块的 `bin.mt.file.content` 包下，并新增 `MTDataFilesWakeUpActivity`，统一在 `FunctionLibrary` 中注册
 
 #### 版本1.2.0
 
