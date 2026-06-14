@@ -1,12 +1,4 @@
-## 本版本更新内容
-
-1. 移除 native 签名校验逻辑，重新签名后不再弹出“请勿修改本App”提示。
-2. 保留并内置 Android WebView 119 内核：`com.google.android.webview_119.0.6045.194.apk`。
-3. 新增 MT 管理器本地存储访问支持，添加 `bin.mt.file.content` 相关 Provider/Activity。
-4. 修复项目直接 Gradle 编译问题，补齐 WebViewUpgrade、zip4j、DialogX 本地 AAR 等依赖配置。
-5. 生成临时 release 签名配置，可直接编译 arm64 release APK。
-
-> [无名杀](https://github.com/libnoname/noname)是优秀的`HTML单机三国杀`，游戏实现方式本质上来说是一个 网页+“浏览器”，通过能够在不同平台的浏览器运行无名杀网页，从而组成了各个平台的版本，版本的区别仅仅体现在浏览器的差异。 无名杀有强大的DIY功能，可以与网友讨论交流，设计自己喜欢的武将，目前支持联机功能。有着自己原创的模式，以及三国杀的众多玩法。
+> [无名杀](https://github.com/libnoname/noname)是优秀的`HTML单机三国杀`，游戏实现方式本质上来说是一个 网页+"浏览器"，通过能够在不同平台的浏览器运行无名杀网页，从而组成了各个平台的版本，版本的区别仅仅体现在浏览器的差异。 无名杀有强大的DIY功能，可以与网友讨论交流，设计自己喜欢的武将，目前支持联机功能。有着自己原创的模式，以及三国杀的众多玩法。
 
 本仓库在其基础上开发的`android 应用程序`。
 
@@ -63,6 +55,20 @@
 
 ## 更新日志
 
+#### 版本1.2.0 (修改版)
+
+2026年6月14日
+
+构建及功能修复：
+
+1. 移除 native 签名校验逻辑，重新签名后不再弹出"请勿修改本App"提示
+2. 保留并内置 Android WebView 119 内核：`com.google.android.webview_119.0.6045.194.apk`
+3. 新增 MT 管理器本地存储访问支持，添加 `bin.mt.file.content` 相关 Provider/Activity
+4. 修复项目直接 Gradle 编译问题，补齐 WebViewUpgrade、zip4j、DialogX 本地 AAR 等依赖配置
+5. 生成临时 release 签名配置，可直接编译 arm64 release APK
+6. 修复 `WebViewFileSystemLoader` prefix 路径问题，将原生 JNI 实现替换为 Java 反射并修正为相对路径，解决首次进游戏连接 localhost 失败的问题
+7. 修复 `Settings.restartApp()` 在 Android 12+ 上进程自杀不可靠的问题，改用 `finishAffinity()` 确保导入资源后重启生效
+
 #### 版本1.2.0
 
 2026年5月17日
@@ -78,7 +84,7 @@
 3. 内置119版本WebView内核，此内核仅在版本比系统WebView新或为华为WebView时启用
 4. 增加默认的下载加速链接
 
-注: 内置内核可能影响开启“自动进入游戏”设置的启动速度
+注: 内置内核可能影响开启"自动进入游戏"设置的启动速度
 
 #### 版本1.1.0
 

@@ -509,22 +509,26 @@ public class Settings {
     }
 
     public static void restartApp(Context context) {
-        PackageManager packageManager = context.getPackageManager();
-        Intent launchIntent = packageManager.getLaunchIntentForPackage(context.getPackageName());
-        if (launchIntent != null) {
-            // 设置Intent标志，确保新的Activity作为新的任务栈顶部运行，并清除当前任务栈
-            launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            // 启动主Activity
-            context.startActivity(launchIntent);
-        }
-        try {
-            // 杀掉当前进程
+        // Android 12+ (API 31+) 限制了 Process.killProcess() 和 System.exit(0)，
+        // 改用 finishAffinity() 清空 Activity 栈 + 启动器重开，确保全新启动。
+        if (context instanceof Activity) {
+            Activity activity = (Activity) context;
+            activity.finishAffinity();
+            PackageManager packageManager = activity.getPackageManager();
+            Intent launchIntent = packageManager.getLaunchIntentForPackage(activity.getPackageName());
+            if (launchIntent != null) {
+                launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                activity.startActivity(launchIntent);
+            }
+        } else {
+            // 非 Activity 上下文（Service 等），用旧方案兜底
+            PackageManager packageManager = context.getPackageManager();
+            Intent launchIntent = packageManager.getLaunchIntentForPackage(context.getPackageName());
+            if (launchIntent != null) {
+                launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                context.startActivity(launchIntent);
+            }
             android.os.Process.killProcess(android.os.Process.myPid());
-            // 退出Java虚拟机
-            System.exit(0);
-        } catch (Exception e) {
-            // 处理启动Activity时可能出现的异常
-            e.printStackTrace();
         }
     }
 

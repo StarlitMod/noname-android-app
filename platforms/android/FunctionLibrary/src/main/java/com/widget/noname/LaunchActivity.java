@@ -51,6 +51,7 @@ import com.widget.noname.common.util.FileConstant;
 import com.widget.noname.function.functionlibrary.config.ImportConfig;
 import com.widget.noname.function.functionlibrary.data.ImportEventViewModel;
 import com.widget.noname.function.functionlibrary.data.MessageType;
+import com.widget.noname.common.util.TutorialConstant;
 import com.widget.noname.decompress.DecompressCallback;
 import com.widget.noname.decompress.DecompressHelper;
 import com.widget.noname.eventbus.ActivityResultEvent;
@@ -311,6 +312,27 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
             if (!gameRootPath.endsWith("/") && !gameRootPath.endsWith(File.separator)) {
                 gameRootPath += File.separator;
             }
+
+            // 将绝对路径转换为相对路径，匹配 native 实现的行为
+            // 在 WebViewFileSystemLoader.getPathHandler() 里：
+            //   file = new File(webView.getContext().getExternalFilesDir(null).getParentFile(), prefix + path);
+            // 所以 prefix 应该相对于 getExternalFilesDir(null) 的父目录
+            File externalFilesDir = getExternalFilesDir(null);
+            if (externalFilesDir != null) {
+                File parentDir = externalFilesDir.getParentFile();
+                if (parentDir != null) {
+                    String parentPath = parentDir.getAbsolutePath();
+                    if (gameRootPath.startsWith(parentPath)) {
+                        String relativePrefix = gameRootPath.substring(parentPath.length());
+                        if (relativePrefix.startsWith("/")) {
+                            relativePrefix = relativePrefix.substring(1);
+                        }
+                        Log.d(TAG, "Prefix converted: " + gameRootPath + " -> " + relativePrefix);
+                        gameRootPath = relativePrefix;
+                    }
+                }
+            }
+
             Class<?> clazz = Class.forName("org.apache.cordova.webviewfilesystemloader.WebViewFileSystemLoader");
             clazz.getMethod("setPrefix", String.class).invoke(null, gameRootPath);
             clazz.getMethod("setLoadAssets", boolean.class).invoke(null, !Settings.getDisableLoadAssets());
@@ -508,12 +530,41 @@ public class LaunchActivity extends WebViewUpgradeAppCompatActivity implements V
 
     private void afterAgreedToPrivacyPolicy() {
         // waitDialog.doDismiss();
-        if (!getSharedPreferences("nonameyuri", MODE_PRIVATE).getBoolean("readTutorialInLaunchActivity", false)) {
+        SharedPreferences prefs = getSharedPreferences("nonameyuri", MODE_PRIVATE);
+        if (!prefs.getBoolean("tutorialFirstLaunchPromptShown", false)) {
+            showFirstLaunchTutorialPrompt();
+        } else if (!prefs.getBoolean("readTutorialInLaunchActivity", false)) {
             DialogListBuilder builder = createTutorial();
             builder.show();
         } else {
             checkAppUpdate();
         }
+    }
+
+    private void showFirstLaunchTutorialPrompt() {
+        MessageDialog.build()
+                .setTitle(com.widget.noname.function.functionlibrary.R.string.tutorial_first_launch_title)
+                .setMessage(com.widget.noname.function.functionlibrary.R.string.tutorial_first_launch_message)
+                .setCancelable(false)
+                .setOkButton(com.widget.noname.function.functionlibrary.R.string.tutorial_first_launch_yes, (dialog, v) -> {
+                    getSharedPreferences("nonameyuri", MODE_PRIVATE).edit()
+                            .putBoolean("tutorialFirstLaunchPromptShown", true).apply();
+                    if (!getSharedPreferences("nonameyuri", MODE_PRIVATE).getBoolean("readTutorialInLaunchActivity", false)) {
+                        createTutorial().show();
+                    } else {
+                        checkAppUpdate();
+                    }
+                    return false;
+                })
+                .setCancelButton(com.widget.noname.function.functionlibrary.R.string.tutorial_first_launch_no, (dialog, v) -> {
+                    getSharedPreferences("nonameyuri", MODE_PRIVATE).edit()
+                            .putBoolean("tutorialFirstLaunchPromptShown", true).apply();
+                    TutorialConstant.disableAllTutorials(LaunchActivity.this);
+                    tip(com.widget.noname.function.functionlibrary.R.string.tutorial_toast_all_disabled).iconSuccess().show();
+                    checkAppUpdate();
+                    return false;
+                })
+                .show();
     }
 
     private void afterCheckAppUpdate() {
