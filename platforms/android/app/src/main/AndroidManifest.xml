@@ -3,7 +3,7 @@
     android:appCategory="game"
     android:hardwareAccelerated="true"
     android:versionCode="102000"
-    android:versionName="1.2.0"
+    android:versionName="1.2.0.1"
     android:enableOnBackInvokedCallback="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
