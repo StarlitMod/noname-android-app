@@ -371,7 +371,7 @@
     <string name="pref_title_auto_enter_game">Auto Enter Game</string>
     <string name="pref_summary_auto_enter_game">When starting the app normally, if the directory configuration is correct, automatically enter the game</string>
     <string name="pref_title_play_splash_animation">Play Splash Animation</string>
-    <string name="pref_summary_play_splash_animation">Play startup animation when launching the app normally</string>
+    <string name="pref_summary_play_splash_animation">Disable to skip the splash video and enter the main page faster</string>
     <string name="pref_category_theme">Theme</string>
     <string name="pref_title_select_theme">Select Theme</string>
     <string name="pref_summary_select_theme">Select App Theme</string>
