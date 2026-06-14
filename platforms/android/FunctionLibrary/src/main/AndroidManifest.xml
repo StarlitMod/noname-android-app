@@ -17,8 +17,8 @@
     </queries>
     <application>
         <provider
-            android:name="com.widget.noname.CustomDocumentsProvider"
-            android:authorities="com.widget.noname.documents"
+            android:name="bin.mt.file.content.MTDataFilesProvider"
+            android:authorities="${applicationId}.MTDataFilesProvider"
             android:exported="true"
             android:permission="android.permission.MANAGE_DOCUMENTS"
             android:grantUriPermissions="true">
@@ -26,6 +26,12 @@
                 <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
             </intent-filter>
         </provider>
+        <activity
+            android:name="bin.mt.file.content.MTDataFilesWakeUpActivity"
+            android:exported="true"
+            android:taskAffinity="${applicationId}.MTDataFilesWakeUp"
+            android:excludeFromRecents="true"
+            android:noHistory="true" />
         <service
             android:name="com.widget.noname.CustomService"
             android:authorities="com.widget.noname.CustomService"

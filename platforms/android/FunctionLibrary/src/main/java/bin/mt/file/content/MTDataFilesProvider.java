@@ -1,4 +1,4 @@
-package com.widget.noname;
+package bin.mt.file.content;
 
 import static android.provider.DocumentsContract.Document.MIME_TYPE_DIR;
 import static android.system.OsConstants.S_IFLNK;
@@ -19,7 +19,6 @@ import android.provider.DocumentsProvider;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.StructStat;
-import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import java.io.File;
@@ -28,17 +27,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-public class CustomDocumentsProvider extends DocumentsProvider {
+public class MTDataFilesProvider extends DocumentsProvider {
 
-    private static final String TAG = "CustomDocumentsProvider";
-
-    static {
-        Log.e(TAG, "CustomDocumentsProvider.static");
-    }
+    private static final String TAG = "MTDataFilesProvider";
 
     @Override
     public final boolean onCreate() {
-        Log.e(TAG, "CustomDocumentsProvider.onCreate");
         return true;
     }
 
@@ -428,7 +422,7 @@ public class CustomDocumentsProvider extends DocumentsProvider {
         row.add(DocumentsContract.Root.COLUMN_ROOT_ID, this.packageName);
         row.add(DocumentsContract.Root.COLUMN_DOCUMENT_ID, this.packageName);
         row.add(DocumentsContract.Root.COLUMN_SUMMARY, this.packageName);
-        row.add(DocumentsContract.Root.COLUMN_FLAGS, DocumentsContract.Root.FLAG_SUPPORTS_CREATE | DocumentsContract.Root.FLAG_SUPPORTS_IS_CHILD); //mt的比termux少了一个 DocumentsContract.Root.FLAG_SUPPORTS_SEARCH
+        row.add(DocumentsContract.Root.COLUMN_FLAGS, DocumentsContract.Root.FLAG_SUPPORTS_CREATE | DocumentsContract.Root.FLAG_SUPPORTS_IS_CHILD);
         row.add(DocumentsContract.Root.COLUMN_TITLE, title);
         row.add(DocumentsContract.Root.COLUMN_MIME_TYPES, "*/*");
         row.add(DocumentsContract.Root.COLUMN_ICON, appInfo.icon);
